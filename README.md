@@ -95,12 +95,12 @@ npm start
 # or development watch mode:
 npm run dev
 ```
-The server will start on: **`http://localhost:5000`**
-- Storefront: `http://localhost:5000/`
-- Shop: `http://localhost:5000/shop`
-- Landing Pages: `http://localhost:5000/lp/panjabi` or `http://localhost:5000/lp/test-product`
-- Admin Panel: `http://localhost:5000/admin`
-- POS Terminal: `http://localhost:5000/pos`
+The server will start on: **`http://localhost:5050`**
+- Storefront: `http://localhost:5050/`
+- Shop: `http://localhost:5050/shop`
+- Landing Pages: `http://localhost:5050/lp/panjabi` or `http://localhost:5050/lp/test-product`
+- Admin Panel: `http://localhost:5050/admin`
+- POS Terminal: `http://localhost:5050/pos`
 
 ---
 
