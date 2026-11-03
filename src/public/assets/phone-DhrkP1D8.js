@@ -1,0 +1,1 @@
+const s="০১২৩৪৫৬৭৮৯",e=i=>String(i||"").replace(/[০-৯]/g,t=>String(s.indexOf(t)));function n(i){let t=e(i).replace(/\D/g,"");return t.startsWith("00")&&(t=t.slice(2)),(t.startsWith("880")&&t.length>=13||t.startsWith("88")&&t.length>11)&&(t=t.slice(2)),t.length===10&&t.startsWith("1")&&(t=`0${t}`),t.slice(0,11)}const l=/^01[3-9]\d{8}$/;export{l as B,n};

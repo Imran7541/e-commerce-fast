@@ -1,0 +1,416 @@
+const express = require('express');
+const router = express.Router();
+const db = require('../db/database');
+const { getStoreSettings } = require('../services/orderService');
+
+// 1. Settings & Store Config
+router.get('/settings', (req, res) => {
+  try {
+    const settings = getStoreSettings();
+    res.json(settings);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.get('/settings/theme', (req, res) => {
+  try {
+    const row = db.get(`SELECT value FROM settings WHERE key = 'theme'`);
+    const theme = row ? JSON.parse(row.value) : {};
+    res.json(theme);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 2. Categories
+router.get('/categories', (req, res) => {
+  try {
+    const isTree = req.query.tree === '1' || req.query.tree === 'true';
+    const rows = db.all(`SELECT * FROM categories WHERE status = 'active' ORDER BY sort_order ASC, id ASC`);
+
+    const formatted = rows.map(r => ({
+      id: r.id,
+      name: r.name,
+      slug: r.slug,
+      parentId: r.parent_id,
+      image: r.image,
+      icon: r.icon,
+      banner: r.banner,
+      sortOrder: r.sort_order,
+      isFeatured: Boolean(r.is_featured),
+      status: r.status
+    }));
+
+    if (isTree) {
+      const map = {};
+      const roots = [];
+      formatted.forEach(c => {
+        map[c.id] = { ...c, children: [] };
+      });
+      formatted.forEach(c => {
+        if (c.parentId && map[c.parentId]) {
+          map[c.parentId].children.push(map[c.id]);
+        } else {
+          roots.push(map[c.id]);
+        }
+      });
+      return res.json(roots);
+    }
+
+    res.json(formatted);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 3. Banners
+router.get('/banners', (req, res) => {
+  try {
+    const banners = db.all(`SELECT * FROM banners WHERE status = 'active' ORDER BY sort_order ASC, id ASC`);
+    res.json(banners.map(b => ({
+      id: b.id,
+      title: b.title,
+      subtitle: b.subtitle,
+      imageUrl: b.image_url,
+      linkUrl: b.link_url,
+      position: b.position,
+      sortOrder: b.sort_order,
+      status: b.status
+    })));
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 4. Brands & Generics
+router.get('/brands', (req, res) => {
+  try {
+    const brands = db.all(`SELECT * FROM brands WHERE status = 'active'`);
+    res.json(brands);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.get('/generics', (req, res) => {
+  try {
+    const generics = db.all(`SELECT * FROM generics WHERE status = 'active'`);
+    res.json(generics);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 5. Products Catalog
+router.get('/products', (req, res) => {
+  try {
+    const {
+      limit = 50,
+      offset = 0,
+      category,
+      search,
+      featured,
+      isFlashSale,
+      isBestSeller,
+      isNewArrival,
+      onSale,
+      bestSeller,
+      newArrival
+    } = req.query;
+
+    let sql = `
+      SELECT p.*, c.name as categoryName, c.slug as categorySlug,
+             b.name as brandName, b.slug as brandSlug
+      FROM products p
+      LEFT JOIN categories c ON p.category_id = c.id
+      LEFT JOIN brands b ON p.brand_id = b.id
+      WHERE p.status = 'active'
+    `;
+    const params = [];
+
+    if (category) {
+      sql += ' AND (c.slug = ? OR p.category_id = ?)';
+      params.push(category, category);
+    }
+    if (search) {
+      sql += ' AND (p.name LIKE ? OR p.sku LIKE ? OR p.description LIKE ?)';
+      params.push(`%${search}%`, `%${search}%`, `%${search}%`);
+    }
+    if (featured === 'true' || featured === '1') {
+      sql += ' AND p.featured = 1';
+    }
+    if (isFlashSale === 'true' || isFlashSale === '1') {
+      sql += ' AND p.is_flash_sale = 1';
+    }
+    if (isBestSeller === 'true' || isBestSeller === '1' || bestSeller === 'true') {
+      sql += ' AND p.is_best_seller = 1';
+    }
+    if (isNewArrival === 'true' || isNewArrival === '1' || newArrival === 'true') {
+      sql += ' AND p.is_new_arrival = 1';
+    }
+    if (onSale === 'true') {
+      sql += ' AND p.sale_price IS NOT NULL AND p.sale_price < p.price';
+    }
+
+    sql += ' ORDER BY p.id DESC LIMIT ? OFFSET ?';
+    params.push(parseInt(limit, 10), parseInt(offset, 10));
+
+    const rows = db.all(sql, params);
+
+    const products = rows.map(r => ({
+      id: r.id,
+      name: r.name,
+      genericName: r.generic_name,
+      slug: r.slug,
+      sku: r.sku,
+      barcode: r.barcode,
+      categoryId: r.category_id,
+      brandId: r.brand_id,
+      description: r.description,
+      shortDescription: r.short_description,
+      price: r.price,
+      salePrice: r.sale_price,
+      stock: r.stock,
+      lowStockThreshold: r.low_stock_threshold,
+      unit: r.unit,
+      featured: Boolean(r.featured),
+      isFlashSale: Boolean(r.is_flash_sale),
+      isBestSeller: Boolean(r.is_best_seller),
+      isNewArrival: Boolean(r.is_new_arrival),
+      rating: r.rating,
+      reviewCount: r.review_count,
+      image: r.image,
+      images: JSON.parse(r.images || '[]'),
+      hasVariations: Boolean(r.has_variations),
+      freeShipping: Boolean(r.free_shipping),
+      categoryName: r.categoryName,
+      categorySlug: r.categorySlug,
+      brandName: r.brandName,
+      brandSlug: r.brandSlug
+    }));
+
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Single Product Dossier
+router.get('/products/:id', (req, res) => {
+  try {
+    const idOrSlug = req.params.id;
+    let product;
+
+    if (!isNaN(idOrSlug)) {
+      product = db.get(`
+        SELECT p.*, c.name as categoryName, c.slug as categorySlug,
+               b.name as brandName, b.slug as brandSlug
+        FROM products p
+        LEFT JOIN categories c ON p.category_id = c.id
+        LEFT JOIN brands b ON p.brand_id = b.id
+        WHERE p.id = ?
+      `, [idOrSlug]);
+    } else {
+      product = db.get(`
+        SELECT p.*, c.name as categoryName, c.slug as categorySlug,
+               b.name as brandName, b.slug as brandSlug
+        FROM products p
+        LEFT JOIN categories c ON p.category_id = c.id
+        LEFT JOIN brands b ON p.brand_id = b.id
+        WHERE p.slug = ?
+      `, [idOrSlug]);
+    }
+
+    if (!product) {
+      return res.status(404).json({ error: 'Product not found' });
+    }
+
+    // Get variations
+    const variations = db.all(`SELECT * FROM product_variations WHERE product_id = ?`, [product.id]).map(v => ({
+      id: v.id,
+      productId: v.product_id,
+      name: v.name,
+      sku: v.sku,
+      price: v.price,
+      salePrice: v.sale_price,
+      stock: v.stock,
+      image: v.image,
+      attributes: JSON.parse(v.attribute_values || '{}')
+    }));
+
+    // Get related products
+    const related = db.all(`
+      SELECT id, name, slug, price, sale_price as salePrice, image, rating, review_count as reviewCount
+      FROM products
+      WHERE category_id = ? AND id != ? AND status = 'active'
+      LIMIT 8
+    `, [product.category_id, product.id]);
+
+    // Get reviews
+    const reviews = db.all(`SELECT * FROM reviews WHERE product_id = ? AND status = 'approved'`, [product.id]);
+
+    const formattedProduct = {
+      id: product.id,
+      name: product.name,
+      genericName: product.generic_name,
+      slug: product.slug,
+      sku: product.sku,
+      barcode: product.barcode,
+      categoryId: product.category_id,
+      brandId: product.brand_id,
+      description: product.description,
+      shortDescription: product.short_description,
+      price: product.price,
+      salePrice: product.sale_price,
+      stock: product.stock,
+      unit: product.unit,
+      featured: Boolean(product.featured),
+      rating: product.rating,
+      reviewCount: product.review_count,
+      image: product.image,
+      images: JSON.parse(product.images || '[]'),
+      hasVariations: Boolean(product.has_variations),
+      freeShipping: Boolean(product.free_shipping),
+      shippingCharges: product.shipping_charges,
+      highlights: JSON.parse(product.highlights || '[]'),
+      howToUse: product.how_to_use,
+      seoTitle: product.seo_title,
+      seoDescription: product.seo_description,
+      categoryName: product.categoryName,
+      categorySlug: product.categorySlug,
+      brandName: product.brandName,
+      brandSlug: product.brandSlug
+    };
+
+    res.json({
+      product: formattedProduct,
+      variations,
+      hasVariations: variations.length > 0,
+      related,
+      reviews,
+      ratingBreakdown: { 5: 5, 4: 0, 3: 0, 2: 0, 1: 0 },
+      sizeGuide: null,
+      attributes: []
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// 6. Blog
+router.get('/blog', (req, res) => {
+  try {
+    const { limit = 10, page = 1 } = req.query;
+    const offset = (page - 1) * limit;
+
+    const posts = db.all(`
+      SELECT id, title, slug, excerpt, cover_image as coverImage, author, category, views, created_at as createdAt
+      FROM blog_posts
+      WHERE is_published = 1
+      ORDER BY id DESC
+      LIMIT ? OFFSET ?
+    `, [parseInt(limit, 10), parseInt(offset, 10)]);
+
+    const total = db.get(`SELECT COUNT(*) as c FROM blog_posts WHERE is_published = 1`).c;
+
+    res.json({
+      posts,
+      total,
+      page: parseInt(page, 10),
+      limit: parseInt(limit, 10),
+      categories: ['Fashion', 'Beauty', 'Health', 'Lifestyle']
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.get('/blog/:slug', (req, res) => {
+  try {
+    const post = db.get(`SELECT * FROM blog_posts WHERE slug = ?`, [req.params.slug]);
+    if (!post) {
+      return res.status(404).json({ error: 'Blog post not found' });
+    }
+
+    res.json({
+      post: {
+        id: post.id,
+        title: post.title,
+        slug: post.slug,
+        excerpt: post.excerpt,
+        content: post.content,
+        coverImage: post.cover_image,
+        author: post.author,
+        category: post.category,
+        tags: JSON.parse(post.tags || '[]'),
+        views: post.views,
+        createdAt: post.created_at
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.post('/blog/:slug/view', (req, res) => {
+  try {
+    db.run(`UPDATE blog_posts SET views = views + 1 WHERE slug = ?`, [req.params.slug]);
+    res.json({ success: true });
+  } catch {
+    res.json({ success: false });
+  }
+});
+
+// 7. Landing Pages
+router.get('/lp/:slug', (req, res) => {
+  try {
+    const lp = db.get(`SELECT * FROM landing_pages WHERE slug = ? AND status = 'active'`, [req.params.slug]);
+    if (!lp) {
+      return res.status(404).json({ error: 'Landing page not found' });
+    }
+
+    res.json({
+      page: {
+        id: lp.id,
+        title: lp.title,
+        slug: lp.slug,
+        template: lp.template,
+        status: lp.status,
+        content: JSON.parse(lp.content || '{}'),
+        views: lp.views,
+        createdAt: lp.created_at
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.post('/lp/:slug/view', (req, res) => {
+  try {
+    db.run(`UPDATE landing_pages SET views = views + 1 WHERE slug = ?`, [req.params.slug]);
+    res.json({ success: true });
+  } catch {
+    res.json({ success: false });
+  }
+});
+
+// 8. Utility & System Endpoints
+router.get('/maintenance/status', (req, res) => {
+  res.json({ isUnderMaintenance: false });
+});
+
+router.get('/cache-version', (req, res) => {
+  res.json({ version: 1730600000 });
+});
+
+router.get('/access-check', (req, res) => {
+  res.json({ allowed: true });
+});
+
+router.post('/track/capi', (req, res) => {
+  res.json({ received: true });
+});
+
+module.exports = router;

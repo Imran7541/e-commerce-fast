@@ -1,0 +1,52 @@
+# Zero-Trust Security Policies & Role-Based Access Control
+
+policies:
+  authentication:
+    default_deny: true
+    jwt_expiry: "7d"
+    password_hash: "bcrypt"
+    min_password_length: 6
+
+  roles:
+    super_admin:
+      can_manage_system: true
+      can_manage_users: true
+      can_manage_catalog: true
+      can_manage_orders: true
+      can_manage_finances: true
+      can_operate_pos: true
+
+    manager:
+      can_manage_system: false
+      can_manage_users: false
+      can_manage_catalog: true
+      can_manage_orders: true
+      can_manage_finances: true
+      can_operate_pos: true
+
+    pos_operator:
+      can_manage_system: false
+      can_manage_users: false
+      can_manage_catalog: false
+      can_manage_orders: false
+      can_manage_finances: false
+      can_operate_pos: true
+
+    customer:
+      can_view_account: true
+      can_track_orders: true
+      can_submit_reviews: true
+
+  rate_limiting:
+    public_window_ms: 60000
+    public_max_requests: 120
+    auth_window_ms: 60000
+    auth_max_requests: 15
+
+  storage:
+    allowed_mime_types:
+      - "image/jpeg"
+      - "image/png"
+      - "image/webp"
+      - "image/gif"
+    max_upload_size_mb: 10

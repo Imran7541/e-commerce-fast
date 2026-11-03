@@ -1,0 +1,450 @@
+{
+  "panjabi": {
+    "page": {
+      "id": 2,
+      "title": "panjabi",
+      "slug": "panjabi",
+      "template": "organic",
+      "status": "active",
+      "content": {
+        "theme": {
+          "primary": "#d97706",
+          "accent": "#15803d",
+          "background": "#fffbeb"
+        },
+        "topBar": {
+          "enabled": false,
+          "text": "খাঁটি পণ্যের নিশ্চয়তা — সারা বাংলাদেশে ক্যাশ অন ডেলিভারি"
+        },
+        "hero": {
+          "badge": "১০০% প্রাকৃতিক",
+          "title": "Test Product ",
+          "highlight": "সরাসরি মৌচাক থেকে আপনার ঘরে",
+          "subtitle": "কোনো ভেজাল, চিনি বা কেমিক্যাল ছাড়া সংগ্রহ করা খাঁটি মধু। পুরো পরিবারের জন্য নিশ্চিন্তে বেছে নিন।",
+          "image": "/uploads/1790641675919_40760c_WhatsApp_Image_20265-09-23_at_10_04_11_P.jpg",
+          "ctaText": "এখনই অর্ডার করুন",
+          "bullets": [
+            "ল্যাব টেস্টেড ও ভেজালমুক্ত",
+            "চিনি ছাড়া প্রাকৃতিক স্বাদ",
+            "পণ্য হাতে পেয়ে টাকা দিন"
+          ]
+        },
+        "video": {
+          "enabled": true,
+          "title": "ভিডিওতে দেখে নিন",
+          "url": "https://youtu.be/qa69CcWQmRE"
+        },
+        "features": {
+          "enabled": true,
+          "title": "কেন আমাদের পণ্য বেছে নেবেন?",
+          "items": [
+            {
+              "title": "সরাসরি সংগ্রহ",
+              "text": "মধ্যস্বত্বভোগী ছাড়া সরাসরি উৎস থেকে সংগ্রহ করা।"
+            },
+            {
+              "title": "ভেজালমুক্ত",
+              "text": "প্রতিটি ব্যাচ পরীক্ষা করে তবেই প্যাক করা হয়।"
+            },
+            {
+              "title": "নিরাপদ প্যাকেজিং",
+              "text": "ফুড-গ্রেড বোতলে লিক-প্রুফ প্যাকিং।"
+            },
+            {
+              "title": "দ্রুত ডেলিভারি",
+              "text": "ঢাকায় ১-২ দিন, ঢাকার বাইরে ২-৩ দিনে।"
+            }
+          ]
+        },
+        "gallery": {
+          "enabled": true,
+          "title": "আমাদের পণ্য",
+          "images": []
+        },
+        "benefits": {
+          "enabled": true,
+          "title": "যেভাবে ব্যবহার করবেন",
+          "items": [
+            "সকালে কুসুম গরম পানির সাথে",
+            "চা বা লেবু পানিতে চিনির বদলে",
+            "রুটি, পিঠা ও নাস্তার সাথে",
+            "শিশু থেকে বয়স্ক সবার জন্য"
+          ]
+        },
+        "offer": {
+          "enabled": true,
+          "title": "সীমিত সময়ের অফার",
+          "text": "অফার চলাকালীন অর্ডারে বিশেষ মূল্য — স্টক শেষ হওয়ার আগেই অর্ডার করুন।",
+          "endsAt": ""
+        },
+        "reviews": {
+          "enabled": true,
+          "title": "কাস্টমারদের মতামত",
+          "images": [],
+          "items": []
+        },
+        "faq": {
+          "enabled": true,
+          "title": "সচরাচর জিজ্ঞাসা",
+          "items": [
+            {
+              "q": "কিভাবে অর্ডার করবো?",
+              "a": "নিচের ফর্মে নাম, মোবাইল নাম্বার ও ঠিকানা দিয়ে \"অর্ডার কনফার্ম করুন\" চাপুন। আমরা ফোন করে কনফার্ম করবো।"
+            },
+            {
+              "q": "টাকা কখন দিতে হবে?",
+              "a": "পণ্য হাতে পেয়ে ডেলিভারি ম্যানকে টাকা দেবেন।"
+            },
+            {
+              "q": "পণ্য খারাপ হলে কি করবো?",
+              "a": "ডেলিভারির সময় পণ্য দেখে নিন। কোনো সমস্যা থাকলে সাথে সাথে আমাদের জানান।"
+            }
+          ]
+        },
+        "checkout": {
+          "productsTitle": "প্রোডাক্ট নির্বাচন করুন",
+          "nameLabel": "আপনার নাম",
+          "phoneLabel": "মোবাইল নাম্বার",
+          "addressLabel": "সম্পূর্ণ ঠিকানা",
+          "noteEnabled": false,
+          "notePlaceholder": "অতিরিক্ত কোনো তথ্য (ঐচ্ছিক)",
+          "codText": "পণ্য হাতে পেয়ে টাকা পরিশোধ করুন",
+          "title": "অর্ডার করতে নিচের তথ্যগুলো দিন",
+          "subtitle": "অর্ডার কনফার্ম করতে আমাদের প্রতিনিধি আপনাকে কল করবেন",
+          "buttonText": "অর্ডার কনফার্ম করুন"
+        },
+        "footer": {
+          "text": "যেকোনো প্রয়োজনে কল করুন",
+          "phone": "",
+          "whatsapp": ""
+        },
+        "pixel": {
+          "metaPixelId": ""
+        },
+        "seo": {
+          "title": "",
+          "description": "",
+          "image": ""
+        }
+      },
+      "products": [
+        {
+          "productId": 30,
+          "variationIds": [],
+          "preselect": true,
+          "qty": 1
+        },
+        {
+          "productId": 26,
+          "variationIds": [],
+          "preselect": false,
+          "qty": 1
+        }
+      ],
+      "shipping": {
+        "mode": "store",
+        "charges": {},
+        "freeMinQuantity": null,
+        "freeMinSubtotal": null
+      },
+      "createdAt": "2026-09-28T14:48:40.000Z",
+      "updatedAt": "2026-09-29T07:07:20.000Z"
+    },
+    "products": [
+      {
+        "id": 30,
+        "name": "Smart Panjabi",
+        "slug": "smart-panjabi-copy",
+        "sku": "MED-558262",
+        "image": "/uploads/1790641675186_3baf66_WhatsApp_Image_2026-09-23_at_10_04_11_PM.jpg",
+        "images": "[\"/uploads/1790641675628_fb6ead_WhatsApp_Image_2026-09-235_at_10_04_11_P.jpg\",\"/uploads/1790641675186_3baf66_WhatsApp_Image_2026-09-23_at_10_04_11_PM.jpg\"]",
+        "price": "750.00",
+        "salePrice": "550.00",
+        "stock": 68,
+        "unit": "Pcs",
+        "hasVariations": false,
+        "freeShipping": false,
+        "shippingCharges": null,
+        "status": "active",
+        "variations": [],
+        "preselect": true,
+        "qty": 1
+      },
+      {
+        "id": 26,
+        "name": "Full T-shirt",
+        "slug": "full-t-shirt-copy",
+        "sku": "MED-472436",
+        "image": "/uploads/1790641670782_328974_WhatsApp_Image_2026-09-23_6at_10_04_09_P.jpg",
+        "images": "[\"/uploads/1790641670782_328974_WhatsApp_Image_2026-09-23_6at_10_04_09_P.jpg\",\"/uploads/1790641672220_1233d5_WhatsApp_Image_2026-09-23_at_10_04_06_PM.jpg\"]",
+        "price": "750.00",
+        "salePrice": "700.00",
+        "stock": 116,
+        "unit": "Pcs",
+        "hasVariations": true,
+        "freeShipping": false,
+        "shippingCharges": null,
+        "status": "active",
+        "variations": [
+          {
+            "id": 44,
+            "label": "M",
+            "combination": {
+              "Size": "M"
+            },
+            "price": null,
+            "salePrice": null,
+            "stock": 38,
+            "image": "",
+            "sku": ""
+          },
+          {
+            "id": 45,
+            "label": "L",
+            "combination": {
+              "Size": "L"
+            },
+            "price": null,
+            "salePrice": null,
+            "stock": 40,
+            "image": "",
+            "sku": ""
+          },
+          {
+            "id": 46,
+            "label": "XL",
+            "combination": {
+              "Size": "XL"
+            },
+            "price": null,
+            "salePrice": null,
+            "stock": 38,
+            "image": "",
+            "sku": ""
+          }
+        ],
+        "preselect": false,
+        "qty": 1
+      }
+    ],
+    "preview": false
+  },
+  "test-product": {
+    "page": {
+      "id": 1,
+      "title": "saree",
+      "slug": "test-product",
+      "template": "fashion",
+      "status": "active",
+      "content": {
+        "theme": {
+          "primary": "#0d9488",
+          "accent": "#f59e0b",
+          "background": "#f0fdfa"
+        },
+        "topBar": {
+          "enabled": true,
+          "text": "সারা বাংলাদেশে হোম ডেলিভারি — পণ্য হাতে পেয়ে টাকা দিন"
+        },
+        "hero": {
+          "badge": "নতুন কালেকশন",
+          "title": "আরামদায়ক স্টাইলিশ শাড়ি",
+          "highlight": "আরামদায়ক, টেকসই, স্টাইলিশ",
+          "subtitle": "১০০% কম্বড কটন কাপড়। বারবার ধোয়ার পরও রং ও ফিটিং ঠিক থাকে — প্রতিদিনের ব্যবহারের জন্য পারফেক্ট।",
+          "image": "/uploads/1790671331317_c34592_imgi_16_14.jpg",
+          "ctaText": "এখনই অর্ডার করুন",
+          "bullets": [
+            "প্রিমিয়াম কোয়ালিটি কাপড়",
+            "M থেকে XXL সব সাইজ",
+            "পণ্য হাতে পেয়ে টাকা দিন"
+          ]
+        },
+        "video": {
+          "enabled": true,
+          "title": "ভিডিওতে দেখুন",
+          "url": "https://youtu.be/xeRm2sODq1s?list=RDMMxeRm2sODq1s"
+        },
+        "features": {
+          "enabled": true,
+          "title": "কেন আমাদের থেকে কিনবেন?",
+          "items": [
+            {
+              "title": "প্রিমিয়াম কাপড়",
+              "text": "নরম, আরামদায়ক ও ঘাম শোষণকারী।"
+            },
+            {
+              "title": "পারফেক্ট ফিটিং",
+              "text": "সব সাইজের জন্য মাপমতো কাটিং।"
+            },
+            {
+              "title": "রং নষ্ট হয় না",
+              "text": "বারবার ধোয়ার পরও নতুনের মতো।"
+            },
+            {
+              "title": "দ্রুত ডেলিভারি",
+              "text": "ঢাকায় ১-২ দিন, ঢাকার বাইরে ২-৩ দিনে।"
+            }
+          ]
+        },
+        "gallery": {
+          "enabled": true,
+          "title": "প্রোডাক্টের ছবি",
+          "images": []
+        },
+        "benefits": {
+          "enabled": true,
+          "title": "অর্ডারের আগে জেনে নিন",
+          "items": [
+            "সাইজ মিলিয়ে অর্ডার করুন — সাইজ চার্ট দেওয়া আছে",
+            "ডেলিভারির সময় পণ্য চেক করে নিন",
+            "সাইজ না মিললে সহজ এক্সচেঞ্জ",
+            "অর্ডার কনফার্মেশনের জন্য কল রিসিভ করুন"
+          ]
+        },
+        "offer": {
+          "enabled": true,
+          "title": "অফার সীমিত সময়ের জন্য",
+          "text": "একসাথে একাধিক পিস নিলে ডেলিভারি চার্জ ফ্রি!",
+          "endsAt": ""
+        },
+        "reviews": {
+          "enabled": true,
+          "title": "আমাদের কাস্টমাররা যা বলছেন",
+          "images": [],
+          "items": []
+        },
+        "faq": {
+          "enabled": true,
+          "title": "সচরাচর জিজ্ঞাসা",
+          "items": [
+            {
+              "q": "কিভাবে অর্ডার করবো?",
+              "a": "প্রোডাক্ট ও সাইজ বেছে নিয়ে নিচের ফর্মটি পূরণ করুন। আমরা কল করে অর্ডার কনফার্ম করবো।"
+            },
+            {
+              "q": "ডেলিভারি চার্জ কত?",
+              "a": "ডেলিভারি চার্জ চেকআউটে দেখানো আছে — এলাকা বেছে নিলেই মোট টাকা দেখতে পাবেন।"
+            },
+            {
+              "q": "সাইজ না মিললে?",
+              "a": "ডেলিভারির সময় ট্রাই করে দেখুন, না মিললে এক্সচেঞ্জ করে দেওয়া হবে।"
+            }
+          ]
+        },
+        "checkout": {
+          "productsTitle": "প্রোডাক্ট নির্বাচন করুন",
+          "nameLabel": "আপনার নাম",
+          "phoneLabel": "মোবাইল নাম্বার",
+          "addressLabel": "সম্পূর্ণ ঠিকানা",
+          "noteEnabled": false,
+          "notePlaceholder": "অতিরিক্ত কোনো তথ্য (ঐচ্ছিক)",
+          "codText": "পণ্য হাতে পেয়ে টাকা পরিশোধ করুন",
+          "title": "অর্ডার করতে নিচের ফর্মটি পূরণ করুন",
+          "subtitle": "সঠিক তথ্য দিন — অর্ডার কনফার্ম করতে আমরা কল করবো",
+          "buttonText": "অর্ডার কনফার্ম করুন"
+        },
+        "footer": {
+          "text": "যেকোনো প্রয়োজনে কল করুন",
+          "phone": "01313133044",
+          "whatsapp": "01313133044"
+        },
+        "pixel": {
+          "metaPixelId": "1068744785942838"
+        },
+        "seo": {
+          "title": "",
+          "description": "",
+          "image": ""
+        }
+      },
+      "products": [
+        {
+          "productId": 35,
+          "variationIds": [],
+          "preselect": true,
+          "qty": 1
+        },
+        {
+          "productId": 31,
+          "variationIds": [],
+          "preselect": false,
+          "qty": 1
+        },
+        {
+          "productId": 34,
+          "variationIds": [],
+          "preselect": false,
+          "qty": 1
+        }
+      ],
+      "shipping": {
+        "mode": "store",
+        "charges": {},
+        "freeMinQuantity": null,
+        "freeMinSubtotal": null
+      },
+      "createdAt": "2026-09-28T14:15:54.000Z",
+      "updatedAt": "2026-09-29T03:14:55.000Z"
+    },
+    "products": [
+      {
+        "id": 35,
+        "name": "Pakistani Jamdani Saree",
+        "slug": "smart-indian-jamdani-saree-copy",
+        "sku": "MED-492384",
+        "image": "/uploads/1790671331317_c34592_imgi_16_14.jpg",
+        "images": "[\"/uploads/1790671329971_92b7da_imgi_9_4.jpg\",\"/uploads/1790671331725_12c8cc_imgi_18_3-1.jpg\",\"/uploads/1790671332647_46a6b3_imgi_21_6.jpg\"]",
+        "price": "1900.00",
+        "salePrice": "1550.00",
+        "stock": 80,
+        "unit": "Pcs",
+        "hasVariations": false,
+        "freeShipping": false,
+        "shippingCharges": null,
+        "status": "active",
+        "variations": [],
+        "preselect": true,
+        "qty": 1
+      },
+      {
+        "id": 31,
+        "name": "Indian Saree",
+        "slug": "indian-saree",
+        "sku": "MED-351502",
+        "image": "/uploads/1790671329971_92b7da_imgi_9_4.jpg",
+        "images": "[\"/uploads/1790671329971_92b7da_imgi_9_4.jpg\",\"/uploads/1790671331725_12c8cc_imgi_18_3-1.jpg\"]",
+        "price": "1200.00",
+        "salePrice": "1150.00",
+        "stock": 80,
+        "unit": "Pcs",
+        "hasVariations": false,
+        "freeShipping": false,
+        "shippingCharges": null,
+        "status": "active",
+        "variations": [],
+        "preselect": false,
+        "qty": 1
+      },
+      {
+        "id": 34,
+        "name": "Smart Indian Jamdani Saree",
+        "slug": "indian-jamdani-saree-copy",
+        "sku": "MED-448239",
+        "image": "/uploads/1790671330480_d1cbd3_imgi_12_Topper-IT-demo56.jpg",
+        "images": "[\"/uploads/1790671329971_92b7da_imgi_9_4.jpg\",\"/uploads/1790671331725_12c8cc_imgi_18_3-1.jpg\"]",
+        "price": "1900.00",
+        "salePrice": "1550.00",
+        "stock": 86,
+        "unit": "Pcs",
+        "hasVariations": false,
+        "freeShipping": false,
+        "shippingCharges": null,
+        "status": "active",
+        "variations": [],
+        "preselect": false,
+        "qty": 1
+      }
+    ],
+    "preview": false
+  }
+}
