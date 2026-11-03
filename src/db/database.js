@@ -1,4 +1,7 @@
-const { DatabaseSync } = require('node:sqlite');
+const sqlite = typeof process.getBuiltinModule === 'function' 
+  ? process.getBuiltinModule('node:sqlite') 
+  : eval("require('node:sqlite')");
+const { DatabaseSync } = sqlite;
 const path = require('path');
 const fs = require('fs');
 
