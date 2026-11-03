@@ -23,8 +23,8 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Static Asset Pipeline
-app.use('/assets', express.static(path.join(__dirname, 'public/assets'), { maxAge: '1y' }));
-app.use('/uploads', express.static(path.join(__dirname, 'public/uploads'), { maxAge: '1y' }));
+app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads'), { maxAge: 0 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // API Routes Mounting
