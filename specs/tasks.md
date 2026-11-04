@@ -64,3 +64,15 @@ Branch: main
 - [x] T038 Verify HTTP 200 delivery for all 3D ghost mannequin images and verify `/api/products/browse`
 - [x] T039 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
 - [x] T040 Git commit and push all changes to GitHub repository `origin main`
+
+## Phase 12: Customer Reviews Customization with Real User Imagery (P1)
+- [x] T041 Backup original review card images in `data/backup_original_reviews/`
+- [x] T042 [P] [US4] Process and generate 4 high-resolution (1200x1201) Customer Review Cards featuring user's real customer photos (`customer_review_1.jpg` to `4.jpg`)
+- [x] T043 [P] [US4] Deploy raw customer avatars and composited review cards to `src/public/uploads/` and `data/uploads/`
+- [x] T044 [US4] Overwrite legacy review image files (`imgi_302`, `imgi_304`, `imgi_303`, `imgi_306`, `imgi_307`) with the new customer review card assets
+- [x] T045 [US4] Update `review_images_config` in SQLite database `settings` table with the 4 new customer review items
+- [x] T046 [US4] Update `data/extracted_backend_data/settings.json` and SSR hydration script in `src/public/index.html`
+- [x] T047 Verify HTTP 200 delivery of all review card images and check `/api/settings` response
+- [x] T048 Update automated test in `tests/api.test.js` to verify 4 customer reviews in `/api/settings` and run `npm test`
+- [x] T049 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
+- [x] T050 Git commit and push all changes to GitHub repository `origin main`

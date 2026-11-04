@@ -58,7 +58,10 @@ async function runTests() {
     assert.strictEqual(resSettings.status, 200);
     assert.ok(resSettings.body.general, 'Settings should contain general store info');
     assert.strictEqual(resSettings.body.general.storeName, 'Digital Bazar - Best Online Shop');
-    console.log('  [PASS] Store settings returned accurately.');
+    assert.ok(resSettings.body.review_images_config, 'Settings should contain review_images_config');
+    assert.strictEqual(resSettings.body.review_images_config.images.length, 4);
+    assert.ok(resSettings.body.review_images_config.images[0].url.includes('customer_review_1.jpg'));
+    console.log('  [PASS] Store settings returned accurately with 4 customer reviews.');
 
     // 2. Categories
     console.log('Testing GET /api/categories?tree=1...');

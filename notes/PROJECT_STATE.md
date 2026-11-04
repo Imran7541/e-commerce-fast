@@ -20,11 +20,13 @@
 - [x] Fixed `/shop` page product catalog: implemented `/api/products/browse` route with pagination, filtering, and dynamic facets (`categories`, `brands`, `price`), and added the 11th product "Test Prodcut" (Groceries)
 - [x] Full "EM-BRAND" brand attribution across all 10 Men's & Women's Fashion products in SQLite database (`brands` and `products` tables), seeded JSONs, `/api/brands`, and replaced legacy "S BRAND" garment embroidery/tags with "EM-BRAND" on Men's T-Shirts (IDs 25, 26)
 - [x] Enforced 100% Halal 3D Ghost Mannequin Saree presentation across all 5 saree products (IDs 31-35) with unique URLs (`saree_3d_ghost_*.jpg`), gallery updates, anti-cache HTTP headers (`Cache-Control: no-cache, no-store, must-revalidate`), and full overwrite of legacy filenames
+- [x] Replaced legacy customer review section images with 4 custom high-resolution (1200x1201) review cards featuring user's real customer photos (`customer_review_1.jpg` to `4.jpg`), updated SQLite settings, `settings.json`, and `index.html`
 
 ## Active System Inventory
 - Frontend: Exact original frontend bundles from `nodejs.topperit.com.bd` with all micro-interactions, responsive styling, and animations.
 - Brand Attribution: Active brand "EM-BRAND" (ID 1) created and assigned to all 5 Men's Fashion products and all 5 Women's Fashion products; `/shop` brand facet shows `EM-BRAND (10)`; `/product/:slug` renders `Brand: EM-BRAND`.
 - Garment Branding: All 5 Men's garments (IDs 22, 24, 30 Panjabis and IDs 25, 26 T-Shirts/Polo/Shirt) feature custom "EM-BRAND" chest embroidery/prints and collar label in `src/public/uploads/` and `data/uploads/` (originals backed up in `data/backup_original_panjabis/` and `data/backup_original_tshirts/`).
+- Customer Reviews ("Listen To Our Customers."): 4 custom high-resolution review cards (`customer_review_1.jpg` to `4.jpg`) featuring user-supplied authentic customer photos, verified buyer badges, 5-star ratings, and clothing feedback in `src/public/uploads/`, SQLite `settings`, and SSR hydration.
 - Shop Catalog: Complete 11 products (5 Men's Fashion, 5 Woman's Fashion, 1 Groceries) rendering dynamically on `/shop` with category counts, brand counts, price filter (৳190-৳1550), search, and sorting.
 - Hero Banners: 3 custom high-res hero banners from user in `src/public/uploads/`.
 - New Products Header: Localized to English ("New Products") with the star/sparkle badge removed.
