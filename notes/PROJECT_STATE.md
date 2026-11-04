@@ -21,12 +21,18 @@
 - [x] Full "EM-BRAND" brand attribution across all 10 Men's & Women's Fashion products in SQLite database (`brands` and `products` tables), seeded JSONs, `/api/brands`, and replaced legacy "S BRAND" garment embroidery/tags with "EM-BRAND" on Men's T-Shirts (IDs 25, 26)
 - [x] Enforced 100% Halal 3D Ghost Mannequin Saree presentation across all 5 saree products (IDs 31-35) with unique URLs (`saree_3d_ghost_*.jpg`), gallery updates, anti-cache HTTP headers (`Cache-Control: no-cache, no-store, must-revalidate`), and full overwrite of legacy filenames
 - [x] Replaced legacy customer review section images with 4 custom high-resolution (1200x1201) review cards featuring user's real customer photos (`customer_review_1.jpg` to `4.jpg`), updated SQLite settings, `settings.json`, and `index.html`
+- [x] Enforced 100% Halal imagery & resolved 100% topic-to-image alignment in "From Our Blog": removed all female models from blog cards, deployed authentic baby blanket image (`baby_blanket_care_guide.jpg`) for Baby Care post, updated Jacket photo post to "পুরুষদের ফ্যাশনে স্টাইলিশ জ্যাকেট ও উইন্টার ট্রেন্ড গাইড", linked traditional saree post to 100% Halal 3D Ghost Mannequin (`saree_3d_ghost_32_purple.jpg`), and synced categories to "Men's Fashion", "Women's Fashion", "Baby Care", and "Health & Nutrition" in SQLite, JSON seed files, and automated tests
 
 ## Active System Inventory
 - Frontend: Exact original frontend bundles from `nodejs.topperit.com.bd` with all micro-interactions, responsive styling, and animations.
 - Brand Attribution: Active brand "EM-BRAND" (ID 1) created and assigned to all 5 Men's Fashion products and all 5 Women's Fashion products; `/shop` brand facet shows `EM-BRAND (10)`; `/product/:slug` renders `Brand: EM-BRAND`.
 - Garment Branding: All 5 Men's garments (IDs 22, 24, 30 Panjabis and IDs 25, 26 T-Shirts/Polo/Shirt) feature custom "EM-BRAND" chest embroidery/prints and collar label in `src/public/uploads/` and `data/uploads/` (originals backed up in `data/backup_original_panjabis/` and `data/backup_original_tshirts/`).
 - Customer Reviews ("Listen To Our Customers."): 4 custom high-resolution review cards (`customer_review_1.jpg` to `4.jpg`) featuring user-supplied authentic customer photos, verified buyer badges, 5-star ratings, and clothing feedback in `src/public/uploads/`, SQLite `settings`, and SSR hydration.
+- Blog Section ("From Our Blog"): 4 perfectly aligned, 100% Halal articles:
+  1. Health & Nutrition: Organic food jar (`346e6219adb9413c8fa149b20cf59f03.jpg`)
+  2. Men's Fashion: Winter jacket guide with matching male jacket image (`45be41ab013e154cd4db71559bfdd3a1.jpg`)
+  3. Women's Fashion: Traditional saree heritage with 100% Halal 3D Ghost Mannequin drape (`saree_3d_ghost_32_purple.jpg`)
+  4. Baby Care: Baby blanket buying guide with cozy knitted pastel blanket on crib (`baby_blanket_care_guide.jpg`)
 - Shop Catalog: Complete 11 products (5 Men's Fashion, 5 Woman's Fashion, 1 Groceries) rendering dynamically on `/shop` with category counts, brand counts, price filter (৳190-৳1550), search, and sorting.
 - Hero Banners: 3 custom high-res hero banners from user in `src/public/uploads/`.
 - New Products Header: Localized to English ("New Products") with the star/sparkle badge removed.
@@ -34,3 +40,4 @@
 - Admin Panel: Full original admin management suite at `/admin` (`admin@digitalbazar.com` / `admin123`).
 - POS Terminal: Full original POS suite at `/pos` (`pos@digitalbazar.com` / `staff123`).
 - Server: Express on port 5050 with SQLite backend.
+

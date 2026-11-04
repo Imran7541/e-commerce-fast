@@ -116,7 +116,10 @@ async function runTests() {
     const resBlog = await request('GET', '/api/blog');
     assert.strictEqual(resBlog.status, 200);
     assert.strictEqual(resBlog.body.posts.length, 4);
-    console.log('  [PASS] 4 blog posts returned.');
+    assert.ok(resBlog.body.posts.some(p => p.category === "Men's Fashion"));
+    assert.ok(resBlog.body.posts.some(p => p.category === "Baby Care"));
+    assert.ok(resBlog.body.posts.some(p => p.coverImage.includes('baby_blanket_care_guide')));
+    console.log('  [PASS] 4 blog posts returned with matching topics and Halal images.');
 
     // 6. Landing Page
     console.log('Testing GET /api/lp/panjabi...');

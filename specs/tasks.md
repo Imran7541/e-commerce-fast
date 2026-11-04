@@ -76,3 +76,15 @@ Branch: main
 - [x] T048 Update automated test in `tests/api.test.js` to verify 4 customer reviews in `/api/settings` and run `npm test`
 - [x] T049 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
 - [x] T050 Git commit and push all changes to GitHub repository `origin main`
+
+## Phase 13: Blog Post Image & Topic Alignment + Halal Enforcement (P1)
+- [x] T051 Backup current blog posts from SQLite and JSON in `data/backup_blog_posts/`
+- [x] T052 [P] [US5] Deploy new baby blanket image (`baby_blanket_care_guide.jpg`) to `src/public/uploads/` and `data/uploads/`
+- [x] T053 [US5] Update Post 4 (Men's Jacket): Change title to "পুরুষদের ফ্যাশনে স্টাইলিশ জ্যাকেট ও উইন্টার ট্রেন্ড গাইড", slug to "পুরুষদের-ফ্যাশনে-স্টাইলিশ-জ্যাকেট-ও-উইন্টার-ট্রেন্ড-গাইড", category to "Men's Fashion", and update content to match men's jacket fashion in SQLite and JSONs
+- [x] T054 [US5] Update Post 3 (Saree): Update cover image to 100% Halal 3D Ghost Mannequin `/uploads/saree_3d_ghost_32_purple.jpg` (removing old girl image), category to "Women's Fashion" in SQLite and JSONs
+- [x] T055 [US5] Update Post 2 (Baby Blanket): Update cover image to `/uploads/baby_blanket_care_guide.jpg` (removing old saree girl image), change category from "Osan" to "Baby Care" in SQLite and JSONs
+- [x] T056 [US5] Update `data/extracted_backend_data/blog_summary.json` and `blog_posts.json` to keep seed data in sync
+- [x] T057 Verify `/api/blog` and `/api/blog/:slug` endpoints return all 4 updated, matched, Halal blog articles via curl
+- [x] T058 Update and run automated integration test suite (`npm test`) to ensure all 15 tests pass
+- [x] T059 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
+- [x] T060 Git commit and push all changes to GitHub repository `origin main`
