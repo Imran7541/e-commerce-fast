@@ -30,7 +30,7 @@ The repository adheres to Spec-Driven Development (SDD) standards with strict se
 |-- package.json                     # Node.js project manifest and pinned dependencies
 |
 |-- specs/                           # Spec-Driven Development (SDD) source of truth
-|   |-- ecommerce_reverse_engineering_specification.md
+|   |-- ecommerce_platform_specification.md
 |   |-- admin_panel_phase_roadmap.md
 |   |-- admin_auth_and_user_management.md
 |   |-- footer_contact_info_update.md

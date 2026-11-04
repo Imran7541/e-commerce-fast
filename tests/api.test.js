@@ -573,7 +573,7 @@ async function runTests() {
     console.log('  [PASS] Static image asset served successfully.');
 
     console.log('\n======================================================');
-    console.log('  ALL 15 TESTS PASSED! FULL RECONSTRUCTION VERIFIED! ');
+    console.log('  ALL 15 TESTS PASSED! FULL PLATFORM VERIFIED!        ');
     console.log('======================================================\n');
     server.close(() => {
       process.exit(0);

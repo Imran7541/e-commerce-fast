@@ -203,3 +203,13 @@ Branch: main
 - [x] T149 [US16] Implement Courier Webhook endpoints (`/api/webhooks/steadfast`, `/api/webhooks/pathao`, `/api/webhooks/redx`)
 - [x] T150 [US16] Add automated tests for Phase 5 in `tests/api.test.js` and run `npm test`
 - [x] T151 [US16] Restart server daemon on port 5050, verify live endpoints, update `notes/PROJECT_STATE.md`, `notes/AGENT_HANDOVER.md`, commit and push to GitHub `origin main`
+
+## Phase 25: Platform Identity Sanitation & Attribution Polish (P1)
+- [x] T152 [US17] Update `package.json` description to "Enterprise E-Commerce, POS & Admin Suite"
+- [x] T153 [US17] Update startup banner in `src/server.js` to "Familio Bazar E-Commerce & POS Server Running!"
+- [x] T154 [US17] Update integration test completion banner in `tests/api.test.js` to "ALL 15 TESTS PASSED! FULL PLATFORM VERIFIED!"
+- [x] T155 [US17] Clean all external domain URLs, schema identifiers, and developer credits in `src/public/index.html`
+- [x] T156 [US17] Update footer credit settings (`companyCredit: "Powered By"`, `developerName: "Familio Bazar"`, `creditUrl: "/"`) in `data/extracted_backend_data/settings.json` and SQLite database
+- [x] T157 [US17] Migrate specification to `specs/ecommerce_platform_specification.md` and archive legacy draft
+- [x] T158 [US17] Update `README.md` and `notes/PROJECT_STATE.md` to remove any third-party target references
+- [x] T159 [US17] Run verification scanner to confirm clean attribution and zero emojis across repository

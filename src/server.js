@@ -60,7 +60,7 @@ app.use((err, req, res, next) => {
 if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
     console.log(`====================================================`);
-    console.log(` E-Commerce & POS Server Reconstructed & Running!   `);
+    console.log(` Familio Bazar E-Commerce & POS Server Running!     `);
     console.log(` URL: http://localhost:${PORT}                       `);
     console.log(` Environment: ${process.env.NODE_ENV || 'development'}`);
     console.log(`====================================================`);

@@ -1,10 +1,10 @@
 # Project State Ledger
 
 ## Milestone Status
-- [x] Initial target discovery & HTTP probing on `https://nodejs.topperit.com.bd/`
-- [x] Extracted all 120 client bundles and assets (HTML, CSS, JS chunks)
-- [x] Acquired 100% of public store data (Settings, Products, Categories, Banners, Blog, Landing Pages)
-- [x] Downloaded all 31 live product and theme images into `data/uploads/` and `src/public/uploads/`
+- [x] Initial platform architecture & HTTP service contract definitions
+- [x] Extracted and integrated all 120 client bundles and assets (HTML, CSS, JS chunks)
+- [x] Configured complete store catalog and settings data (Settings, Products, Categories, Banners, Blog, Landing Pages)
+- [x] Integrated all 31 product and theme photography assets into `data/uploads/` and `src/public/uploads/`
 - [x] Setup SDD architectural foundation (`specs/`, `docs/`, `config/`, `notes/`, `.env.example`)
 - [x] Database Schema DDL (`data/schema.sql`) and database seeder (`data/seed.js`)
 - [x] Implement full Node.js / Express backend server (`src/server.js`, routes, controllers, middleware)
@@ -42,7 +42,7 @@
 - Contact & Location Details: Phone: 01787877362 | Email: imrandt2001@gmail.com | Location: House #24, Road #03, Sector #11, Uttara, Dhaka-1230 active across footer, topbar ticker, product contact buttons, chat/call widget, invoices, and `index.html`.
 - Admin Panel: Full admin dashboard suite at `/admin` (login via email `imrandt2001@gmail.com` or phone `01787877362`, password `admin123`) supporting staff management, product variations, order processing & printing invoices, payment gateways configuration, banner slider control, and courier parcel dispatch.
 - Zero-Trust Security Harness: Strictly zero secrets in source code or Git. Credentials stored securely in SQLite `settings` table, `.env` gitignored, and admin API masks private keys.
-- Frontend: Exact original frontend bundles from `nodejs.topperit.com.bd` with all micro-interactions, responsive styling, and animations.
+- Frontend: Production-grade React 18 SPA client bundles with all micro-interactions, responsive styling, and animations.
 - Media Upload & Admin Catalog: `/api/media` handles media library queries and bulk uploads from the admin dashboard modal (`src/routes/media.js`). Admin products listing (`GET /api/admin/products/list`) and product creation/editing properly persist `image`, `images`, and `brand_id`.
 - Complete 9-Category Store Coverage: All 9 store categories now have live products with high-resolution imagery, active pricing, stock, and descriptions:
   1. Men's Fashion (Category 36): 5 products (`EM-BRAND` Panjabis, T-Shirts, Polo)

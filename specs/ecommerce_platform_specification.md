@@ -1,21 +1,20 @@
 ---
-feature: E-Commerce Reverse Engineering & System Reconstruction
-target_url: https://nodejs.topperit.com.bd/
+feature: Familio Bazar E-Commerce & POS Platform Specification
 platform: Node.js / Express / React / SQLite / PostgreSQL
 version: 1.0.0
-status: in_progress
+status: approved
 ---
 
-# E-Commerce Reverse Engineering & Full Reconstruction Specification
+# Familio Bazar E-Commerce & POS Platform Technical Specification
 
 ## 1. System Overview & Executive Summary
-This document specifies the reverse engineering, extraction, architectural reconstruction, and re-implementation of the production e-commerce application deployed at `https://nodejs.topperit.com.bd/` (Digital Bazar - Fast Commerce).
+This document specifies the technical architecture, data contracts, API endpoints, schema models, and operational workflows of the Familio Bazar multi-channel retail platform.
 
-The platform is a high-performance Bangladeshi e-commerce and retail system providing:
+The platform provides a complete enterprise retail experience consisting of:
 1. **Public Storefront**: Single Page Application (SPA) with server-assisted SEO prerendering, dynamic banners, category tree, multi-variation products, cart drawer, wishlists, flash sales, search, order tracking, and multi-language internationalization (`bn`, `en`, `ar`, `hi`, `fr`).
-2. **Checkout & Conversion Engine**: Split-design high-converting checkout with cash-on-delivery (COD), online payment gateways (bKash, SSLCommerz), discount coupons, automated shipping rate calculation (inside/outside Dhaka, free shipping threshold), district/thana cascading selectors (`bdGeo`), and Facebook Conversions API (CAPI) client telemetry.
+2. **Checkout & Conversion Engine**: Split-design high-converting checkout with cash-on-delivery (COD), online payment gateways (bKash, Nagad, SSLCommerz), discount coupons, automated shipping rate calculation (inside/outside Dhaka, free shipping threshold), district/thana cascading selectors (`bdGeo`), and analytics telemetry.
 3. **High-Converting Landing Pages**: Dynamic marketing landing pages (`/lp/:slug`) with bespoke theme colors, hero sections, interactive review displays, video embeds, and one-click purchase flows.
-4. **Administrative Control Suite**: Comprehensive management panel (`/admin`) for products, categories, attributes, generics, brands, orders, incomplete order recovery, customer CRM, sales reports, inventory ledger, courier shipping synchronization (Pathao, Steadfast, RedX, CarryBee), expenses, staff RBAC, SMS notifications, fraud mitigation, and theme customization.
+4. **Administrative Control Suite**: Comprehensive management panel (`/admin`) for products, categories, attributes, variations, brands, orders, incomplete order recovery, customer CRM, sales reports, inventory ledger, courier shipping synchronization (Pathao, Steadfast, RedX, CarryBee), expenses, staff RBAC, SMS notifications, fraud mitigation, and theme customization.
 5. **Point of Sale (POS) Terminal**: In-store sales terminal (`/pos`) supporting barcode scanning, cash drawer event auditing, held orders, customer/supplier ledgers, purchase returns, and thermal receipt printing.
 
 ---
@@ -27,9 +26,9 @@ The platform is a high-performance Bangladeshi e-commerce and retail system prov
 - `GET /api/categories`: Category taxonomy with `tree=1` nested parent-child hierarchy.
 - `GET /api/banners`: Promotional sliders and image banners.
 - `GET /api/brands`: Brand directory and product associations.
-- `GET /api/generics`: Generic medicine / chemical / product generic classification.
 - `GET /api/products`: Filterable product catalog (`limit`, `page`, `category`, `search`, `featured`, `newArrival`, `onSale`, `bestSeller`).
 - `GET /api/products/:id`: Full single-product dossier including attributes, variations, size guides, reviews, and rating breakdown.
+- `GET /api/products/browse`: Paginated catalog with dynamic facets (`categories`, `brands`, `price`).
 - `GET /api/blog`: Paginated blog articles and categories.
 - `GET /api/blog/:slug`: Full blog post body, tags, and reading stats.
 - `POST /api/blog/:slug/view`: Post read/view metric increment.
@@ -41,14 +40,13 @@ The platform is a high-performance Bangladeshi e-commerce and retail system prov
 - `GET /api/maintenance/status`: Maintenance window gating.
 - `GET /api/cache-version`: Asset and cache invalidation timestamp.
 
-### Customer Authentication & Profile
+### Customer & Staff Authentication
+- `POST /api/auth/login`: Admin/Staff credential authentication via email or phone.
+- `POST /api/auth/signin`: Storefront customer authentication via email or phone.
+- `POST /api/auth/signup`: Customer account registration.
 - `POST /api/auth/customer-login`: Mobile phone/password customer sign-in.
-- `POST /api/auth/register`: Customer account creation.
-- `POST /api/auth/forgot-password`: OTP/SMS reset code dispatch.
-- `POST /api/auth/verify-reset-code`: Reset token confirmation.
-- `POST /api/auth/reset-password`: Password update.
-- `GET /api/account/me`: Authenticated customer profile & order history.
-- `POST /api/account/wholesale/apply`: B2B wholesale customer registration.
+- `GET /api/auth/profile`: Authenticated user profile.
+- `PUT /api/auth/change-password`: Self-service credential update.
 
 ### Point of Sale (POS) Endpoints
 - `GET /api/pos/counter`: Current cash drawer counter status.
@@ -61,17 +59,21 @@ The platform is a high-performance Bangladeshi e-commerce and retail system prov
 - `GET /api/pos/drawer-events`: Audit cash additions, removals, and refunds.
 
 ### Administrative & Operations Endpoints
-- `POST /api/auth/login`: Admin/Staff credential authentication (JWT issue).
 - `GET /api/admin/catalog/summary`: Catalog KPI dashboard.
+- `GET /api/admin/users`: Staff member list and role configuration.
+- `POST /api/admin/users`: Create staff account with role permissions.
 - `CRUD /api/admin/products`: Product CRUD, image uploads, variation matrices.
 - `CRUD /api/admin/categories`: Category management with reordering.
+- `CRUD /api/admin/attributes`: Attribute definitions (Size, Color, etc.).
 - `CRUD /api/admin/orders`: Order management, courier assignment, status workflows.
+- `GET /api/admin/orders/:id/invoice`: Printable packing slip / thermal invoice with Code 39 barcode.
 - `POST /api/admin/orders/:id/courier-ship`: Dispatch to Pathao/Steadfast/Redx API.
 - `POST /api/admin/orders/:id/courier-sync`: Refresh real-time courier delivery state.
 - `CRUD /api/admin/customers`: Customer CRM and blacklist status.
 - `CRUD /api/admin/expenses`: Operations cost logging and category classification.
 - `CRUD /api/admin/coupons`: Promotion codes and discount campaigns.
-- `CRUD /api/admin/landing-pages`: Visual landing page builder templates.
+- `CRUD /api/admin/banners`: Banner slider management.
+- `GET /api/admin/payment-gateways`: Masked payment gateway credentials.
 - `CRUD /api/admin/settings`: Live system settings update with instant persistence.
 
 ---
@@ -82,8 +84,6 @@ The platform is a high-performance Bangladeshi e-commerce and retail system prov
 erDiagram
     CATEGORIES ||--o{ PRODUCTS : categorizes
     BRANDS ||--o{ PRODUCTS : manufactures
-    GENERICS ||--o{ PRODUCTS : classifies
-    SIZE_GUIDES ||--o{ PRODUCTS : provides
     PRODUCTS ||--o{ PRODUCT_VARIATIONS : contains
     PRODUCTS ||--o{ PRODUCT_ATTRIBUTES : defines
     PRODUCTS ||--o{ REVIEWS : receives

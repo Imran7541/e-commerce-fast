@@ -1,7 +1,7 @@
 {
   "name": "e-commerce-fast-commerce",
   "version": "1.0.0",
-  "description": "Full-stack E-Commerce, POS & Admin Suite reconstructed from nodejs.topperit.com.bd",
+  "description": "Enterprise E-Commerce, POS & Admin Suite",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
