@@ -148,12 +148,35 @@ router.get('/products', (req, res) => {
     }
     if (isNewArrival === 'true' || isNewArrival === '1' || newArrival === 'true') {
       sql += ' AND p.is_new_arrival = 1';
+      // New Arrivals ordering: Feature Women's & Men's Fashion first, then Kids, Beauty & Health!
+      sql += ` ORDER BY 
+        CASE 
+          WHEN p.category_id = 37 THEN 1 -- Woman's Fashion (Saree)
+          WHEN p.category_id = 36 THEN 2 -- Men's Fashion (Panjabi / T-Shirt)
+          WHEN p.category_id = 38 THEN 3 -- Kid's Fashion
+          WHEN p.category_id = 41 THEN 4 -- Beauty & Care
+          WHEN p.category_id = 42 THEN 5 -- Health & Wellness
+          ELSE 6
+        END,
+        p.id DESC
+        LIMIT ? OFFSET ?`;
+    } else {
+      // General catalog (feeds "All Products" on homepage):
+      // Prioritize Men's & Women's Fashion (IDs 22, 24, 25, 31, 33, 34) so they lead the homepage,
+      // and surface items not in "New Products" first to guarantee ZERO DUPLICATES with "New Products"!
+      sql += ` ORDER BY 
+        CASE 
+          WHEN p.category_id = 36 THEN 1 -- Men's Fashion
+          WHEN p.category_id = 37 THEN 2 -- Woman's Fashion
+          WHEN p.category_id = 38 THEN 3 -- Kid's Fashion
+          WHEN p.category_id = 41 THEN 4 -- Beauty & Care
+          WHEN p.category_id = 42 THEN 5 -- Health & Wellness
+          ELSE 6
+        END,
+        CASE WHEN p.is_new_arrival = 0 THEN 0 ELSE 1 END,
+        p.id ASC
+        LIMIT ? OFFSET ?`;
     }
-    if (onSale === 'true') {
-      sql += ' AND p.sale_price IS NOT NULL AND p.sale_price < p.price';
-    }
-
-    sql += ' ORDER BY p.id DESC LIMIT ? OFFSET ?';
     params.push(parseInt(limit, 10), parseInt(offset, 10));
 
     const rows = db.all(sql, params);
@@ -273,7 +296,14 @@ router.get('/products/browse', (req, res) => {
       whereClause += ' AND p.is_new_arrival = 1';
     }
 
-    let orderBy = 'ORDER BY p.id DESC';
+    let orderBy = `ORDER BY 
+      CASE 
+        WHEN p.category_id IN (36, 37) THEN 1  -- Men's & Woman's Fashion
+        WHEN p.category_id = 38 THEN 2         -- Kid's Fashion
+        WHEN p.category_id IN (41, 42) THEN 3  -- Beauty & Health
+        ELSE 4
+      END, 
+      p.id DESC`;
     if (sort === 'popular') {
       orderBy = 'ORDER BY p.rating DESC, p.review_count DESC, p.id DESC';
     } else if (sort === 'price-asc') {
@@ -281,7 +311,14 @@ router.get('/products/browse', (req, res) => {
     } else if (sort === 'price-desc') {
       orderBy = 'ORDER BY COALESCE(p.sale_price, p.price) DESC, p.id DESC';
     } else if (sort === 'newest') {
-      orderBy = 'ORDER BY p.id DESC';
+      orderBy = `ORDER BY 
+        CASE 
+          WHEN p.category_id IN (36, 37) THEN 1
+          WHEN p.category_id = 38 THEN 2
+          WHEN p.category_id IN (41, 42) THEN 3
+          ELSE 4
+        END, 
+        p.id DESC`;
     } else if (sort === 'rating') {
       orderBy = 'ORDER BY p.rating DESC, p.id DESC';
     }

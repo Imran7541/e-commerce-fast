@@ -495,7 +495,8 @@
         "image": ""
       }
     ],
-    "hasVariations": true
+    "hasVariations": true,
+    "isNewArrival": false
   },
   "24": {
     "product": {
@@ -775,7 +776,8 @@
     },
     "attributes": [],
     "variations": [],
-    "hasVariations": false
+    "hasVariations": false,
+    "isNewArrival": false
   },
   "25": {
     "product": {
@@ -1092,7 +1094,8 @@
         "image": ""
       }
     ],
-    "hasVariations": true
+    "hasVariations": true,
+    "isNewArrival": false
   },
   "26": {
     "product": {
@@ -1409,7 +1412,8 @@
         "image": ""
       }
     ],
-    "hasVariations": true
+    "hasVariations": true,
+    "isNewArrival": true
   },
   "30": {
     "product": {
@@ -1689,7 +1693,8 @@
     },
     "attributes": [],
     "variations": [],
-    "hasVariations": false
+    "hasVariations": false,
+    "isNewArrival": true
   },
   "31": {
     "product": {
@@ -1933,7 +1938,8 @@
     "sizeGuide": null,
     "attributes": [],
     "variations": [],
-    "hasVariations": false
+    "hasVariations": false,
+    "isNewArrival": false
   },
   "32": {
     "product": {
@@ -2177,7 +2183,8 @@
     "sizeGuide": null,
     "attributes": [],
     "variations": [],
-    "hasVariations": false
+    "hasVariations": false,
+    "isNewArrival": true
   },
   "33": {
     "product": {
@@ -2421,7 +2428,8 @@
     "sizeGuide": null,
     "attributes": [],
     "variations": [],
-    "hasVariations": false
+    "hasVariations": false,
+    "isNewArrival": false
   },
   "34": {
     "product": {
@@ -2665,7 +2673,8 @@
     "sizeGuide": null,
     "attributes": [],
     "variations": [],
-    "hasVariations": false
+    "hasVariations": false,
+    "isNewArrival": false
   },
   "35": {
     "product": {
@@ -2909,7 +2918,8 @@
     "sizeGuide": null,
     "attributes": [],
     "variations": [],
-    "hasVariations": false
+    "hasVariations": false,
+    "isNewArrival": true
   },
   "39": {
     "product": {
@@ -2944,7 +2954,8 @@
       "freeShipping": true,
       "status": "active"
     },
-    "variations": []
+    "variations": [],
+    "isNewArrival": false
   },
   "41": {
     "id": 41,
@@ -2970,7 +2981,8 @@
     "rating": 5.0,
     "reviewCount": 12,
     "description": "\u09aa\u09cd\u09b0\u09bf\u09ae\u09bf\u09af\u09bc\u09be\u09ae \u09b8\u09c1\u09a4\u09bf \u0995\u09be\u09aa\u09dc\u09c7 \u09a4\u09c8\u09b0\u09bf \u09ac\u09be\u099a\u09cd\u099a\u09be\u09a6\u09c7\u09b0 \u09b8\u09cd\u099f\u09be\u0987\u09b2\u09bf\u09b6 \u0993 \u0986\u09b0\u09be\u09ae\u09a6\u09be\u09df\u0995 \u09b8\u09cd\u0995\u09be\u0987 \u09ac\u09cd\u09b2\u09c1 \u09aa\u09be\u099e\u09cd\u099c\u09be\u09ac\u09bf\u0964 EM-BRAND \u098f\u0995\u09cd\u09b8\u0995\u09cd\u09b2\u09c1\u09b8\u09bf\u09ad \u0995\u09be\u09b2\u09c7\u0995\u09b6\u09a8\u0964",
-    "status": "active"
+    "status": "active",
+    "isNewArrival": true
   },
   "42": {
     "id": 42,
@@ -2996,7 +3008,8 @@
     "rating": 5.0,
     "reviewCount": 9,
     "description": "\u0988\u09a6\u09c7 \u09ac\u09be \u0989\u09ce\u09b8\u09ac\u09c7\u09b0 \u099c\u09a8\u09cd\u09af \u09ac\u09be\u099a\u09cd\u099a\u09be\u09a6\u09c7\u09b0 \u09b8\u09ab\u099f \u0995\u099f\u09a8 \u09ae\u09bf\u09a8\u09cd\u099f \u0997\u09cd\u09b0\u09bf\u09a8 \u098f\u09ae\u09ac\u09cd\u09b0\u09df\u09a1\u09be\u09b0\u09bf \u09aa\u09be\u099e\u09cd\u099c\u09be\u09ac\u09bf\u0964 EM-BRAND \u0995\u09cb\u09df\u09be\u09b2\u09bf\u099f\u09bf \u09a8\u09bf\u09b6\u09cd\u099a\u09df\u09a4\u09be\u0964",
-    "status": "active"
+    "status": "active",
+    "isNewArrival": false
   },
   "43": {
     "id": 43,
@@ -3022,7 +3035,8 @@
     "rating": 5.0,
     "reviewCount": 15,
     "description": "\u09e7\u09e6\u09e6% \u09aa\u09cd\u09b0\u09bf\u09ae\u09bf\u09df\u09be\u09ae \u0995\u09ae\u09cd\u09ac\u09a1 \u0995\u099f\u09a8\u09c7 \u09a4\u09c8\u09b0\u09bf \u09ac\u09be\u099a\u09cd\u099a\u09be\u09a6\u09c7\u09b0 \u0986\u09b0\u09be\u09ae\u09a6\u09be\u09df\u0995 \u09a8\u09c7\u09ad\u09bf \u09ac\u09cd\u09b2\u09c1 \u09aa\u09cb\u09b2\u09cb \u099f\u09bf-\u09b6\u09be\u09b0\u09cd\u099f\u0964 EM-BRAND \u0995\u09cd\u09af\u09be\u099c\u09c1\u09df\u09be\u09b2 \u0995\u09be\u09b2\u09c7\u0995\u09b6\u09a8\u0964",
-    "status": "active"
+    "status": "active",
+    "isNewArrival": true
   },
   "44": {
     "id": 44,
@@ -3048,7 +3062,8 @@
     "rating": 5.0,
     "reviewCount": 8,
     "description": "\u09ac\u09be\u099a\u09cd\u099a\u09be\u09a6\u09c7\u09b0 \u09a6\u09c8\u09a8\u09a8\u09cd\u09a6\u09bf\u09a8 \u09ac\u09cd\u09af\u09ac\u09b9\u09be\u09b0\u09c7 \u09b8\u09ab\u099f \u0993 \u09b8\u09cd\u0995\u09bf\u09a8-\u09ab\u09cd\u09b0\u09c7\u09a8\u09cd\u09a1\u09b2\u09bf \u09ab\u09c1\u09b2 \u09b9\u09be\u09a4\u09be \u0995\u099f\u09a8 \u099f\u09bf-\u09b6\u09be\u09b0\u09cd\u099f\u0964 EM-BRAND \u09aa\u09cd\u09b0\u09bf\u09ae\u09bf\u09df\u09be\u09ae \u0995\u09cb\u09df\u09be\u09b2\u09bf\u099f\u09bf\u0964",
-    "status": "active"
+    "status": "active",
+    "isNewArrival": false
   },
   "45": {
     "id": 45,
@@ -3167,7 +3182,7 @@
     "featured": true,
     "isFlashSale": false,
     "isBestSeller": false,
-    "isNewArrival": true,
+    "isNewArrival": false,
     "rating": "5.0",
     "reviewCount": 11,
     "image": "/uploads/beauty_teatree_facewash.jpg",
@@ -3214,7 +3229,7 @@
     "featured": true,
     "isFlashSale": false,
     "isBestSeller": false,
-    "isNewArrival": true,
+    "isNewArrival": false,
     "rating": "5.0",
     "reviewCount": 16,
     "image": "/uploads/beauty_rose_water.jpg",
@@ -3355,7 +3370,7 @@
     "featured": true,
     "isFlashSale": false,
     "isBestSeller": false,
-    "isNewArrival": true,
+    "isNewArrival": false,
     "rating": "5.0",
     "reviewCount": 15,
     "image": "/uploads/health_wellness_capsules.jpg",
@@ -3402,7 +3417,7 @@
     "featured": true,
     "isFlashSale": false,
     "isBestSeller": false,
-    "isNewArrival": true,
+    "isNewArrival": false,
     "rating": "5.0",
     "reviewCount": 12,
     "image": "/uploads/health_organic_nutrition.jpg",
@@ -3449,7 +3464,7 @@
     "featured": true,
     "isFlashSale": false,
     "isBestSeller": false,
-    "isNewArrival": true,
+    "isNewArrival": false,
     "rating": "5.0",
     "reviewCount": 28,
     "image": "/uploads/electronic_wireless_earbuds.jpg",
@@ -3496,7 +3511,7 @@
     "featured": true,
     "isFlashSale": false,
     "isBestSeller": false,
-    "isNewArrival": true,
+    "isNewArrival": false,
     "rating": "5.0",
     "reviewCount": 34,
     "image": "/uploads/smartwatch_fitness_tracker.jpg",
@@ -3543,7 +3558,7 @@
     "featured": true,
     "isFlashSale": false,
     "isBestSeller": false,
-    "isNewArrival": true,
+    "isNewArrival": false,
     "rating": "5.0",
     "reviewCount": 17,
     "image": "/uploads/toys_educational_play_set.jpg",

@@ -87,7 +87,22 @@ async function runTests() {
     assert.strictEqual(resProducts.status, 200);
     assert.ok(Array.isArray(resProducts.body));
     assert.strictEqual(resProducts.body.length, 26);
-    console.log(`  [PASS] 26 products returned in catalog.`);
+    // Verify All Products priority: Men's Fashion is at the very front
+    assert.strictEqual(resProducts.body[0].categoryName, "Men's Fashion");
+    assert.strictEqual(resProducts.body[0].name, 'Panjabi');
+    console.log(`  [PASS] 26 products returned in catalog with Men's Fashion priority.`);
+
+    // 3a. New Arrivals Priority & Deduplication
+    console.log('Testing GET /api/products?newArrival=true&limit=10...');
+    const resNewArrivals = await request('GET', '/api/products?newArrival=true&limit=10');
+    assert.strictEqual(resNewArrivals.status, 200);
+    assert.strictEqual(resNewArrivals.body.length, 10);
+    assert.strictEqual(resNewArrivals.body[0].categoryName, "Woman's Fashion");
+    assert.ok(resNewArrivals.body.some(p => p.categoryName === "Woman's Fashion"));
+    assert.ok(resNewArrivals.body.some(p => p.categoryName === "Men's Fashion"));
+    // Verify that the first product of New Arrivals is NOT the first product of All Products (Deduplication)
+    assert.notStrictEqual(resNewArrivals.body[0].id, resProducts.body[0].id);
+    console.log(`  [PASS] New Arrivals curated with Fashion priority and zero duplicate of All Products lead.`);
 
     // 3b. Products Browse (used by /shop)
     console.log('Testing GET /api/products/browse...');

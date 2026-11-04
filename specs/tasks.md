@@ -134,6 +134,19 @@ Branch: main
 - [x] T096 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
 - [x] T097 Git commit and push all changes to GitHub repository `origin main`
 
+## Phase 18: Homepage Catalog Curation, Men's & Woman's Fashion Priority & Deduplication (P1)
+- [x] T098 [US10] Update SQLite `products` table `is_new_arrival` flags so that 10 curated flagship items (IDs 35, 32, 30, 26, 41, 43, 45, 46, 49, 50) have `is_new_arrival = 1` and other products have `is_new_arrival = 0`
+- [x] T099 [US10] Update `src/routes/public.js`:
+  - Enhance `/api/products` ordering: sort by category priority (Fashion first: 37, 36, 38, 41, 42, then others), and deduplicate "All Products" against "New Products"
+  - Enhance `/api/products/browse` default ordering to prioritize fashion categories
+- [x] T100 [US10] Update `data/extracted_backend_data/products_summary.json` and `products_details.json` to reflect updated `isNewArrival` flags
+- [x] T101 [US10] Update automated tests in `tests/api.test.js` to assert homepage deduplication and fashion priority in both sections
+- [x] T102 Run automated test suite (`npm test`) to verify all tests pass
+- [x] T103 Verify `/api/products?newArrival=true&limit=10` and `/api/products?limit=10` return distinct, fashion-first product sets via curl
+- [x] T104 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
+- [x] T105 Git commit and push all changes to GitHub repository `origin main`
+
+
 
 
 
