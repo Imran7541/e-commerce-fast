@@ -376,6 +376,147 @@ async function runTests() {
     assert.ok(typeof resBrandCounts.body === 'object');
     console.log('  [PASS] Brand product counts verified.');
 
+    // 10g. Order Management, Invoices & Status (Phase 3)
+    console.log('Testing GET /api/admin/orders-staff...');
+    const resStaff = await request('GET', '/api/admin/orders-staff', null, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resStaff.status, 200);
+    assert.ok(Array.isArray(resStaff.body));
+
+    console.log('Testing GET /api/admin/orders-customer-lookup...');
+    const resCustLookup = await request('GET', '/api/admin/orders-customer-lookup?q=017', null, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resCustLookup.status, 200);
+    assert.ok(Array.isArray(resCustLookup.body));
+
+    console.log('Testing GET /api/admin/orders/1...');
+    const resSingleOrder = await request('GET', '/api/admin/orders/1', null, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resSingleOrder.status, 200);
+    assert.ok(resSingleOrder.body.orderNumber);
+
+    console.log('Testing PATCH /api/admin/orders/1/status...');
+    const resStatusUpdate = await request('PATCH', '/api/admin/orders/1/status', {
+      status: 'confirmed'
+    }, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resStatusUpdate.status, 200);
+
+    console.log('Testing PATCH /api/admin/orders/1/assign...');
+    const resAssignUpdate = await request('PATCH', '/api/admin/orders/1/assign', {
+      assignedTo: 2
+    }, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resAssignUpdate.status, 200);
+
+    console.log('Testing GET /api/admin/orders/invoices?ids=1...');
+    const resInvoices = await request('GET', '/api/admin/orders/invoices?ids=1', null, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resInvoices.status, 200);
+    assert.ok(Array.isArray(resInvoices.body));
+    assert.strictEqual(resInvoices.body.length, 1);
+    assert.strictEqual(resInvoices.body[0].storeName, 'FAMILIO BAZAR');
+
+    console.log('Testing GET /api/admin/orders/1/invoice (HTML printable view)...');
+    const resHtmlInvoice = await request('GET', '/api/admin/orders/1/invoice', null, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resHtmlInvoice.status, 200);
+    assert.ok(resHtmlInvoice.raw.includes('FAMILIO BAZAR'));
+    console.log('  [PASS] Phase 3 Order Management, Invoices & Status workflow verified.');
+
+    // 10h. Payment Gateways Configuration (Phase 4)
+    console.log('Testing GET /api/admin/payment-gateways...');
+    const resGateways = await request('GET', '/api/admin/payment-gateways', null, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resGateways.status, 200);
+    assert.ok(resGateways.body.bkash);
+    assert.ok(resGateways.body.nagad);
+    assert.ok(resGateways.body.sslcommerz);
+
+    console.log('Testing PUT /api/admin/payment-gateways...');
+    const resSaveGateways = await request('PUT', '/api/admin/payment-gateways', {
+      bkash: { enabled: true, mode: 'sandbox', appKey: 'SANDBOX_APP_KEY' }
+    }, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resSaveGateways.status, 200);
+
+    console.log('Testing POST /api/admin/payment-gateways/bkash/test...');
+    const resTestGateway = await request('POST', '/api/admin/payment-gateways/bkash/test', null, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resTestGateway.status, 200);
+    assert.strictEqual(resTestGateway.body.success, true);
+
+    console.log('Testing GET /api/admin/payment-transactions...');
+    const resTx = await request('GET', '/api/admin/payment-transactions', null, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resTx.status, 200);
+    assert.ok(Array.isArray(resTx.body));
+    console.log('  [PASS] Phase 4 Payment Gateways configuration verified.');
+
+    // 10i. Courier Integration & Banner Management (Phase 5)
+    console.log('Testing GET /api/admin/banners...');
+    const resBanners = await request('GET', '/api/admin/banners', null, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resBanners.status, 200);
+    assert.ok(Array.isArray(resBanners.body));
+    assert.ok(resBanners.body.length >= 3);
+
+    console.log('Testing POST /api/admin/banners...');
+    const resCreateBanner = await request('POST', '/api/admin/banners', {
+      title: 'Summer Sale 2026',
+      imageUrl: '/uploads/kids_panjabi_sky_blue.jpg',
+      position: 'home_hero',
+      sortOrder: 10
+    }, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resCreateBanner.status, 201);
+    const createdBannerId = resCreateBanner.body.id;
+
+    console.log('Testing DELETE /api/admin/banners/:id...');
+    const resDelBanner = await request('DELETE', `/api/admin/banners/${createdBannerId}`, null, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resDelBanner.status, 200);
+
+    console.log('Testing GET /api/admin/courier/pathao/cities...');
+    const resCities = await request('GET', '/api/admin/courier/pathao/cities', null, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resCities.status, 200);
+    assert.ok(Array.isArray(resCities.body));
+    assert.ok(resCities.body.some(c => c.name === 'Dhaka'));
+
+    console.log('Testing POST /api/admin/courier/test...');
+    const resCourierTest = await request('POST', '/api/admin/courier/test', {
+      courier: 'pathao'
+    }, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resCourierTest.status, 200);
+    assert.strictEqual(resCourierTest.body.success, true);
+
+    console.log('Testing POST /api/webhooks/pathao...');
+    const resWebhook = await request('POST', '/api/webhooks/pathao', {
+      consignment_id: 'TRK-PAT-TEST-123',
+      order_status: 'Delivered',
+      merchant_order_id: 'DB-20261104-5075'
+    });
+    assert.strictEqual(resWebhook.status, 200);
+    console.log('  [PASS] Phase 5 Courier integration & Banner control verified.');
+
     // 11. Admin Protected Summary
     console.log('Testing GET /api/admin/catalog/summary...');
     const resSummary = await request('GET', '/api/admin/catalog/summary', null, {

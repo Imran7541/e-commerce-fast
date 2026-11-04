@@ -142,4 +142,47 @@ router.post('/payments/switch-to-cod', (req, res) => {
   }
 });
 
+// Courier Webhook Handlers
+const handleCourierWebhook = (courierName) => (req, res) => {
+  try {
+    const payload = req.body || {};
+    const trackingId = payload.consignment_id || payload.tracking_code || payload.tracking_id || payload.trackingId;
+    const orderNumber = payload.merchant_order_id || payload.order_number || payload.orderNumber;
+    const courierStatus = payload.status || payload.order_status || payload.delivery_status || 'In Transit';
+
+    if (trackingId || orderNumber) {
+      const order = db.get(`
+        SELECT id, total FROM orders 
+        WHERE courier_tracking_id = ? OR order_number = ?
+      `, [trackingId || '', orderNumber || '']);
+
+      if (order) {
+        let orderStatusUpdate = '';
+        const params = [courierName, courierStatus];
+
+        if (String(courierStatus).toLowerCase().includes('deliver')) {
+          orderStatusUpdate = ", status = 'delivered', payment_status = 'paid'";
+        } else if (String(courierStatus).toLowerCase().includes('return') || String(courierStatus).toLowerCase().includes('cancel')) {
+          orderStatusUpdate = ", status = 'returned'";
+        }
+
+        db.run(`
+          UPDATE orders
+          SET courier_name = ?, courier_status = ? ${orderStatusUpdate}, updated_at = CURRENT_TIMESTAMP
+          WHERE id = ?
+        `, [...params, order.id]);
+      }
+    }
+
+    res.json({ success: true, message: `${courierName} webhook processed.` });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+router.post('/webhooks/steadfast', handleCourierWebhook('Steadfast'));
+router.post('/webhooks/pathao', handleCourierWebhook('Pathao'));
+router.post('/webhooks/redx', handleCourierWebhook('RedX'));
+router.post('/webhooks/carrybee', handleCourierWebhook('Carrybee'));
+
 module.exports = router;

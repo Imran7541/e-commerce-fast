@@ -179,3 +179,27 @@ Branch: main
 - [x] T131 [US13] Update automated test suite in `tests/api.test.js` to verify attributes CRUD, variations management, and category reorder
 - [x] T132 Run automated test suite (`npm test`) to ensure all tests pass
 - [x] T133 Verify live endpoints via curl, update `notes/PROJECT_STATE.md`, `notes/AGENT_HANDOVER.md`, and commit/push to GitHub `origin main`
+
+## Phase 22: Order Management, Printable Invoice & Status Workflow (Phase 3) (P1)
+- [x] T134 [US14] Implement `GET /api/admin/orders/:id` (returns full order object with items, customer details, and invoice formatting) in `src/routes/admin.js`
+- [x] T135 [US14] Implement `PATCH` & `PUT /api/admin/orders/:id/status` (updates order status) and `PATCH` & `PUT /api/admin/orders/:id/assign` (assigns staff member) in `src/routes/admin.js`
+- [x] T136 [US14] Implement `PUT /api/admin/orders/:id` (edits order address, customer name, items, recalculates totals) and `DELETE /api/admin/orders/:id` in `src/routes/admin.js`
+- [x] T137 [US14] Implement `POST /api/admin/orders/bulk` (bulk status update and bulk deletion) in `src/routes/admin.js`
+- [x] T138 [US14] Implement `GET /api/admin/orders-staff` (lists active staff for assignment) and `GET /api/admin/orders-customer-lookup` (customer history & delivery rate lookup) in `src/routes/admin.js`
+- [x] T139 [US14] Implement `GET /api/admin/orders/invoices` (batch invoice data) and `GET /api/admin/orders/:id/invoice` (HTML printable memo / invoice view with Familio Bazar branding) in `src/routes/admin.js`
+- [x] T140 [US14] Add automated tests for Phase 3 in `tests/api.test.js` and run `npm test`
+- [x] T141 [US14] Verify live Phase 3 endpoints via curl
+
+## Phase 23: Payment Gateways (bKash, Nagad, SSLCommerz) Configuration (Phase 4) (P1)
+- [x] T142 [US15] Implement `GET /api/admin/payment-gateways` (returns configurations with masked secrets) in `src/routes/admin.js`
+- [x] T143 [US15] Implement `PUT /api/admin/payment-gateways/:id` (saves bKash, Nagad, SSLCommerz credentials into SQLite `settings` table safely) in `src/routes/admin.js`
+- [x] T144 [US15] Implement `POST /api/admin/payment-gateways/:id/test` (simulates/validates gateway connectivity) and `GET /api/admin/payment-transactions` in `src/routes/admin.js`
+- [x] T145 [US15] Add automated tests for Phase 4 in `tests/api.test.js` and run `npm test`
+
+## Phase 24: Courier Integration & Banner Control (Phase 5) (P1)
+- [x] T146 [US16] Implement Banner Management CRUD in `src/routes/admin.js` (`GET /api/admin/banners`, `POST /api/admin/banners`, `PUT /api/admin/banners/:id`, `DELETE /api/admin/banners/:id`)
+- [x] T147 [US16] Implement Courier Area/Zone/City endpoints in `src/routes/admin.js` (`/api/admin/courier/pathao/cities`, `zones/:id`, `areas/:id`, `redx/areas`, `carrybee/...`)
+- [x] T148 [US16] Implement `POST /api/admin/orders/:id/courier-ship` and `POST /api/admin/orders/:id/courier-sync` and `POST /api/admin/courier/sync-all` in `src/routes/admin.js`
+- [x] T149 [US16] Implement Courier Webhook endpoints (`/api/webhooks/steadfast`, `/api/webhooks/pathao`, `/api/webhooks/redx`)
+- [x] T150 [US16] Add automated tests for Phase 5 in `tests/api.test.js` and run `npm test`
+- [x] T151 [US16] Restart server daemon on port 5050, verify live endpoints, update `notes/PROJECT_STATE.md`, `notes/AGENT_HANDOVER.md`, commit and push to GitHub `origin main`

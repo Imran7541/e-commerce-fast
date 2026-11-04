@@ -119,6 +119,9 @@ CREATE TABLE IF NOT EXISTS banners (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   title TEXT,
   subtitle TEXT,
+  badge TEXT,
+  button_text TEXT,
+  button_link TEXT,
   image_url TEXT NOT NULL,
   link_url TEXT,
   position TEXT DEFAULT 'home_hero',
@@ -218,6 +221,7 @@ CREATE TABLE IF NOT EXISTS orders (
   courier_status TEXT,
   source TEXT DEFAULT 'web',
   landing_page_id INTEGER,
+  assigned_to INTEGER DEFAULT NULL,
   ip_address TEXT,
   user_agent TEXT,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -332,6 +336,20 @@ CREATE TABLE IF NOT EXISTS sms_logs (
   status TEXT,
   response TEXT,
   sent_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS payment_transactions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  order_id INTEGER,
+  transaction_id TEXT UNIQUE NOT NULL,
+  gateway TEXT NOT NULL,
+  amount REAL NOT NULL,
+  currency TEXT DEFAULT 'BDT',
+  status TEXT DEFAULT 'completed',
+  sender_number TEXT,
+  raw_response TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE SET NULL
 );
 
 CREATE INDEX IF NOT EXISTS idx_products_category ON products(category_id);
