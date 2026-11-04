@@ -13,7 +13,7 @@ function getStoreSettings() {
   return settings;
 }
 
-function calculateShipping(district, subtotal, itemsCount = 1) {
+function calculateShipping(districtOrZone, subtotal, itemsCount = 1) {
   const settings = getStoreSettings();
   const freeShip = settings.free_shipping_config || {};
   const shipping = settings.shipping || {};
@@ -29,8 +29,9 @@ function calculateShipping(district, subtotal, itemsCount = 1) {
   }
 
   // Inside Dhaka vs Outside Dhaka
-  const isDhaka = district && district.toLowerCase().includes('dhaka');
-  if (isDhaka) {
+  const str = (districtOrZone || '').toLowerCase();
+  const isOutside = str.includes('outside');
+  if (!isOutside) {
     return shipping.insideDhaka !== undefined ? parseFloat(shipping.insideDhaka) : 70.0;
   } else {
     return shipping.outsideDhaka !== undefined ? parseFloat(shipping.outsideDhaka) : 120.0;
@@ -83,12 +84,12 @@ function generateOrderNumber() {
 
 function createOrder(orderData) {
   const customerName = (orderData.customerName || orderData.name || '').trim();
+  const phone = (orderData.customerPhone || orderData.phone || orderData.mobileNumber || '').trim();
+  const address = (orderData.customerAddress || orderData.address || orderData.fullAddress || '').trim();
+  const district = (orderData.district || (orderData.shippingZone && orderData.shippingZone.toLowerCase().includes('outside') ? 'Outside Dhaka' : 'Dhaka')).trim();
+  const thana = (orderData.thana || '').trim();
   const {
-    phone,
     alternativePhone,
-    address,
-    district,
-    thana,
     notes,
     items = [],
     couponCode,
@@ -96,7 +97,9 @@ function createOrder(orderData) {
     source = 'web',
     landingPageId = null,
     ipAddress = null,
-    userAgent = null
+    userAgent = null,
+    transactionId = null,
+    senderNumber = null
   } = orderData;
 
   if (!customerName || !phone || !address || !items.length) {
@@ -208,6 +211,18 @@ function createOrder(orderData) {
       it.total
     );
     decrementStock.run(it.quantity, it.productId);
+  }
+
+  if (transactionId) {
+    try {
+      db.run(`
+        INSERT INTO payment_transactions (
+          order_id, transaction_id, gateway, amount, currency, status, sender_number, raw_response, created_at
+        ) VALUES (?, ?, ?, ?, 'BDT', 'completed', ?, ?, CURRENT_TIMESTAMP)
+      `, [orderId, transactionId, paymentMethod, total, senderNumber || null, JSON.stringify({ manual: true })]);
+    } catch (e) {
+      console.warn('Could not record payment transaction:', e.message);
+    }
   }
 
   return {
