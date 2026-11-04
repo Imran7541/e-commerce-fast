@@ -114,5 +114,16 @@ Branch: main
 - [x] T080 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
 - [x] T081 Git commit and push all changes to GitHub repository `origin main`
 
+## Phase 16: Beauty & Care Catalog Population & Halal Product Media (P1)
+- [x] T082 [P] [US8] Generate 4 high-res, 100% Halal cosmetic product images for Beauty & Care (`beauty_aloevera_gel.jpg`, `beauty_vitaminc_serum.jpg`, `beauty_teatree_facewash.jpg`, `beauty_rose_water.jpg`) and deploy to `src/public/uploads/` and `data/uploads/`
+- [x] T083 [US8] Insert 4 Beauty & Care products (IDs 45, 46, 47, 48) into SQLite `products` table under Category 41 and Brand 1 ("EM-BRAND")
+- [x] T084 [US8] Update `data/extracted_backend_data/products_summary.json` and `products_details.json` to keep seed data synchronized
+- [x] T085 [US8] Update automated test suite in `tests/api.test.js` to assert Beauty & Care catalog browsing and 19 total products
+- [x] T086 Run automated test suite (`npm test`) to verify all tests pass
+- [x] T087 Verify `/api/products/browse?category=beauty-care` returns HTTP 200 with 4 products via curl
+- [x] T088 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
+- [x] T089 Git commit and push all changes to GitHub repository `origin main`
+
+
 
 
