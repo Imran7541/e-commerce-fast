@@ -213,3 +213,13 @@ Branch: main
 - [x] T157 [US17] Migrate specification to `specs/ecommerce_platform_specification.md` and archive legacy draft
 - [x] T158 [US17] Update `README.md` and `notes/PROJECT_STATE.md` to remove any third-party target references
 - [x] T159 [US17] Run verification scanner to confirm clean attribution and zero emojis across repository
+
+## Phase 26: Hero Section Banner Replacement & Continuous Auto-Slide (P1)
+- [x] T160 [US18] Identify target hero banner image for Premium Polo Collection in SQLite database and asset folders (`1790641227090_97daaa_S-BRAND2-01_jpg.jpg`, banner ID 2)
+- [x] T161 [US18] Resample user uploaded polo image (`media_1793804888808_1331cc34.jpg`) to native dimensions 2400x1040 and overwrite banner assets in `src/public/uploads/`, `data/uploads/`, and `hero imge/`
+- [x] T162 [US18] Update hero slider transition interval from 5500ms to 3200ms in `src/public/assets/index-BIdHCx7F.js` and `src/public/assets/index.js`
+- [x] T163 [US18] Prevent desktop mouse hover from freezing carousel auto-slide (`onMouseEnter: ()=>{}, onMouseLeave: ()=>{}`)
+- [x] T164 [US18] Add cache-busting version query parameter (`?v=hero-slide-2`) to main client script tag in `src/public/index.html`
+- [x] T165 [US18] Verify HTTP 200 delivery for banner image, updated script bundle, and homepage
+- [x] T166 [US18] Verify continuous automated sliding via headless browser and ensure 15/15 tests pass (`npm test`)
+- [x] T167 [US18] Update documentation and project notes (`notes/PROJECT_STATE.md`, `notes/AGENT_HANDOVER.md`), verifying zero emojis across repository
