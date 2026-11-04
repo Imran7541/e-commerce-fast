@@ -14,7 +14,7 @@ authors:
 The user requested three specific updates to the storefront's "New Products" section:
 1. **Garment Brand Customization**: Update the 3 single Panjabi product images displayed under New Products (Green, Navy Blue, White) to feature the brand name **"EM-BRAND"** instead of "S BRAND" on the chest embroidery/print area.
 2. **Section Title English Localization**: Replace the Bengali header text (`"নতুন পণ্য"`) with clean English (`"New Products"`).
-3. **Badge Logo Removal**: Remove the star-like sparkle badge icon (`[ ✦ ]`) preceding the section title.
+3. **Badge Logo Removal**: Remove the star-like sparkle badge icon preceding the section title.
 
 ---
 

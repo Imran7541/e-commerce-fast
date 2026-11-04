@@ -40,3 +40,19 @@ module.exports = {
     return db.exec(sql);
   }
 };
+
+// Auto-bootstrap seed data on fresh clone/deployment if database is empty
+try {
+  const countRow = db.prepare('SELECT COUNT(*) as count FROM settings').get();
+  if (!countRow || countRow.count === 0) {
+    const seedModulePath = path.join(__dirname, '../../data/seed.js');
+    if (fs.existsSync(seedModulePath)) {
+      const { seed } = require(seedModulePath);
+      if (typeof seed === 'function') {
+        seed();
+      }
+    }
+  }
+} catch (e) {
+  // Gracefully handle initial edge cases
+}
