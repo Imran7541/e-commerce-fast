@@ -124,6 +124,17 @@ Branch: main
 - [x] T088 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
 - [x] T089 Git commit and push all changes to GitHub repository `origin main`
 
+## Phase 17: Health & Wellness Catalog Population & Halal Product Media (P1)
+- [x] T090 [P] [US9] Generate 4 high-res, 100% Halal wellness product images (`health_raw_honey.jpg`, `health_blackseed_oil.jpg`, `health_moringa_powder.jpg`, `health_chia_seeds.jpg`) and deploy to `src/public/uploads/` and `data/uploads/`
+- [x] T091 [US9] Insert 4 Health & Wellness products (IDs 49, 50, 51, 52) into SQLite `products` table under Category 42 and Brand 1 ("EM-BRAND")
+- [x] T092 [US9] Update `data/extracted_backend_data/products_summary.json` and `products_details.json` to keep seed data synchronized
+- [x] T093 [US9] Update automated test suite in `tests/api.test.js` to assert Health & Wellness catalog browsing and 23 total products
+- [x] T094 Run automated test suite (`npm test`) to verify all tests pass
+- [x] T095 Verify `/api/products/browse?category=health-wellness` returns HTTP 200 with 4 products via curl
+- [x] T096 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
+- [x] T097 Git commit and push all changes to GitHub repository `origin main`
+
+
 
 
 

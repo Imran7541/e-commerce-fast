@@ -86,25 +86,29 @@ async function runTests() {
     const resProducts = await request('GET', '/api/products');
     assert.strictEqual(resProducts.status, 200);
     assert.ok(Array.isArray(resProducts.body));
-    assert.strictEqual(resProducts.body.length, 19);
-    console.log(`  [PASS] 19 products returned in catalog.`);
+    assert.strictEqual(resProducts.body.length, 26);
+    console.log(`  [PASS] 26 products returned in catalog.`);
 
     // 3b. Products Browse (used by /shop)
     console.log('Testing GET /api/products/browse...');
     const resBrowse = await request('GET', '/api/products/browse');
     assert.strictEqual(resBrowse.status, 200);
-    assert.strictEqual(resBrowse.body.total, 19);
-    assert.strictEqual(resBrowse.body.items.length, 19);
+    assert.strictEqual(resBrowse.body.total, 26);
+    assert.strictEqual(resBrowse.body.items.length, 20); // page 1 pageSize is 20
     assert.ok(resBrowse.body.facets);
     assert.strictEqual(resBrowse.body.facets.categories['36'], 5);
     assert.strictEqual(resBrowse.body.facets.categories['37'], 5);
     assert.strictEqual(resBrowse.body.facets.categories['38'], 4); // Kid's Fashion
-    assert.strictEqual(resBrowse.body.facets.categories['40'], 1);
+    assert.strictEqual(resBrowse.body.facets.categories['39'], 1); // Electronic
+    assert.strictEqual(resBrowse.body.facets.categories['40'], 1); // Groceries
     assert.strictEqual(resBrowse.body.facets.categories['41'], 4); // Beauty & Care
-    assert.strictEqual(resBrowse.body.facets.brands['1'], 18); // EM-BRAND (10 men/women + 4 kids + 4 beauty)
+    assert.strictEqual(resBrowse.body.facets.categories['42'], 4); // Health & Wellness
+    assert.strictEqual(resBrowse.body.facets.categories['43'], 1); // Toys & Hobbies
+    assert.strictEqual(resBrowse.body.facets.categories['44'], 1); // Smart Watch
+    assert.strictEqual(resBrowse.body.facets.brands['1'], 25); // EM-BRAND
     assert.strictEqual(resBrowse.body.facets.price.min, 190);
     assert.strictEqual(resBrowse.body.facets.price.max, 1550);
-    console.log('  [PASS] Products browse endpoint returned with 19 items and facets (including Kid\'s Fashion & Beauty & Care).');
+    console.log('  [PASS] Products browse endpoint returned with 26 items and complete 9-category facets.');
 
     // 3c. Kid's Fashion browse filter
     console.log('Testing GET /api/products/browse?category=kid-s-fashion...');
@@ -122,6 +126,15 @@ async function runTests() {
     assert.strictEqual(resBeauty.body.items.length, 4);
     assert.ok(resBeauty.body.items[0].image.includes('beauty_'));
     console.log('  [PASS] Beauty & Care category returns 4 products with Halal images.');
+
+    // 3e. Health & Wellness browse filter
+    console.log('Testing GET /api/products/browse?category=health-wellness...');
+    const resHealth = await request('GET', '/api/products/browse?category=health-wellness');
+    assert.strictEqual(resHealth.status, 200);
+    assert.strictEqual(resHealth.body.total, 4);
+    assert.strictEqual(resHealth.body.items.length, 4);
+    assert.ok(resHealth.body.items[0].image.includes('health_'));
+    console.log('  [PASS] Health & Wellness category returns 4 products with Halal images.');
 
     // 4. Single Product Details
     console.log('Testing GET /api/products/35...');
