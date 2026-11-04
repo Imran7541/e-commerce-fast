@@ -484,16 +484,42 @@ router.get('/products/:id', (req, res) => {
     }
 
     // Get variations
-    const variations = db.all(`SELECT * FROM product_variations WHERE product_id = ?`, [product.id]).map(v => ({
-      id: v.id,
-      productId: v.product_id,
-      name: v.name,
-      sku: v.sku,
-      price: v.price,
-      salePrice: v.sale_price,
-      stock: v.stock,
-      image: v.image,
-      attributes: JSON.parse(v.attribute_values || '{}')
+    const variations = db.all(`SELECT * FROM product_variations WHERE product_id = ?`, [product.id]).map(v => {
+      let comb = {};
+      try {
+        comb = typeof v.attribute_values === 'string' ? JSON.parse(v.attribute_values) : (v.attribute_values || {});
+      } catch {
+        comb = {};
+      }
+      const label = v.name || Object.entries(comb).map(([k, val]) => `${k}: ${val}`).join(' / ');
+      return {
+        id: v.id,
+        productId: v.product_id,
+        name: label,
+        label,
+        sku: v.sku,
+        price: v.price,
+        salePrice: v.sale_price,
+        stock: v.stock,
+        image: v.image,
+        combination: comb,
+        attributes: comb
+      };
+    });
+
+    // Build dynamic attributes list from variations
+    const attrMap = {};
+    for (const v of variations) {
+      for (const [attrName, attrVal] of Object.entries(v.combination || {})) {
+        if (!attrMap[attrName]) attrMap[attrName] = [];
+        if (!attrMap[attrName].includes(String(attrVal))) {
+          attrMap[attrName].push(String(attrVal));
+        }
+      }
+    }
+    const attributes = Object.entries(attrMap).map(([name, values]) => ({
+      name,
+      values
     }));
 
     // Get related products
@@ -527,7 +553,8 @@ router.get('/products/:id', (req, res) => {
       reviewCount: product.review_count,
       image: product.image,
       images: JSON.parse(product.images || '[]'),
-      hasVariations: Boolean(product.has_variations),
+      hasVariations: Boolean(product.has_variations || variations.length > 0),
+      variations,
       freeShipping: Boolean(product.free_shipping),
       shippingCharges: product.shipping_charges,
       highlights: JSON.parse(product.highlights || '[]'),
@@ -543,12 +570,12 @@ router.get('/products/:id', (req, res) => {
     res.json({
       product: formattedProduct,
       variations,
-      hasVariations: variations.length > 0,
+      hasVariations: Boolean(product.has_variations || variations.length > 0),
       related,
       reviews,
       ratingBreakdown: { 5: 5, 4: 0, 3: 0, 2: 0, 1: 0 },
       sizeGuide: null,
-      attributes: []
+      attributes
     });
   } catch (err) {
     res.status(500).json({ error: err.message });

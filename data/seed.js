@@ -224,21 +224,25 @@ async function seed() {
 
       // Check variations in productDetails
       const variations = productDetails[String(pid)]?.variations;
-      if (Array.isArray(variations)) {
+      if (Array.isArray(variations) && variations.length > 0) {
+        let varStock = 0;
         for (const v of variations) {
+          const vStock = v.stock !== undefined ? v.stock : 50;
           runSafe(
             insertVariation,
             v.id,
             p.id,
-            v.name || '',
+            v.name || v.label || '',
             v.sku || `${p.sku}-VAR-${v.id}`,
             parseFloat(v.price) || p.price,
             v.salePrice ? parseFloat(v.salePrice) : null,
-            v.stock !== undefined ? v.stock : 50,
+            vStock,
             v.image || null,
-            JSON.stringify(v.attributeValues || v.attributes || {})
+            JSON.stringify(v.combination || v.attributeValues || v.attributes || {})
           );
+          varStock += vStock;
         }
+        db.db.prepare('UPDATE products SET has_variations = 1, stock = ? WHERE id = ?').run(varStock, p.id);
       }
     }
     console.log(`  [+] Seeded ${products.length} products with variation data.`);
@@ -347,6 +351,17 @@ async function seed() {
   runSafe(insertCoupon, 2, 'EID50', 'fixed', 50, 1000, null, 500, 12, 'active');
   runSafe(insertCoupon, 3, 'FLAT100', 'fixed', 100, 1500, null, 200, 2, 'active');
   console.log('  [+] Seeded coupons: WELCOME10, EID50, FLAT100.');
+
+  // 10. Seed Standard Product Attributes
+  console.log('Seeding standard product attributes (Size, Color, Kids Size)...');
+  const insertAttr = db.db.prepare(`
+    INSERT OR REPLACE INTO product_attributes (id, name, values_json, created_at)
+    VALUES (?, ?, ?, CURRENT_TIMESTAMP)
+  `);
+  runSafe(insertAttr, 1, 'Size', JSON.stringify(['40', '42', '44', '46', 'M', 'L', 'XL', 'XXL']));
+  runSafe(insertAttr, 2, 'Color', JSON.stringify(['White', 'Black', 'Navy Blue', 'Maroon', 'Sky Blue', 'Mint Green', 'Purple', 'Red']));
+  runSafe(insertAttr, 3, 'Kids Size', JSON.stringify(['2-3Y', '4-5Y', '6-7Y', '8-9Y', '10-12Y']));
+  console.log('  [+] Seeded product attributes.');
 
   db.exec('PRAGMA foreign_keys = ON;');
   console.log('--- Database Seeding Complete! ---');

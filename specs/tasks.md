@@ -167,3 +167,15 @@ Branch: main
 - [x] T121 Verify live `/api/auth/login` and `/api/admin/users` via curl
 - [x] T122 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
 - [x] T123 Git commit and push all changes to GitHub repository `origin main`
+
+## Phase 21: Product Variations, Attributes & Category Management (Phase 2) (P1)
+- [x] T124 [US13] Seed standard fashion attributes ("Size", "Color", "Kids Size") into SQLite `product_attributes` table and update `data/seed.js`
+- [x] T125 [US13] Implement full Attributes CRUD endpoints in `src/routes/admin.js` (`GET /api/admin/attributes`, `POST /api/admin/attributes`, `PUT /api/admin/attributes/:id`, `DELETE /api/admin/attributes/:id`)
+- [x] T126 [US13] Implement Product Variations endpoints in `src/routes/admin.js` (`GET /api/admin/products/:id/variations`, `PUT /api/admin/products/:id/variations`) with automatic product stock recalculation
+- [x] T127 [US13] Implement Category Management CRUD & Reorder endpoints in `src/routes/admin.js` (`GET /api/admin/categories` with product_count, `POST /api/admin/categories`, `PUT /api/admin/categories/:id`, `DELETE /api/admin/categories/:id`, `PUT /api/admin/categories/reorder`)
+- [x] T128 [US13] Implement Brands Management endpoints in `src/routes/admin.js` (`GET /api/admin/brands/product-counts`, `POST /api/admin/brands`, `PUT /api/admin/brands/:id`, `DELETE /api/admin/brands/:id`)
+- [x] T129 [US13] Update public product dossier endpoint `GET /api/products/:id` in `src/routes/public.js` to return dynamic `attributes` and `combination` objects for interactive variation selectors
+- [x] T130 [US13] Populate realistic size variations (40, 42, 44 or M, L, XL) for fashion garments (Panjabis, T-Shirts, Kids wear) in SQLite `product_variations` table
+- [x] T131 [US13] Update automated test suite in `tests/api.test.js` to verify attributes CRUD, variations management, and category reorder
+- [x] T132 Run automated test suite (`npm test`) to ensure all tests pass
+- [x] T133 Verify live endpoints via curl, update `notes/PROJECT_STATE.md`, `notes/AGENT_HANDOVER.md`, and commit/push to GitHub `origin main`

@@ -275,6 +275,107 @@ async function runTests() {
     assert.strictEqual(resDelStaff.status, 200);
     console.log('  [PASS] Admin staff & user management CRUD verified.');
 
+    // 10c. Admin Attributes CRUD
+    console.log('Testing GET /api/admin/attributes...');
+    const resAttrs = await request('GET', '/api/admin/attributes', null, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resAttrs.status, 200);
+    assert.ok(Array.isArray(resAttrs.body));
+    const sizeAttr = resAttrs.body.find(a => a.name === 'Size');
+    assert.ok(sizeAttr, 'Size attribute should exist');
+    assert.ok(sizeAttr.values.includes('40'));
+
+    console.log('Testing POST /api/admin/attributes...');
+    const resCreateAttr = await request('POST', '/api/admin/attributes', {
+      name: 'Fabric Type',
+      values: ['Pure Cotton', 'Silk Blend']
+    }, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resCreateAttr.status, 201);
+    const createdAttrId = resCreateAttr.body.id;
+
+    console.log('Testing PUT /api/admin/attributes/:id...');
+    const resUpdateAttr = await request('PUT', `/api/admin/attributes/${createdAttrId}`, {
+      values: ['Pure Cotton', 'Silk Blend', 'Georgette']
+    }, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resUpdateAttr.status, 200);
+    assert.strictEqual(resUpdateAttr.body.attribute.values.length, 3);
+
+    console.log('Testing DELETE /api/admin/attributes/:id...');
+    const resDelAttr = await request('DELETE', `/api/admin/attributes/${createdAttrId}`, null, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resDelAttr.status, 200);
+    console.log('  [PASS] Attributes CRUD verified.');
+
+    // 10d. Product Variations Management & Public Verification
+    console.log('Testing GET /api/admin/products/22/variations...');
+    const resVars = await request('GET', '/api/admin/products/22/variations', null, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resVars.status, 200);
+    assert.ok(Array.isArray(resVars.body));
+    assert.ok(resVars.body.length >= 2);
+    assert.ok(resVars.body[0].combination && resVars.body[0].combination.Size);
+
+    console.log('Testing PUT /api/admin/products/22/variations...');
+    const resPutVars = await request('PUT', '/api/admin/products/22/variations', {
+      variations: [
+        { sku: 'PANJ-40', price: 750, salePrice: 550, stock: 30, combination: { Size: '40' } },
+        { sku: 'PANJ-42', price: 750, salePrice: 550, stock: 35, combination: { Size: '42' } },
+        { sku: 'PANJ-44', price: 750, salePrice: 550, stock: 35, combination: { Size: '44' } }
+      ]
+    }, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resPutVars.status, 200);
+    assert.strictEqual(resPutVars.body.totalStock, 100);
+
+    console.log('Testing GET /api/products/22 (Public product dossier with combinations)...');
+    const resPub22 = await request('GET', '/api/products/22');
+    assert.strictEqual(resPub22.status, 200);
+    assert.strictEqual(resPub22.body.hasVariations, true);
+    assert.strictEqual(resPub22.body.product.stock, 100);
+    assert.strictEqual(resPub22.body.variations.length, 3);
+    assert.strictEqual(resPub22.body.variations[0].combination.Size, '40');
+    assert.ok(resPub22.body.attributes.find(a => a.name === 'Size'));
+    console.log('  [PASS] Product variations management & public dossier verified.');
+
+    // 10e. Categories CRUD & Reordering
+    console.log('Testing GET /api/admin/categories...');
+    const resAdminCats = await request('GET', '/api/admin/categories', null, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resAdminCats.status, 200);
+    assert.ok(Array.isArray(resAdminCats.body));
+    assert.ok(resAdminCats.body[0].productCount !== undefined);
+
+    console.log('Testing PUT /api/admin/categories/reorder...');
+    const resReorder = await request('PUT', '/api/admin/categories/reorder', {
+      categories: [
+        { id: 36, sortOrder: 1 },
+        { id: 37, sortOrder: 2 },
+        { id: 38, sortOrder: 3 }
+      ]
+    }, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resReorder.status, 200);
+    console.log('  [PASS] Category reordering verified.');
+
+    // 10f. Brand Product Counts
+    console.log('Testing GET /api/admin/brands/product-counts...');
+    const resBrandCounts = await request('GET', '/api/admin/brands/product-counts', null, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resBrandCounts.status, 200);
+    assert.ok(typeof resBrandCounts.body === 'object');
+    console.log('  [PASS] Brand product counts verified.');
+
     // 11. Admin Protected Summary
     console.log('Testing GET /api/admin/catalog/summary...');
     const resSummary = await request('GET', '/api/admin/catalog/summary', null, {
