@@ -88,3 +88,17 @@ Branch: main
 - [x] T058 Update and run automated integration test suite (`npm test`) to ensure all 15 tests pass
 - [x] T059 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
 - [x] T060 Git commit and push all changes to GitHub repository `origin main`
+
+## Phase 14: Store Brand Migration to "FAMILIO BAZAR" (P1)
+- [x] T061 Backup current logo and settings in `data/backup_brand_settings/`
+- [x] T062 [P] [US6] Deploy new 803x311 transparent logo (`familio_bazar_logo.png`) and overwrite `1791364808818_7eef93_DIGITA_BAZAR_Fast_Commerce_Logo-removebg.png` in `src/public/uploads/` and `data/uploads/`
+- [x] T063 [US6] Update SQLite `settings` table (`general`, `logo_config`, `seo_config`, `footer_config`) to "Familio Bazar - Best Online Shop", updated logo URLs, and "© 2026 Familio Bazar. All Rights Reserved."
+- [x] T064 [US6] Update `data/extracted_backend_data/settings.json` to keep seed data in sync
+- [x] T065 [US6] Update `src/public/index.html` (SSR metadata, title `<title>Familio Bazar - Best Online Shop</title>`, meta og/twitter tags, boot logo, Schema.org JSON-LD, SEO snapshot, and `window.__PHARMA_BOOT__`)
+- [x] T066 [US6] Update SQLite `blog_posts` table and seed files `blog_posts.json` & `blog_summary.json` author attribution from "Digital Bazar Team" to "Familio Bazar Team"
+- [x] T067 Update automated test suite in `tests/api.test.js` to assert "Familio Bazar" in store settings and blog responses
+- [x] T068 Run automated test suite (`npm test`) to ensure all 15 tests pass
+- [x] T069 Verify HTTP 200 delivery for the new logo and check `/api/settings` response via curl
+- [x] T070 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
+- [x] T071 Git commit and push all changes to GitHub repository `origin main`
+

@@ -57,11 +57,12 @@ async function runTests() {
     const resSettings = await request('GET', '/api/settings');
     assert.strictEqual(resSettings.status, 200);
     assert.ok(resSettings.body.general, 'Settings should contain general store info');
-    assert.strictEqual(resSettings.body.general.storeName, 'Digital Bazar - Best Online Shop');
+    assert.strictEqual(resSettings.body.general.storeName, 'Familio Bazar - Best Online Shop');
+    assert.strictEqual(resSettings.body.logo_config.desktopLogoUrl, '/uploads/familio_bazar_logo.png');
     assert.ok(resSettings.body.review_images_config, 'Settings should contain review_images_config');
     assert.strictEqual(resSettings.body.review_images_config.images.length, 4);
     assert.ok(resSettings.body.review_images_config.images[0].url.includes('customer_review_1.jpg'));
-    console.log('  [PASS] Store settings returned accurately with 4 customer reviews.');
+    console.log('  [PASS] Store settings returned accurately with Familio Bazar branding & 4 customer reviews.');
 
     // 2. Categories
     console.log('Testing GET /api/categories?tree=1...');
@@ -119,7 +120,8 @@ async function runTests() {
     assert.ok(resBlog.body.posts.some(p => p.category === "Men's Fashion"));
     assert.ok(resBlog.body.posts.some(p => p.category === "Baby Care"));
     assert.ok(resBlog.body.posts.some(p => p.coverImage.includes('baby_blanket_care_guide')));
-    console.log('  [PASS] 4 blog posts returned with matching topics and Halal images.');
+    assert.ok(resBlog.body.posts.every(p => p.author === "Familio Bazar Team"));
+    console.log('  [PASS] 4 blog posts returned with matching topics, Familio Bazar author, and Halal images.');
 
     // 6. Landing Page
     console.log('Testing GET /api/lp/panjabi...');
