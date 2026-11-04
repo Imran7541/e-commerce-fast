@@ -243,6 +243,26 @@ async function runTests() {
     assert.ok(resPhoneLogin.body.token);
     console.log('  [PASS] Admin dual login (email and phone) verified, JWT token obtained.');
 
+    // 10a. Storefront Universal Sign In (/api/auth/signin)
+    console.log('Testing POST /api/auth/signin with identifier imrandt2001@gmail.com...');
+    const resSignIn = await request('POST', '/api/auth/signin', {
+      identifier: 'imrandt2001@gmail.com',
+      password: 'admin123'
+    });
+    assert.strictEqual(resSignIn.status, 200);
+    assert.strictEqual(resSignIn.body.success, true);
+    assert.ok(resSignIn.body.token);
+    assert.strictEqual(resSignIn.body.user.role, 'super_admin');
+
+    console.log('Testing POST /api/auth/signin with phone identifier 01787877362...');
+    const resSignInPhone = await request('POST', '/api/auth/signin', {
+      identifier: '01787877362',
+      password: 'admin123'
+    });
+    assert.strictEqual(resSignInPhone.status, 200);
+    assert.strictEqual(resSignInPhone.body.success, true);
+    console.log('  [PASS] Storefront /api/auth/signin dual identifier verified.');
+
     // 10b. Admin Staff & User Management CRUD
     console.log('Testing GET /api/admin/users...');
     const resUsers = await request('GET', '/api/admin/users', null, {
