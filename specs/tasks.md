@@ -1,27 +1,29 @@
-# Implementation Tasks: Halal Ghost Mannequin Saree Transformation (Option A)
+# Implementation Tasks: Panjabi Brand Update & New Products Section Polish
 
-Feature: Convert all women's saree products to Islamic-compliant 3D Ghost Mannequin presentations (No human face, skin, or model)
+Feature: Update Panjabi product images to "EM-BRAND", localize section title to "New Products" in English, and remove the star/sparkle badge icon
 Branch: main
 
-## Phase 1: Setup & Asset Analysis
-- [x] T001 Inspect all 5 female saree products and extract target colors, embroidery patterns, and drape attributes
-- [x] T002 Configure image output directories and backup existing original saree assets in `data/backup_original_sarees/`
+## Phase 1: Setup & Asset Backup
+- [x] T001 Backup original Panjabi product images in `data/backup_original_panjabis/`
+- [x] T002 Verify coordinate offsets and typography specifications for the 3 Panjabi variants (Green, Blue, White)
 
-## Phase 2: Generation of Halal 3D Ghost Mannequin Images
-- [x] T003 Generate 3D Ghost Mannequin image for Product #31 (Indian Saree: Royal Blue with intricate silver/gold zari border on invisible mannequin, clean studio background)
-- [x] T004 Generate 3D Ghost Mannequin image for Product #32 (Jamdani Saree: Regal Purple with floral embroidery on invisible mannequin)
-- [x] T005 Generate 3D Ghost Mannequin image for Product #33 (Indian Jamdani Saree: Deep Violet/Plum with luxury border work on invisible mannequin)
-- [x] T006 Generate 3D Ghost Mannequin image for Product #34 (Smart Indian Jamdani Saree: Soft White/Ice Blue Organza with blue floral motifs on invisible mannequin)
-- [x] T007 Generate 3D Ghost Mannequin image for Product #35 (Pakistani Jamdani Saree: Deep Wine/Burgundy with silver zari lace border on invisible mannequin)
+## Phase 2: User Story 1 - Garment Brand Update on Panjabi Images (P1)
+- [x] T003 [P] [US1] Apply seamless fabric patch and render "EM-BRAND" on Green Panjabi in `src/public/uploads/1790641675186_3baf66_WhatsApp_Image_2026-09-23_at_10_04_11_PM.jpg` and `data/uploads/`
+- [x] T004 [P] [US1] Apply seamless fabric patch, underline ornament, and render "EM-BRAND" on Navy Blue Panjabi in `src/public/uploads/1790641675628_fb6ead_WhatsApp_Image_2026-09-235_at_10_04_11_P.jpg` and `data/uploads/`
+- [x] T005 [P] [US1] Apply seamless fabric patch and render "EM-BRAND" on White Panjabi in `src/public/uploads/1790641675919_40760c_WhatsApp_Image_20265-09-23_at_10_04_11_P.jpg` and `data/uploads/`
 
-## Phase 3: Asset Optimization & Database Integration
-- [x] T008 Resize and optimize generated ghost mannequin images to match e-commerce specs (400x500 JPG)
-- [x] T009 Deploy new images to `src/public/uploads/` and `data/uploads/` replacing previous human model files
-- [x] T010 Verify `products` and `products_details` in SQLite database (`data/ecommerce.sqlite`) and JSON data files
+## Phase 3: User Story 2 - Section Title English Localization (P2)
+- [x] T006 [US2] Update translation mapping for "New Arrivals" and "new arrivals" to "New Products" in `src/public/assets/bn-B9K_tnSb.js`
+- [x] T007 [US2] Update default section title from "New Arrivals" to "New Products" in `src/public/assets/index-BIdHCx7F.js` and `src/public/assets/index.js`
 
-## Phase 4: Live Verification & Testing
-- [x] T011 Verify live storefront rendering on `http://localhost:5050` (Home, Category: Woman's Fashion, and Product Details pages)
-- [x] T012 Run automated test suite (`npm test`) to confirm 13/13 tests pass
+## Phase 4: User Story 3 - Star / Sparkle Icon Removal (P3)
+- [x] T008 [US3] Remove the star/sparkle icon container span from the New Products `<h2>` header in `src/public/assets/index-BIdHCx7F.js`
+- [x] T009 [US3] Remove the star/sparkle icon container span from the New Products `<h2>` header in `src/public/assets/index.js`
 
-## Phase 5: Version Control
-- [x] T013 Git commit and push all Halal ghost mannequin assets and configuration to GitHub repository
+## Phase 5: Verification & Quality Gate
+- [x] T010 Verify HTTP 200 delivery and content length for updated Panjabi images via curl
+- [x] T011 Run automated integration test suite (`npm test`) to confirm 13/13 tests pass
+- [x] T012 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
+
+## Phase 6: Version Control
+- [x] T013 Git commit and push all changes to GitHub repository `origin main`

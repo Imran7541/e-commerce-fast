@@ -16,10 +16,13 @@
 - [x] Running live on `http://localhost:5050`
 - [x] GitHub Repository synced (`https://github.com/Imran7541/e-commerce-fast`)
 - [x] Transformed all female saree product images to Islamic Halal 3D Ghost Mannequin format (zero female face/skin/model, realistic 3D invisible mannequin drape matching original saree colors and embroidery)
+- [x] Updated Panjabi single product images to "EM-BRAND" on chest embroidery, localized "New Products" header to English, and removed the star/sparkle icon badge
 
 ## Active System Inventory
 - Frontend: Exact original frontend bundles from `nodejs.topperit.com.bd` with all micro-interactions, responsive styling, and animations.
 - Hero Banners: 3 custom high-res hero banners from user in `src/public/uploads/`.
+- Brand Customization: 3 Panjabi single product images (IDs 22, 24, 30) featuring "EM-BRAND" on chest embroidery in `src/public/uploads/` and `data/uploads/` (originals backed up in `data/backup_original_panjabis/`).
+- New Products Header: Localized to English ("New Products") with the star/sparkle badge removed.
 - Halal Ghost Mannequins: 5 female saree products (IDs 31-35) + gallery assets rendered on 3D invisible mannequins in `src/public/uploads/` and `data/uploads/` (originals backed up in `data/backup_original_sarees/`).
 - Admin Panel: Full original admin management suite at `/admin` (`admin@digitalbazar.com` / `admin123`).
 - POS Terminal: Full original POS suite at `/pos` (`pos@digitalbazar.com` / `staff123`).
