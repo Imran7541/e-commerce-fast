@@ -27,3 +27,13 @@ Branch: main
 
 ## Phase 6: Version Control
 - [x] T013 Git commit and push all changes to GitHub repository `origin main`
+
+## Phase 7: Shop Page Catalog & /api/products/browse Restoration (P1)
+- [x] T014 Diagnose `/shop` "0 products" root cause in `ShopView-DFBAFI87.js` (unmatched `/api/products/browse` route returning 404)
+- [x] T015 Download missing 11th product asset (`1793700384053_7d66cf_1792562397380_a5c3d7_IMG_8455.webp`) into `src/public/uploads/` and `data/uploads/`
+- [x] T016 Insert "Test Prodcut" (ID 39, Groceries ID 40, price ৳230, salePrice ৳190) into SQLite database, `products_summary.json`, and `products_details.json`
+- [x] T017 Implement `/api/products/browse` route with pagination, filtering (category, brand, search, price range, inStock, flashSale, newArrival, sorting) and dynamic facets calculation (`total`, `categories`, `brands`, `price`) in `src/routes/public.js` before `/api/products/:id`
+- [x] T018 Fix `data/seed.js` foreign key handling during re-seeding (`PRAGMA foreign_keys = OFF / ON`)
+- [x] T019 Add automated test for `/api/products/browse` in `tests/api.test.js` (14/14 tests passing)
+- [x] T020 Verify `/api/products/browse` and `/shop` on live server (`http://localhost:5050`) via curl and browser checks
+- [x] T021 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`

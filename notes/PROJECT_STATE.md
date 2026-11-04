@@ -12,14 +12,16 @@
 - [x] 100% Exact original site design, styling, and SPA preserved in `src/public/index.html` and `src/public/assets/`
 - [x] Replaced hero banner images with user-supplied high-resolution 2400x1040 images (`hero imge/`)
 - [x] SQLite database seeded with live store data & matching banners (`data/ecommerce.sqlite`)
-- [x] Automated integration tests passing (`npm test`, 13/13 passing)
+- [x] Automated integration tests passing (`npm test`, 14/14 passing)
 - [x] Running live on `http://localhost:5050`
 - [x] GitHub Repository synced (`https://github.com/Imran7541/e-commerce-fast`)
 - [x] Transformed all female saree product images to Islamic Halal 3D Ghost Mannequin format (zero female face/skin/model, realistic 3D invisible mannequin drape matching original saree colors and embroidery)
 - [x] Updated Panjabi single product images to "EM-BRAND" on chest embroidery, localized "New Products" header to English, and removed the star/sparkle icon badge
+- [x] Fixed `/shop` page product catalog: implemented `/api/products/browse` route with pagination, filtering, and dynamic facets (`categories`, `brands`, `price`), and added the 11th product "Test Prodcut" (Groceries)
 
 ## Active System Inventory
 - Frontend: Exact original frontend bundles from `nodejs.topperit.com.bd` with all micro-interactions, responsive styling, and animations.
+- Shop Catalog: Complete 11 products (5 Men's Fashion, 5 Woman's Fashion, 1 Groceries) rendering dynamically on `/shop` with category counts, price filter (৳190-৳1550), search, and sorting.
 - Hero Banners: 3 custom high-res hero banners from user in `src/public/uploads/`.
 - Brand Customization: 3 Panjabi single product images (IDs 22, 24, 30) featuring "EM-BRAND" on chest embroidery in `src/public/uploads/` and `data/uploads/` (originals backed up in `data/backup_original_panjabis/`).
 - New Products Header: Localized to English ("New Products") with the star/sparkle badge removed.

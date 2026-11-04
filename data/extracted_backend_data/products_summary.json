@@ -1,5 +1,16 @@
 [
   {
+    "id": 39,
+    "name": "Test Prodcut",
+    "slug": "test-prodcut",
+    "categoryId": 40,
+    "price": "230.00",
+    "salePrice": "190.00",
+    "image": "/uploads/1793700384053_7d66cf_1792562397380_a5c3d7_IMG_8455.webp",
+    "stock": 100,
+    "status": "active"
+  },
+  {
     "id": 35,
     "name": "Pakistani Jamdani Saree",
     "genericName": null,

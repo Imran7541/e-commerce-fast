@@ -27,6 +27,7 @@ function runSafe(stmt, ...params) {
 
 async function seed() {
   console.log('--- Starting Database Seeder ---');
+  db.exec('PRAGMA foreign_keys = OFF;');
 
   // 1. Seed Settings
   const settings = readJson('settings.json');
@@ -347,6 +348,7 @@ async function seed() {
   runSafe(insertCoupon, 3, 'FLAT100', 'fixed', 100, 1500, null, 200, 2, 'active');
   console.log('  [+] Seeded coupons: WELCOME10, EID50, FLAT100.');
 
+  db.exec('PRAGMA foreign_keys = ON;');
   console.log('--- Database Seeding Complete! ---');
 }
 
