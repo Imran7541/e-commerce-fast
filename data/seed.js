@@ -317,7 +317,7 @@ async function seed() {
     1,
     'Super Admin',
     'admin@digitalbazar.com',
-    '01910476751',
+    '01787877362',
     adminPasswordHash,
     'super_admin',
     JSON.stringify(['all']),

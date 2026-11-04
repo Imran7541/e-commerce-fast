@@ -42,14 +42,14 @@
         "id": "3r0h1ch",
         "type": "whatsapp",
         "label": "",
-        "value": "01910476751",
+        "value": "01787877362",
         "enabled": true
       },
       {
         "id": "q9ywuoq",
         "type": "call",
         "label": "",
-        "value": "01910476751",
+        "value": "01787877362",
         "enabled": true
       }
     ]
@@ -84,10 +84,10 @@
     "backgroundColor": "#047857",
     "textColor": "",
     "autoUseHeaderLogo": true,
-    "description": "Kinte Chay একটি বিশ্বস্ত অনলাইন মেডিসিন ও স্বাস্থ্যসেবা পণ্য সরবরাহকারী প্ল্যাটফর্ম। প্রয়োজনীয় ওষুধ ও স্বাস্থ্যসেবা পণ্য সহজে অর্ডার এবং সুবিধাজনকভাবে ডেলিভারি পাওয়ার জন্য আমরা আন্তরিকতার সাথে সেবা দিয়ে থাকি।\n",
-    "address": "Ali Hossen Super Market, 2nd Floor, Boro Bazar,Chuadanga",
-    "phone": "01910476751",
-    "email": "jillurr246@gmail.com",
+    "description": "Familio Bazar একটি বিশ্বস্ত অনলাইন শপিং প্ল্যাটফর্ম। ফ্যাশন, লাইফস্টাইল ও দৈনন্দিন নিত্যপ্রয়োজনীয় পণ্য সহজে অর্ডার এবং সুবিধাজনকভাবে ডেলিভারি পাওয়ার জন্য আমরা আন্তরিকতার সাথে সেবা দিয়ে থাকি。\n",
+    "address": "House #24, Road #03, Sector #11, Uttara, Dhaka-1230",
+    "phone": "01787877362",
+    "email": "imrandt2001@gmail.com",
     "drugLicense": "",
     "copyrightText": "© 2026 Familio Bazar. All Rights Reserved.",
     "companyCredit": "Developed By",
@@ -198,8 +198,8 @@
   },
   "general": {
     "storeName": "Familio Bazar - Best Online Shop",
-    "address": "Ali Hossen Super Market, 2nd Floor, Boro Bazar,Chuadanga",
-    "phone": "01910476751"
+    "address": "House #24, Road #03, Sector #11, Uttara, Dhaka-1230",
+    "phone": "01787877362"
   },
   "home_brands_config": {
     "enabled": true,
@@ -505,7 +505,7 @@
       "id": "contact",
       "title": "Contact",
       "slug": "contact",
-      "content": "# যোগাযোগ করুন\n\nFatima Medicine-এর পণ্য, অর্ডার, ডেলিভারি অথবা যেকোনো বিষয়ে জানতে আমাদের সাথে যোগাযোগ করুন। আমরা আপনার প্রশ্ন ও প্রয়োজন অনুযায়ী সহযোগিতা করার চেষ্টা করব।\n\n আমাদের সাথে যোগাযোগ\n\nপ্রতিষ্ঠানের নাম: Fatima Medicine\nফোন: 01910476751\nইমেইল: jillurr246@gmail.com\nঠিকানা: Ali Hossen Super Market, 2nd Floor, Boro Bazar,Chuadanga\n\n\nঅর্ডার সংক্রান্ত সহায়তা\n\nআপনার অর্ডার নম্বর উল্লেখ করে আমাদের সাথে যোগাযোগ করলে আমরা অর্ডারের বর্তমান অবস্থা সম্পর্কে প্রয়োজনীয় তথ্য দেওয়ার চেষ্টা করব।\n\nআপনার যেকোনো প্রশ্ন, পরামর্শ বা অভিযোগ আমাদের জানাতে পারেন। আপনার মতামত আমাদের সেবার মান উন্নত করতে সাহায্য করে।\n\nFatima Medicine — আপনার প্রয়োজনীয় স্বাস্থ্যসেবা পণ্যের সহজ সমাধান।\n",
+      "content": "# যোগাযোগ করুন\n\nFamilio Bazar-এর পণ্য, অর্ডার, ডেলিভারি অথবা যেকোনো বিষয়ে জানতে আমাদের সাথে যোগাযোগ করুন। আমরা আপনার প্রশ্ন ও প্রয়োজন অনুযায়ী সহযোগিতা করার চেষ্টা করব।\n\n আমাদের সাথে যোগাযোগ\n\nপ্রতিষ্ঠানের নাম: Familio Bazar\nফোন: 01787877362\nইমেইল: imrandt2001@gmail.com\nঠিকানা: House #24, Road #03, Sector #11, Uttara, Dhaka-1230\n\n\nঅর্ডার সংক্রান্ত সহায়তা\n\nআপনার অর্ডার নম্বর উল্লেখ করে আমাদের সাথে যোগাযোগ করলে আমরা অর্ডারের বর্তমান অবস্থা সম্পর্কে প্রয়োজনীয় তথ্য দেওয়ার চেষ্টা করব।\n\nআপনার যেকোনো প্রশ্ন, পরামর্শ বা অভিযোগ আমাদের জানাতে পারেন। আপনার মতামত আমাদের সেবার মান উন্নত করতে সাহায্য করে।\n\nFamilio Bazar — আপনার প্রয়োজনীয় স্বাস্থ্যসেবা পণ্যের সহজ সমাধান।\n",
       "isPublished": true
     },
     {
@@ -578,8 +578,8 @@
   },
   "product_contact_config": {
     "showCallButton": true,
-    "callNumber": "01910476751",
-    "whatsappNumber": "01910476751",
+    "callNumber": "01787877362",
+    "whatsappNumber": "01787877362",
     "showWhatsappButton": true,
     "callBgColor": "#187081"
   },
@@ -673,7 +673,7 @@
       "url": "https://youtube.com"
     },
     "whatsapp": {
-      "url": "+880 1324-291903"
+      "url": "+8801787877362"
     },
     "tiktok": {
       "url": "https://tiktok.com"
@@ -692,8 +692,8 @@
     "accentColor": "#f59e0b"
   },
   "topbar": {
-    "addressText": "Ali Hossen Super Market, 2nd Floor, Boro Bazar,Chuadanga",
-    "phoneText": "01910476751",
+    "addressText": "House #24, Road #03, Sector #11, Uttara, Dhaka-1230",
+    "phoneText": "01787877362",
     "deliveryMessage": "Home Delivery all of Bangladesh ",
     "enabled": true,
     "mode": "ticker",

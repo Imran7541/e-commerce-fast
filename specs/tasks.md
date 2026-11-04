@@ -146,8 +146,12 @@ Branch: main
 - [x] T104 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
 - [x] T105 Git commit and push all changes to GitHub repository `origin main`
 
-
-
-
-
-
+## Phase 19: Footer & Site-wide Contact Information Update (P1)
+- [x] T106 [US11] Update SQLite `settings` table (`footer_config`, `general`, `topbar`, `product_contact_config`, `chat_config`, `social_config`, `pages`) with new phone `01787877362`, email `imrandt2001@gmail.com`, and Dhaka location `House #24, Road #03, Sector #11, Uttara, Dhaka-1230`, and update `footer_config.description` to Familio Bazar e-commerce branding
+- [x] T107 [US11] Update `data/extracted_backend_data/settings.json` to keep seed data synchronized with the new contact details
+- [x] T108 [US11] Update `src/public/index.html` SEO snapshot footer with `01787877362` and the Dhaka address
+- [x] T109 [US11] Update automated tests in `tests/api.test.js` to assert the new contact details in `GET /api/settings`
+- [x] T110 Run automated test suite (`npm test`) to ensure all 15 tests pass
+- [x] T111 Verify live `/api/settings` response via curl with `--noproxy '*'`
+- [x] T112 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
+- [x] T113 Git commit and push all changes to GitHub repository `origin main`

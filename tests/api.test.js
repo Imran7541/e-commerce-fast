@@ -62,7 +62,14 @@ async function runTests() {
     assert.ok(resSettings.body.review_images_config, 'Settings should contain review_images_config');
     assert.strictEqual(resSettings.body.review_images_config.images.length, 4);
     assert.ok(resSettings.body.review_images_config.images[0].url.includes('customer_review_1.jpg'));
-    console.log('  [PASS] Store settings returned accurately with Familio Bazar branding & 4 customer reviews.');
+    assert.strictEqual(resSettings.body.footer_config.phone, '01787877362');
+    assert.strictEqual(resSettings.body.footer_config.email, 'imrandt2001@gmail.com');
+    assert.ok(resSettings.body.footer_config.address.includes('Uttara, Dhaka'));
+    assert.strictEqual(resSettings.body.general.phone, '01787877362');
+    assert.ok(resSettings.body.general.address.includes('Uttara, Dhaka'));
+    assert.strictEqual(resSettings.body.topbar.phoneText, '01787877362');
+    assert.strictEqual(resSettings.body.product_contact_config.callNumber, '01787877362');
+    console.log('  [PASS] Store settings returned accurately with Familio Bazar branding, contact info, & 4 customer reviews.');
 
     // 2. Categories
     console.log('Testing GET /api/categories?tree=1...');
