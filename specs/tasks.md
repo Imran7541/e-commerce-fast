@@ -37,3 +37,19 @@ Branch: main
 - [x] T019 Add automated test for `/api/products/browse` in `tests/api.test.js` (14/14 tests passing)
 - [x] T020 Verify `/api/products/browse` and `/shop` on live server (`http://localhost:5050`) via curl and browser checks
 - [x] T021 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
+
+## Phase 8: Foundational & Database Brand Entity (US1)
+- [x] T022 [US1] Create active brand entity "EM-BRAND" (slug: "em-brand") in SQLite database `brands` table and update `data/extracted_backend_data/brands.json`
+- [x] T023 [US1] Associate all 5 Men's Fashion products (IDs 22, 24, 25, 26, 30) and 5 Women's Fashion products (IDs 31, 32, 33, 34, 35) with `brand_id = 1` in `data/ecommerce.sqlite`
+- [x] T024 [US1] Update `data/extracted_backend_data/products_summary.json` and `products_details.json` with `brandId: 1`, `brandName: "EM-BRAND"`, and `brandSlug: "em-brand"`
+
+## Phase 9: Garment Image Customization on Men's T-Shirts (US2)
+- [x] T025 [P] [US2] Backup original T-shirt product images in `data/backup_original_tshirts/`
+- [x] T026 [P] [US2] Patch legacy "S BRAND" chest embroidery on Product 25 (Blue zip polo) and render "EM-BRAND" in `src/public/uploads/1790641672220_1233d5_WhatsApp_Image_2026-09-23_at_10_04_06_PM.jpg` and `data/uploads/`
+- [x] T027 [P] [US2] Patch legacy "S BRAND" chest pocket text & collar label on Product 26 (Maroon shirt) and render "EM-BRAND" in `src/public/uploads/1790641670782_328974_WhatsApp_Image_2026-09-23_6at_10_04_09_P.jpg` and `data/uploads/`
+
+## Phase 10: Verification & Quality Gate
+- [x] T028 Verify `/api/brands` and `/api/products/browse` facet counts (`brands: { "1": 10 }`) via curl
+- [x] T029 Update and run automated integration test suite (`npm test`) to verify EM-BRAND attribution
+- [x] T030 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
+- [x] T031 Git commit and push all changes to GitHub repository `origin main`

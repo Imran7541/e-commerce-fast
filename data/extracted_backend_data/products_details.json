@@ -8,7 +8,7 @@
       "sku": "MED-418872",
       "barcode": "11223344",
       "categoryId": 36,
-      "brandId": null,
+      "brandId": 1,
       "description": null,
       "shortDescription": null,
       "price": "750.00",
@@ -44,8 +44,8 @@
       "createdAt": "2026-09-25T10:33:38.000Z",
       "categoryName": "Men's Fashion",
       "categorySlug": "men-s-fashion",
-      "brandName": "",
-      "brandSlug": "",
+      "brandName": "EM-BRAND",
+      "brandSlug": "em-brand",
       "brandLogo": ""
     },
     "related": [
@@ -506,7 +506,7 @@
       "sku": "MED-194083",
       "barcode": "11223344",
       "categoryId": 36,
-      "brandId": null,
+      "brandId": 1,
       "description": null,
       "shortDescription": null,
       "price": "750.00",
@@ -542,8 +542,8 @@
       "createdAt": "2026-09-29T00:36:34.000Z",
       "categoryName": "Men's Fashion",
       "categorySlug": "men-s-fashion",
-      "brandName": "",
-      "brandSlug": "",
+      "brandName": "EM-BRAND",
+      "brandSlug": "em-brand",
       "brandLogo": ""
     },
     "related": [
@@ -786,7 +786,7 @@
       "sku": "MED-416101",
       "barcode": null,
       "categoryId": 36,
-      "brandId": null,
+      "brandId": 1,
       "description": null,
       "shortDescription": null,
       "price": "750.00",
@@ -822,8 +822,8 @@
       "createdAt": "2026-09-29T07:03:36.000Z",
       "categoryName": "Men's Fashion",
       "categorySlug": "men-s-fashion",
-      "brandName": "",
-      "brandSlug": "",
+      "brandName": "EM-BRAND",
+      "brandSlug": "em-brand",
       "brandLogo": ""
     },
     "related": [
@@ -1103,7 +1103,7 @@
       "sku": "MED-472436",
       "barcode": null,
       "categoryId": 36,
-      "brandId": null,
+      "brandId": 1,
       "description": null,
       "shortDescription": null,
       "price": "750.00",
@@ -1139,8 +1139,8 @@
       "createdAt": "2026-09-29T07:04:32.000Z",
       "categoryName": "Men's Fashion",
       "categorySlug": "men-s-fashion",
-      "brandName": "",
-      "brandSlug": "",
+      "brandName": "EM-BRAND",
+      "brandSlug": "em-brand",
       "brandLogo": ""
     },
     "related": [
@@ -1420,7 +1420,7 @@
       "sku": "MED-558262",
       "barcode": "11223344",
       "categoryId": 36,
-      "brandId": null,
+      "brandId": 1,
       "description": null,
       "shortDescription": null,
       "price": "750.00",
@@ -1456,8 +1456,8 @@
       "createdAt": "2026-09-29T07:05:58.000Z",
       "categoryName": "Men's Fashion",
       "categorySlug": "men-s-fashion",
-      "brandName": "",
-      "brandSlug": "",
+      "brandName": "EM-BRAND",
+      "brandSlug": "em-brand",
       "brandLogo": ""
     },
     "related": [
@@ -1700,7 +1700,7 @@
       "sku": "MED-351502",
       "barcode": null,
       "categoryId": 37,
-      "brandId": null,
+      "brandId": 1,
       "description": null,
       "shortDescription": null,
       "price": "1200.00",
@@ -1736,8 +1736,8 @@
       "createdAt": "2026-09-29T08:42:31.000Z",
       "categoryName": "Woman's Fashion",
       "categorySlug": "woman-s-fashion",
-      "brandName": "",
-      "brandSlug": "",
+      "brandName": "EM-BRAND",
+      "brandSlug": "em-brand",
       "brandLogo": ""
     },
     "related": [
@@ -1936,7 +1936,7 @@
       "sku": "MED-365249",
       "barcode": null,
       "categoryId": 37,
-      "brandId": null,
+      "brandId": 1,
       "description": null,
       "shortDescription": null,
       "price": "1500.00",
@@ -1972,8 +1972,8 @@
       "createdAt": "2026-09-29T08:42:45.000Z",
       "categoryName": "Woman's Fashion",
       "categorySlug": "woman-s-fashion",
-      "brandName": "",
-      "brandSlug": "",
+      "brandName": "EM-BRAND",
+      "brandSlug": "em-brand",
       "brandLogo": ""
     },
     "related": [
@@ -2172,7 +2172,7 @@
       "sku": "MED-367183",
       "barcode": null,
       "categoryId": 37,
-      "brandId": null,
+      "brandId": 1,
       "description": null,
       "shortDescription": null,
       "price": "1900.00",
@@ -2208,8 +2208,8 @@
       "createdAt": "2026-09-29T08:42:47.000Z",
       "categoryName": "Woman's Fashion",
       "categorySlug": "woman-s-fashion",
-      "brandName": "",
-      "brandSlug": "",
+      "brandName": "EM-BRAND",
+      "brandSlug": "em-brand",
       "brandLogo": ""
     },
     "related": [
@@ -2408,7 +2408,7 @@
       "sku": "MED-448239",
       "barcode": null,
       "categoryId": 37,
-      "brandId": null,
+      "brandId": 1,
       "description": null,
       "shortDescription": null,
       "price": "1900.00",
@@ -2444,8 +2444,8 @@
       "createdAt": "2026-09-29T08:44:08.000Z",
       "categoryName": "Woman's Fashion",
       "categorySlug": "woman-s-fashion",
-      "brandName": "",
-      "brandSlug": "",
+      "brandName": "EM-BRAND",
+      "brandSlug": "em-brand",
       "brandLogo": ""
     },
     "related": [
@@ -2644,7 +2644,7 @@
       "sku": "MED-492384",
       "barcode": null,
       "categoryId": 37,
-      "brandId": null,
+      "brandId": 1,
       "description": "শাড়ি কেন বাঙালি নারীর ঐতিহ্য ও সৌন্দর্যের প্রতীক?\n\nশাড়ি বাঙালি নারীর ঐতিহ্য, সংস্কৃতি ও সৌন্দর্যের সঙ্গে গভীরভাবে জড়িয়ে থাকা একটি পোশাক। সময়ের সঙ্গে পোশাকের ধরন ও ফ্যাশনে অনেক পরিবর্তন এলেও শাড়ির জনপ্রিয়তা এখনো কমেনি। বরং আধুনিক ডিজাইন, রঙ ও কাপড়ের বৈচিত্র্যের কারণে শাড়ি আজও নারীদের অন্যতম পছন্দের পোশাক।\n\nশাড়ির বিশেষত্ব কোথায়?\n\nশাড়ির সবচেয়ে বড় বৈশিষ্ট্য হলো এর বৈচিত্র্য। বিভিন্ন ধরনের কাপড়, ডিজাইন, রঙ ও নকশার শাড়ি পাওয়া যায়। সাধারণ দিনের ব্যবহার থেকে শুরু করে বিয়ে, পার্টি, উৎসব কিংবা বিশেষ অনুষ্ঠানের জন্য আলাদা ধরনের শাড়ি বেছে নেওয়া যায়।\n\nশাড়ি শুধু একটি পোশাক নয়; এটি একজন নারীর ব্যক্তিত্ব ও রুচিকে ফুটিয়ে তুলতেও সাহায্য করে।",
       "shortDescription": "শাড়ি বাঙালি নারীর ঐতিহ্য, সংস্কৃতি ও সৌন্দর্যের সঙ্গে গভীরভাবে জড়িয়ে থাকা একটি পোশাক। সময়ের সঙ্গে পোশাকের ধরন ও ফ্যাশনে অনেক পরিবর্তন এলেও শাড়ির জনপ্রিয়তা এখনো কমেনি।",
       "price": "1900.00",
@@ -2680,8 +2680,8 @@
       "createdAt": "2026-09-29T08:44:52.000Z",
       "categoryName": "Woman's Fashion",
       "categorySlug": "woman-s-fashion",
-      "brandName": "",
-      "brandSlug": "",
+      "brandName": "EM-BRAND",
+      "brandSlug": "em-brand",
       "brandLogo": ""
     },
     "related": [

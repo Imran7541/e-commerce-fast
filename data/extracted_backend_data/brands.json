@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "id": 1,
+    "name": "EM-BRAND",
+    "slug": "em-brand",
+    "logo": null,
+    "website": "",
+    "status": "active"
+  }
+]

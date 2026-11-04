@@ -68,6 +68,15 @@ async function runTests() {
     assert.ok(resCat.body.length > 0);
     console.log(`  [PASS] ${resCat.body.length} root categories returned in tree.`);
 
+    // 2b. Brands
+    console.log('Testing GET /api/brands...');
+    const resBrands = await request('GET', '/api/brands');
+    assert.strictEqual(resBrands.status, 200);
+    assert.ok(Array.isArray(resBrands.body));
+    assert.strictEqual(resBrands.body.length, 1);
+    assert.strictEqual(resBrands.body[0].name, 'EM-BRAND');
+    console.log('  [PASS] EM-BRAND returned in brands list.');
+
     // 3. Products
     console.log('Testing GET /api/products...');
     const resProducts = await request('GET', '/api/products');
@@ -86,6 +95,7 @@ async function runTests() {
     assert.strictEqual(resBrowse.body.facets.categories['36'], 5);
     assert.strictEqual(resBrowse.body.facets.categories['37'], 5);
     assert.strictEqual(resBrowse.body.facets.categories['40'], 1);
+    assert.strictEqual(resBrowse.body.facets.brands['1'], 10);
     assert.strictEqual(resBrowse.body.facets.price.min, 190);
     assert.strictEqual(resBrowse.body.facets.price.max, 1550);
     console.log('  [PASS] Products browse endpoint returned with 11 items and facets.');
@@ -198,7 +208,7 @@ async function runTests() {
     console.log('  [PASS] Static image asset served successfully.');
 
     console.log('\n======================================================');
-    console.log('  ALL 14 TESTS PASSED! FULL RECONSTRUCTION VERIFIED! ');
+    console.log('  ALL 15 TESTS PASSED! FULL RECONSTRUCTION VERIFIED! ');
     console.log('======================================================\n');
     server.close(() => {
       process.exit(0);
