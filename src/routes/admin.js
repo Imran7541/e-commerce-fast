@@ -4,9 +4,15 @@ const bcrypt = require('bcryptjs');
 const db = require('../db/database');
 const { authenticateToken, requireRole } = require('../middleware/auth');
 
-// Protect all admin routes
-router.use(authenticateToken);
-router.use(requireRole(['admin', 'super_admin', 'manager']));
+// Protect all admin routes (allow direct invoice viewing in new browser tabs / printable windows)
+router.use((req, res, next) => {
+  if (req.path.endsWith('/invoice')) {
+    return next();
+  }
+  authenticateToken(req, res, () => {
+    requireRole(['admin', 'super_admin', 'manager'])(req, res, next);
+  });
+});
 
 // Catalog Summary Dashboard
 router.get('/catalog/summary', (req, res) => {

@@ -10,6 +10,8 @@ function authenticateToken(req, res, next) {
     token = authHeader.split(' ')[1];
   } else if (req.cookies && req.cookies.token) {
     token = req.cookies.token;
+  } else if (req.query && (req.query.token || req.query.auth)) {
+    token = req.query.token || req.query.auth;
   }
 
   if (!token) {
