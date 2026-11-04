@@ -109,13 +109,133 @@ router.post('/orders/:id/courier-ship', (req, res) => {
   }
 });
 
-// Admin Products CRUD
+// Admin Products CRUD & List
+router.get('/products/list', (req, res) => {
+  try {
+    const {
+      page = 1,
+      pageSize = 20,
+      search = '',
+      category = 'all',
+      brand = 'all',
+      status = 'all',
+      stock = 'all',
+      sort = 'id',
+      dir = 'desc'
+    } = req.query;
+
+    let sql = `
+      SELECT p.*, c.name as categoryName, b.name as brandName 
+      FROM products p 
+      LEFT JOIN categories c ON p.category_id = c.id
+      LEFT JOIN brands b ON p.brand_id = b.id
+      WHERE 1=1
+    `;
+    const params = [];
+
+    if (search && search.trim()) {
+      sql += ' AND (p.name LIKE ? OR p.sku LIKE ? OR p.slug LIKE ?)';
+      params.push(`%${search.trim()}%`, `%${search.trim()}%`, `%${search.trim()}%`);
+    }
+
+    if (category && category !== 'all') {
+      sql += ' AND (p.category_id = ? OR c.slug = ?)';
+      params.push(isNaN(category) ? category : parseInt(category, 10), category);
+    }
+
+    if (brand && brand !== 'all') {
+      sql += ' AND (p.brand_id = ? OR b.name = ?)';
+      params.push(isNaN(brand) ? brand : parseInt(brand, 10), brand);
+    }
+
+    if (status && status !== 'all') {
+      sql += ' AND p.status = ?';
+      params.push(status);
+    }
+
+    if (stock === 'out') {
+      sql += ' AND p.stock <= 0';
+    } else if (stock === 'low') {
+      sql += ' AND p.stock > 0 AND p.stock <= p.low_stock_threshold';
+    } else if (stock === 'in') {
+      sql += ' AND p.stock > 0';
+    }
+
+    // Sort order
+    const allowedSortFields = ['id', 'name', 'price', 'stock', 'created_at'];
+    const sortField = allowedSortFields.includes(sort) ? `p.${sort}` : 'p.id';
+    const sortDir = dir.toLowerCase() === 'asc' ? 'ASC' : 'DESC';
+    sql += ` ORDER BY ${sortField} ${sortDir}`;
+
+    // Get total matching
+    const countSql = sql.replace('SELECT p.*, c.name as categoryName, b.name as brandName', 'SELECT COUNT(*) as c');
+    const total = db.get(countSql, params).c;
+
+    // Apply pagination
+    const offset = (parseInt(page, 10) - 1) * parseInt(pageSize, 10);
+    sql += ' LIMIT ? OFFSET ?';
+    params.push(parseInt(pageSize, 10), offset);
+
+    const rows = db.all(sql, params).map(r => ({
+      id: r.id,
+      name: r.name,
+      slug: r.slug,
+      sku: r.sku,
+      price: r.price,
+      salePrice: r.sale_price,
+      stock: r.stock,
+      status: r.status,
+      categoryId: r.category_id,
+      categoryName: r.categoryName,
+      brandId: r.brand_id,
+      brandName: r.brandName,
+      image: r.image,
+      images: (() => {
+        try {
+          return r.images ? JSON.parse(r.images) : (r.image ? [r.image] : []);
+        } catch (e) {
+          return r.image ? [r.image] : [];
+        }
+      })()
+    }));
+
+    // Summary statistics
+    const summaryTotal = db.get(`SELECT COUNT(*) as c FROM products`).c;
+    const summaryActive = db.get(`SELECT COUNT(*) as c FROM products WHERE status = 'active'`).c;
+    const summaryDraft = db.get(`SELECT COUNT(*) as c FROM products WHERE status = 'draft'`).c;
+    const summaryOut = db.get(`SELECT COUNT(*) as c FROM products WHERE stock <= 0`).c;
+    const summaryLow = db.get(`SELECT COUNT(*) as c FROM products WHERE stock > 0 AND stock <= low_stock_threshold`).c;
+    const summaryValue = db.get(`SELECT SUM(price * stock) as s FROM products`).s || 0;
+
+    res.json({
+      rows,
+      total,
+      page: parseInt(page, 10),
+      pageSize: parseInt(pageSize, 10),
+      summary: {
+        total: summaryTotal,
+        active: summaryActive,
+        draft: summaryDraft,
+        archived: 0,
+        unpublished: 0,
+        out: summaryOut,
+        low: summaryLow,
+        value: summaryValue
+      }
+    });
+  } catch (err) {
+    console.error('Error in /products/list:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 router.get('/products', (req, res) => {
   try {
     const rows = db.all(`
-      SELECT p.*, c.name as categoryName 
+      SELECT p.*, c.name as categoryName, b.name as brandName 
       FROM products p 
       LEFT JOIN categories c ON p.category_id = c.id
+      LEFT JOIN brands b ON p.brand_id = b.id
       ORDER BY p.id DESC
     `);
     res.json(rows.map(r => ({
@@ -127,8 +247,18 @@ router.get('/products', (req, res) => {
       salePrice: r.sale_price,
       stock: r.stock,
       status: r.status,
+      categoryId: r.category_id,
       categoryName: r.categoryName,
-      image: r.image
+      brandId: r.brand_id,
+      brandName: r.brandName,
+      image: r.image,
+      images: (() => {
+        try {
+          return r.images ? JSON.parse(r.images) : (r.image ? [r.image] : []);
+        } catch (e) {
+          return r.image ? [r.image] : [];
+        }
+      })()
     })));
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -138,10 +268,13 @@ router.get('/products', (req, res) => {
 router.post('/products', (req, res) => {
   try {
     const p = req.body;
+    const image = p.image || (Array.isArray(p.images) && p.images[0]) || null;
+    const imagesStr = typeof p.images === 'string' ? p.images : JSON.stringify(p.images || (image ? [image] : []));
+
     const result = db.run(`
       INSERT INTO products (
-        name, slug, sku, price, sale_price, stock, category_id, description, status, created_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+        name, slug, sku, price, sale_price, stock, category_id, brand_id, description, image, images, status, created_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
     `, [
       p.name,
       p.slug || `prod-${Date.now()}`,
@@ -150,7 +283,10 @@ router.post('/products', (req, res) => {
       p.salePrice ? parseFloat(p.salePrice) : null,
       parseInt(p.stock, 10) || 0,
       p.categoryId || null,
+      p.brandId || 1, // default EM-BRAND
       p.description || '',
+      image,
+      imagesStr,
       p.status || 'active'
     ]);
 
@@ -163,20 +299,49 @@ router.post('/products', (req, res) => {
 router.put('/products/:id', (req, res) => {
   try {
     const p = req.body;
-    db.run(`
+    const image = p.image || (Array.isArray(p.images) && p.images[0]) || null;
+    const imagesStr = typeof p.images === 'string' ? p.images : (p.images ? JSON.stringify(p.images) : null);
+
+    let sql = `
       UPDATE products 
       SET name = ?, price = ?, sale_price = ?, stock = ?, category_id = ?, status = ?
-      WHERE id = ?
-    `, [
+    `;
+    const params = [
       p.name,
       parseFloat(p.price) || 0,
       p.salePrice ? parseFloat(p.salePrice) : null,
       parseInt(p.stock, 10) || 0,
       p.categoryId || null,
-      p.status || 'active',
-      req.params.id
-    ]);
+      p.status || 'active'
+    ];
+
+    if (image !== undefined) {
+      sql += `, image = ?`;
+      params.push(image);
+    }
+    if (imagesStr !== null && imagesStr !== undefined) {
+      sql += `, images = ?`;
+      params.push(imagesStr);
+    }
+    if (p.brandId !== undefined) {
+      sql += `, brand_id = ?`;
+      params.push(p.brandId);
+    }
+
+    sql += ` WHERE id = ?`;
+    params.push(req.params.id);
+
+    db.run(sql, params);
     res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.delete('/products/:id', (req, res) => {
+  try {
+    db.run(`DELETE FROM products WHERE id = ?`, [req.params.id]);
+    res.json({ success: true, message: 'Product deleted' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

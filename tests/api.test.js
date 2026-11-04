@@ -86,23 +86,32 @@ async function runTests() {
     const resProducts = await request('GET', '/api/products');
     assert.strictEqual(resProducts.status, 200);
     assert.ok(Array.isArray(resProducts.body));
-    assert.strictEqual(resProducts.body.length, 11);
-    console.log(`  [PASS] 11 products returned in catalog.`);
+    assert.strictEqual(resProducts.body.length, 15);
+    console.log(`  [PASS] 15 products returned in catalog.`);
 
     // 3b. Products Browse (used by /shop)
     console.log('Testing GET /api/products/browse...');
     const resBrowse = await request('GET', '/api/products/browse');
     assert.strictEqual(resBrowse.status, 200);
-    assert.strictEqual(resBrowse.body.total, 11);
-    assert.strictEqual(resBrowse.body.items.length, 11);
+    assert.strictEqual(resBrowse.body.total, 15);
+    assert.strictEqual(resBrowse.body.items.length, 15);
     assert.ok(resBrowse.body.facets);
     assert.strictEqual(resBrowse.body.facets.categories['36'], 5);
     assert.strictEqual(resBrowse.body.facets.categories['37'], 5);
+    assert.strictEqual(resBrowse.body.facets.categories['38'], 4); // Kid's Fashion
     assert.strictEqual(resBrowse.body.facets.categories['40'], 1);
-    assert.strictEqual(resBrowse.body.facets.brands['1'], 10);
+    assert.strictEqual(resBrowse.body.facets.brands['1'], 14); // EM-BRAND (10 men/women + 4 kids)
     assert.strictEqual(resBrowse.body.facets.price.min, 190);
     assert.strictEqual(resBrowse.body.facets.price.max, 1550);
-    console.log('  [PASS] Products browse endpoint returned with 11 items and facets.');
+    console.log('  [PASS] Products browse endpoint returned with 15 items and facets (including Kid\'s Fashion).');
+
+    // 3c. Kid's Fashion browse filter
+    console.log('Testing GET /api/products/browse?category=kid-s-fashion...');
+    const resKids = await request('GET', '/api/products/browse?category=kid-s-fashion');
+    assert.strictEqual(resKids.status, 200);
+    assert.strictEqual(resKids.body.total, 4);
+    assert.strictEqual(resKids.body.items.length, 4);
+    console.log('  [PASS] Kid\'s Fashion category returns 4 products with images.');
 
     // 4. Single Product Details
     console.log('Testing GET /api/products/35...');

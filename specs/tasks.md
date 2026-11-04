@@ -102,3 +102,17 @@ Branch: main
 - [x] T070 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
 - [x] T071 Git commit and push all changes to GitHub repository `origin main`
 
+## Phase 15: Media Upload & Admin Catalog Pipeline + Kid's Fashion Products Population (P1)
+- [x] T072 Implement `/api/media` router (`src/routes/media.js`) supporting `GET /api/media`, `POST /api/media/upload-bulk`, `POST /api/media/upload`, and `DELETE /api/media/:id`
+- [x] T073 Mount `/api/media` in `src/server.js` and configure upload storage
+- [x] T074 Enhance `src/routes/admin.js` with `GET /api/admin/products/list` and ensure `image`, `images`, `brand_id` are saved in product CRUD
+- [x] T075 [P] [US7] Generate and deploy 4 authentic, 100% Halal Kid's Fashion product images (`kids_panjabi_sky_blue.jpg`, `kids_panjabi_mint_green.jpg`, `kids_polo_navy.jpg`, `kids_full_tshirt.jpg`) to `src/public/uploads/` and `data/uploads/`
+- [x] T076 [US7] Insert 4 Kid's Fashion products (Category 38, Brand 1 EM-BRAND) into SQLite `products` table
+- [x] T077 [US7] Update `data/extracted_backend_data/products_summary.json` and `products_details.json` to keep seed data in sync
+- [x] T078 Verify `/api/products/browse?category=kid-s-fashion` and `/api/media` return HTTP 200 with all products and media
+- [x] T079 Update and run automated integration test suite (`npm test`) to verify 15+ tests pass
+- [x] T080 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
+- [x] T081 Git commit and push all changes to GitHub repository `origin main`
+
+
+

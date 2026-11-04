@@ -504,5 +504,89 @@
     "brandName": "",
     "brandSlug": "",
     "brandLogo": ""
+  },
+  {
+    "id": 41,
+    "name": "Kids Festive Cotton Panjabi - Sky Blue",
+    "slug": "kids-festive-cotton-panjabi-sky-blue",
+    "sku": "KID-PANJ-01",
+    "price": 490,
+    "salePrice": 420,
+    "image": "/uploads/kids_panjabi_sky_blue.jpg",
+    "category": {
+      "id": 38,
+      "name": "Kid's Fashion",
+      "slug": "kid-s-fashion"
+    },
+    "brand": {
+      "id": 1,
+      "name": "EM-BRAND"
+    },
+    "stock": 25,
+    "rating": 5.0,
+    "reviewCount": 12
+  },
+  {
+    "id": 42,
+    "name": "Kids Smart Embroidered Panjabi - Mint Green",
+    "slug": "kids-smart-embroidered-panjabi-mint-green",
+    "sku": "KID-PANJ-02",
+    "price": 520,
+    "salePrice": 450,
+    "image": "/uploads/kids_panjabi_mint_green.jpg",
+    "category": {
+      "id": 38,
+      "name": "Kid's Fashion",
+      "slug": "kid-s-fashion"
+    },
+    "brand": {
+      "id": 1,
+      "name": "EM-BRAND"
+    },
+    "stock": 20,
+    "rating": 5.0,
+    "reviewCount": 9
+  },
+  {
+    "id": 43,
+    "name": "Kids Classic Collar Polo T-Shirt - Navy Blue",
+    "slug": "kids-classic-collar-polo-t-shirt-navy-blue",
+    "sku": "KID-POLO-01",
+    "price": 380,
+    "salePrice": 290,
+    "image": "/uploads/kids_polo_navy.jpg",
+    "category": {
+      "id": 38,
+      "name": "Kid's Fashion",
+      "slug": "kid-s-fashion"
+    },
+    "brand": {
+      "id": 1,
+      "name": "EM-BRAND"
+    },
+    "stock": 35,
+    "rating": 5.0,
+    "reviewCount": 15
+  },
+  {
+    "id": 44,
+    "name": "Kids Casual Full Sleeve T-Shirt - Crimson Red",
+    "slug": "kids-casual-full-sleeve-t-shirt-crimson-red",
+    "sku": "KID-TSHIRT-01",
+    "price": 350,
+    "salePrice": 260,
+    "image": "/uploads/kids_full_tshirt.jpg",
+    "category": {
+      "id": 38,
+      "name": "Kid's Fashion",
+      "slug": "kid-s-fashion"
+    },
+    "brand": {
+      "id": 1,
+      "name": "EM-BRAND"
+    },
+    "stock": 30,
+    "rating": 5.0,
+    "reviewCount": 8
   }
 ]

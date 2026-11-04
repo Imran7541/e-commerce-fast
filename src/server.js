@@ -9,6 +9,7 @@ const ordersRoutes = require('./routes/orders');
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
 const posRoutes = require('./routes/pos');
+const mediaRoutes = require('./routes/media');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -40,6 +41,7 @@ app.use('/api', ordersRoutes);
 app.use('/api', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/pos', posRoutes);
+app.use('/api/media', mediaRoutes);
 
 // SPA Fallback for React Router (e.g., /shop, /cart, /admin, /pos, /product/:slug, /lp/:slug)
 app.get('*', (req, res) => {

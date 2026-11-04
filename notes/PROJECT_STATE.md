@@ -23,24 +23,27 @@
 - [x] Replaced legacy customer review section images with 4 custom high-resolution (1200x1201) review cards featuring user's real customer photos (`customer_review_1.jpg` to `4.jpg`), updated SQLite settings, `settings.json`, and `index.html`
 - [x] Enforced 100% Halal imagery & resolved 100% topic-to-image alignment in "From Our Blog": removed all female models from blog cards, deployed authentic baby blanket image (`baby_blanket_care_guide.jpg`) for Baby Care post, updated Jacket photo post to "পুরুষদের ফ্যাশনে স্টাইলিশ জ্যাকেট ও উইন্টার ট্রেন্ড গাইড", linked traditional saree post to 100% Halal 3D Ghost Mannequin (`saree_3d_ghost_32_purple.jpg`), and synced categories to "Men's Fashion", "Women's Fashion", "Baby Care", and "Health & Nutrition" in SQLite, JSON seed files, and automated tests
 - [x] Migrated store branding from "DIGITA BAZAR" to "FAMILIO BAZAR": generated high-resolution transparent vector-style logo (`familio_bazar_logo.png`, 803x311 & HD 1606x622) with stylized green pixel accents, custom geometric 'FAMILIO' lettering, green triangle in 'A', green shopping cart with speed lines, and 'BAZAR' pill banner. Updated SQLite settings (`general`, `logo_config`, `seo_config`, `footer_config`), `settings.json`, `index.html` (meta tags, title, boot shell, JSON-LD), blog author ("Familio Bazar Team"), and automated tests (15/15 passing)
+- [x] Implemented Media Upload Pipeline & Populated Kid's Fashion Catalog: implemented `/api/media` router (list media, bulk upload supporting Multer and base64 payloads, single upload, delete), enhanced admin product list (`/api/admin/products/list` with pagination/filters/counters) and product CRUD, and populated Kid's Fashion category (ID 38) with 4 authentic, 100% Halal clothing products with high-resolution ghost mannequin images (`kids_panjabi_sky_blue.jpg`, `kids_panjabi_mint_green.jpg`, `kids_polo_navy.jpg`, `kids_full_tshirt.jpg`) under "EM-BRAND" (IDs 41-44), bringing total store catalog to 15 products with 15/15 automated tests passing
 
 ## Active System Inventory
 - Store Branding & Logo: "FAMILIO BAZAR" (store name: "Familio Bazar - Best Online Shop", copyright: "© 2026 Familio Bazar. All Rights Reserved.") with custom transparent logo (`familio_bazar_logo.png`) active across header, footer, mobile header, login, POS, SEO metadata, and boot-shell.
 - Frontend: Exact original frontend bundles from `nodejs.topperit.com.bd` with all micro-interactions, responsive styling, and animations.
-- Product Brand Attribution: Active product brand "EM-BRAND" (ID 1) created and assigned to all 5 Men's Fashion products and all 5 Women's Fashion products; `/shop` brand facet shows `EM-BRAND (10)`; `/product/:slug` renders `Brand: EM-BRAND`.
-- Garment Branding: All 5 Men's garments (IDs 22, 24, 30 Panjabis and IDs 25, 26 T-Shirts/Polo/Shirt) feature custom "EM-BRAND" chest embroidery/prints and collar label in `src/public/uploads/` and `data/uploads/` (originals backed up in `data/backup_original_panjabis/` and `data/backup_original_tshirts/`).
+- Media Upload & Admin Catalog: `/api/media` handles media library queries and bulk uploads from the admin dashboard modal (`src/routes/media.js`). Admin products listing (`GET /api/admin/products/list`) and product creation/editing properly persist `image`, `images`, and `brand_id`.
+- Product Brand Attribution: Active product brand "EM-BRAND" (ID 1) created and assigned to all 5 Men's Fashion, 5 Women's Fashion, and 4 Kid's Fashion products; `/shop` brand facet shows `EM-BRAND (14)`; `/product/:slug` renders `Brand: EM-BRAND`.
+- Garment Branding: All 5 Men's garments (IDs 22, 24, 30 Panjabis and IDs 25, 26 T-Shirts/Polo/Shirt) feature custom "EM-BRAND" chest embroidery/prints and collar label in `src/public/uploads/` and `data/uploads/`.
 - Customer Reviews ("Listen To Our Customers."): 4 custom high-resolution review cards (`customer_review_1.jpg` to `4.jpg`) featuring user-supplied authentic customer photos, verified buyer badges, 5-star ratings, and clothing feedback in `src/public/uploads/`, SQLite `settings`, and SSR hydration.
 - Blog Section ("From Our Blog"): 4 perfectly aligned, 100% Halal articles authored by "Familio Bazar Team":
   1. Health & Nutrition: Organic food jar (`346e6219adb9413c8fa149b20cf59f03.jpg`)
   2. Men's Fashion: Winter jacket guide with matching male jacket image (`45be41ab013e154cd4db71559bfdd3a1.jpg`)
   3. Women's Fashion: Traditional saree heritage with 100% Halal 3D Ghost Mannequin drape (`saree_3d_ghost_32_purple.jpg`)
   4. Baby Care: Baby blanket buying guide with cozy knitted pastel blanket on crib (`baby_blanket_care_guide.jpg`)
-- Shop Catalog: Complete 11 products (5 Men's Fashion, 5 Woman's Fashion, 1 Groceries) rendering dynamically on `/shop` with category counts, brand counts, price filter (৳190-৳1550), search, and sorting.
+- Shop Catalog: Complete 15 products (5 Men's Fashion, 5 Woman's Fashion, 4 Kid's Fashion, 1 Groceries) rendering dynamically on `/shop` with category counts, brand counts, price filter (৳190-৳1550), search, and sorting. Kid's Fashion category (`/shop?category=kid-s-fashion`) displays all 4 kids garments with images and instant purchase.
 - Hero Banners: 3 custom high-res hero banners from user in `src/public/uploads/`.
 - New Products Header: Localized to English ("New Products") with the star/sparkle badge removed.
-- Halal Ghost Mannequins: All 5 Women's Fashion saree products (IDs 31-35) and secondary galleries strictly display 3D invisible mannequins with zero female faces, skin, or human models, served with fresh URLs (`saree_3d_ghost_*.jpg`) and anti-cache headers.
-- Admin Panel: Full original admin management suite at `/admin` (`admin@digitalbazar.com` / `admin123`).
+- Halal Ghost Mannequins: All 5 Women's Fashion saree products (IDs 31-35) and 4 Kid's Fashion products strictly display 3D invisible mannequins with zero human faces, skin, or human models, served with fresh URLs and anti-cache headers.
+- Admin Panel: Full original admin management suite at `/admin` (`admin@digitalbazar.com` / `admin123`) with working product creation, editing, media upload, and order management.
 - POS Terminal: Full original POS suite at `/pos` (`pos@digitalbazar.com` / `staff123`).
 - Server: Express on port 5050 with SQLite backend.
+
 
 

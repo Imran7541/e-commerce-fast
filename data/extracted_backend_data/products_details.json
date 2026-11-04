@@ -2945,5 +2945,109 @@
       "status": "active"
     },
     "variations": []
+  },
+  "41": {
+    "id": 41,
+    "name": "Kids Festive Cotton Panjabi - Sky Blue",
+    "slug": "kids-festive-cotton-panjabi-sky-blue",
+    "sku": "KID-PANJ-01",
+    "price": 490,
+    "salePrice": 420,
+    "image": "/uploads/kids_panjabi_sky_blue.jpg",
+    "images": [
+      "/uploads/kids_panjabi_sky_blue.jpg"
+    ],
+    "category": {
+      "id": 38,
+      "name": "Kid's Fashion",
+      "slug": "kid-s-fashion"
+    },
+    "brand": {
+      "id": 1,
+      "name": "EM-BRAND"
+    },
+    "stock": 25,
+    "rating": 5.0,
+    "reviewCount": 12,
+    "description": "প্রিমিয়াম সুতি কাপড়ে তৈরি বাচ্চাদের স্টাইলিশ ও আরামদায়ক স্কাই ব্লু পাঞ্জাবি। EM-BRAND এক্সক্লুসিভ কালেকশন।",
+    "status": "active"
+  },
+  "42": {
+    "id": 42,
+    "name": "Kids Smart Embroidered Panjabi - Mint Green",
+    "slug": "kids-smart-embroidered-panjabi-mint-green",
+    "sku": "KID-PANJ-02",
+    "price": 520,
+    "salePrice": 450,
+    "image": "/uploads/kids_panjabi_mint_green.jpg",
+    "images": [
+      "/uploads/kids_panjabi_mint_green.jpg"
+    ],
+    "category": {
+      "id": 38,
+      "name": "Kid's Fashion",
+      "slug": "kid-s-fashion"
+    },
+    "brand": {
+      "id": 1,
+      "name": "EM-BRAND"
+    },
+    "stock": 20,
+    "rating": 5.0,
+    "reviewCount": 9,
+    "description": "ঈদে বা উৎসবের জন্য বাচ্চাদের সফট কটন মিন্ট গ্রিন এমব্রয়ডারি পাঞ্জাবি। EM-BRAND কোয়ালিটি নিশ্চয়তা।",
+    "status": "active"
+  },
+  "43": {
+    "id": 43,
+    "name": "Kids Classic Collar Polo T-Shirt - Navy Blue",
+    "slug": "kids-classic-collar-polo-t-shirt-navy-blue",
+    "sku": "KID-POLO-01",
+    "price": 380,
+    "salePrice": 290,
+    "image": "/uploads/kids_polo_navy.jpg",
+    "images": [
+      "/uploads/kids_polo_navy.jpg"
+    ],
+    "category": {
+      "id": 38,
+      "name": "Kid's Fashion",
+      "slug": "kid-s-fashion"
+    },
+    "brand": {
+      "id": 1,
+      "name": "EM-BRAND"
+    },
+    "stock": 35,
+    "rating": 5.0,
+    "reviewCount": 15,
+    "description": "১০০% প্রিমিয়াম কম্বড কটনে তৈরি বাচ্চাদের আরামদায়ক নেভি ব্লু পোলো টি-শার্ট। EM-BRAND ক্যাজুয়াল কালেকশন।",
+    "status": "active"
+  },
+  "44": {
+    "id": 44,
+    "name": "Kids Casual Full Sleeve T-Shirt - Crimson Red",
+    "slug": "kids-casual-full-sleeve-t-shirt-crimson-red",
+    "sku": "KID-TSHIRT-01",
+    "price": 350,
+    "salePrice": 260,
+    "image": "/uploads/kids_full_tshirt.jpg",
+    "images": [
+      "/uploads/kids_full_tshirt.jpg"
+    ],
+    "category": {
+      "id": 38,
+      "name": "Kid's Fashion",
+      "slug": "kid-s-fashion"
+    },
+    "brand": {
+      "id": 1,
+      "name": "EM-BRAND"
+    },
+    "stock": 30,
+    "rating": 5.0,
+    "reviewCount": 8,
+    "description": "বাচ্চাদের দৈনন্দিন ব্যবহারে সফট ও স্কিন-ফ্রেন্ডলি ফুল হাতা কটন টি-শার্ট। EM-BRAND প্রিমিয়াম কোয়ালিটি।",
+    "status": "active"
   }
 }
