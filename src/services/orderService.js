@@ -82,8 +82,8 @@ function generateOrderNumber() {
 }
 
 function createOrder(orderData) {
+  const customerName = (orderData.customerName || orderData.name || '').trim();
   const {
-    customerName,
     phone,
     alternativePhone,
     address,

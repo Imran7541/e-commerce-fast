@@ -45,7 +45,7 @@ router.get('/orders-staff', (req, res) => {
 
 router.get('/orders-customer-lookup', (req, res) => {
   try {
-    const q = (req.query.q || '').trim();
+    const q = (req.query.q || req.query.phone || '').trim();
     if (!q || q.length < 3) {
       return res.json([]);
     }
@@ -264,6 +264,9 @@ router.get('/orders/:id', (req, res) => {
       courierName: o.courier_name,
       courierTrackingId: o.courier_tracking_id,
       courierStatus: o.courier_status,
+      courier_name: o.courier_name,
+      courier_tracking_id: o.courier_tracking_id,
+      courier_status: o.courier_status,
       assignedTo: o.assigned_to,
       notes: o.notes || '',
       createdAt: o.created_at,
@@ -320,12 +323,15 @@ router.get('/orders/:id/invoice', (req, res) => {
     .footer { margin-top: 40px; display: flex; justify-content: space-between; align-items: flex-end; padding-top: 30px; border-top: 1px dashed #cbd5e1; font-size: 13px; color: #64748b; }
     .sig-line { border-top: 1px solid #94a3b8; width: 180px; text-align: center; padding-top: 5px; }
     .btn-print { background: #16a34a; color: white; border: none; padding: 10px 20px; font-size: 14px; font-weight: bold; border-radius: 6px; cursor: pointer; margin-bottom: 20px; }
+    .barcode { font-family: 'Libre Barcode 39 Text', monospace; font-size: 30px; line-height: 1; color: #0f172a; margin-top: 6px; letter-spacing: 2px; }
     @media print {
       .btn-print { display: none; }
       body { padding: 0; }
       .invoice-container { border: none; }
     }
   </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Text&display=swap" rel="stylesheet">
 </head>
 <body>
   <div style="text-align: right; max-width: 800px; margin: auto;">
@@ -357,6 +363,7 @@ router.get('/orders/:id/invoice', (req, res) => {
         Date: ${new Date(o.created_at).toLocaleDateString('en-GB')}<br>
         Status: <span style="text-transform: uppercase; font-weight: bold; color: #16a34a;">${o.status}</span><br>
         Payment: ${o.payment_method.toUpperCase()} (${o.payment_status.toUpperCase()})
+        <div class="barcode">*${o.order_number}*</div>
       </div>
     </div>
 
@@ -417,7 +424,7 @@ const handleStatusUpdate = (req, res) => {
       return res.status(400).json({ error: 'Status is required' });
     }
     db.run(`UPDATE orders SET status = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?`, [status, req.params.id]);
-    res.json({ success: true, status, message: `Order marked as ${status}` });
+    res.json({ success: true, status, order: { id: parseInt(req.params.id, 10), status }, message: `Order marked as ${status}` });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -428,10 +435,10 @@ router.put('/orders/:id/status', handleStatusUpdate);
 // Assign Staff (supports both PATCH and PUT)
 const handleAssignUpdate = (req, res) => {
   try {
-    const { assignedTo } = req.body;
-    const staffId = assignedTo ? parseInt(assignedTo, 10) : null;
+    const assigned = req.body.assignedTo || req.body.staffId || req.body.assigned_to;
+    const staffId = assigned ? parseInt(assigned, 10) : null;
     db.run(`UPDATE orders SET assigned_to = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?`, [staffId, req.params.id]);
-    res.json({ success: true, assignedTo: staffId, message: 'Order assignment updated' });
+    res.json({ success: true, assignedTo: staffId, order: { id: parseInt(req.params.id, 10), assigned_to: staffId }, message: 'Order assignment updated' });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -651,7 +658,7 @@ router.post('/orders/bulk', (req, res) => {
 // Courier Dispatch Integration
 router.post('/orders/:id/courier-ship', (req, res) => {
   try {
-    const { courierName = 'Pathao', hubId, instructions } = req.body;
+    const courierName = req.body.courierName || req.body.courier || 'Pathao';
     const trackingId = `TRK-${courierName.toUpperCase().slice(0, 3)}-${Date.now()}`;
     db.run(`
       UPDATE orders 
@@ -659,7 +666,20 @@ router.post('/orders/:id/courier-ship', (req, res) => {
       WHERE id = ?
     `, [courierName, trackingId, req.params.id]);
 
-    res.json({ success: true, trackingId, courierName, courierStatus: 'In Transit', message: 'Parcel booked with courier successfully' });
+    res.json({
+      success: true,
+      trackingId,
+      courierName,
+      courierStatus: 'In Transit',
+      order: {
+        id: parseInt(req.params.id, 10),
+        courier_name: courierName,
+        courier_tracking_id: trackingId,
+        courier_status: 'In Transit',
+        status: 'shipped'
+      },
+      message: 'Parcel booked with courier successfully'
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
