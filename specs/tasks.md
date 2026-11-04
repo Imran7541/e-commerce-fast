@@ -53,3 +53,14 @@ Branch: main
 - [x] T029 Update and run automated integration test suite (`npm test`) to verify EM-BRAND attribution
 - [x] T030 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
 - [x] T031 Git commit and push all changes to GitHub repository `origin main`
+
+## Phase 11: Halal 3D Ghost Mannequin Saree Enforcement & Cache Busting (P1)
+- [x] T032 [US3] Copy pristine 3D ghost mannequin images to new unique paths (`saree_3d_ghost_31_blue.jpg` to `35_maroon.jpg` and `gallery.jpg`) in `src/public/uploads/` and `data/uploads/`
+- [x] T033 [US3] Overwrite all legacy saree filenames (`imgi_9_4`, `imgi_18_3-1`, `imgi_19_4-1`, `imgi_12`, `imgi_16`, `imgi_21_6`) with the full-res 3D ghost mannequin images
+- [x] T034 [US3] Update SQLite database `products` table for Category 37 (IDs 31-35) with the new 3D ghost mannequin paths in both `image` and `images` array (removing any secondary girl images)
+- [x] T035 [US3] Update `data/extracted_backend_data/products_summary.json` and `products_details.json` with the new 3D ghost mannequin image paths
+- [x] T036 [US3] Configure `src/server.js` static `/uploads` handler with `Cache-Control: no-cache, no-store, must-revalidate` to prevent any browser cache persistence
+- [x] T037 Run automated test suite (`npm test`) to verify all 15 tests pass with new image paths
+- [x] T038 Verify HTTP 200 delivery for all 3D ghost mannequin images and verify `/api/products/browse`
+- [x] T039 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
+- [x] T040 Git commit and push all changes to GitHub repository `origin main`

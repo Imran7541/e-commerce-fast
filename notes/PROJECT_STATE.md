@@ -19,6 +19,7 @@
 - [x] Updated Panjabi single product images to "EM-BRAND" on chest embroidery, localized "New Products" header to English, and removed the star/sparkle icon badge
 - [x] Fixed `/shop` page product catalog: implemented `/api/products/browse` route with pagination, filtering, and dynamic facets (`categories`, `brands`, `price`), and added the 11th product "Test Prodcut" (Groceries)
 - [x] Full "EM-BRAND" brand attribution across all 10 Men's & Women's Fashion products in SQLite database (`brands` and `products` tables), seeded JSONs, `/api/brands`, and replaced legacy "S BRAND" garment embroidery/tags with "EM-BRAND" on Men's T-Shirts (IDs 25, 26)
+- [x] Enforced 100% Halal 3D Ghost Mannequin Saree presentation across all 5 saree products (IDs 31-35) with unique URLs (`saree_3d_ghost_*.jpg`), gallery updates, anti-cache HTTP headers (`Cache-Control: no-cache, no-store, must-revalidate`), and full overwrite of legacy filenames
 
 ## Active System Inventory
 - Frontend: Exact original frontend bundles from `nodejs.topperit.com.bd` with all micro-interactions, responsive styling, and animations.
@@ -27,7 +28,7 @@
 - Shop Catalog: Complete 11 products (5 Men's Fashion, 5 Woman's Fashion, 1 Groceries) rendering dynamically on `/shop` with category counts, brand counts, price filter (৳190-৳1550), search, and sorting.
 - Hero Banners: 3 custom high-res hero banners from user in `src/public/uploads/`.
 - New Products Header: Localized to English ("New Products") with the star/sparkle badge removed.
-- Halal Ghost Mannequins: 5 female saree products (IDs 31-35) + gallery assets rendered on 3D invisible mannequins in `src/public/uploads/` and `data/uploads/` (originals backed up in `data/backup_original_sarees/`).
+- Halal Ghost Mannequins: All 5 Women's Fashion saree products (IDs 31-35) and secondary galleries strictly display 3D invisible mannequins with zero female faces, skin, or human models, served with fresh URLs (`saree_3d_ghost_*.jpg`) and anti-cache headers.
 - Admin Panel: Full original admin management suite at `/admin` (`admin@digitalbazar.com` / `admin123`).
 - POS Terminal: Full original POS suite at `/pos` (`pos@digitalbazar.com` / `staff123`).
 - Server: Express on port 5050 with SQLite backend.

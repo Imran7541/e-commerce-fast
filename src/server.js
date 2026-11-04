@@ -24,7 +24,14 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Static Asset Pipeline
 app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
-app.use('/uploads', express.static(path.join(__dirname, 'public/uploads'), { maxAge: 0 }));
+app.use('/uploads', express.static(path.join(__dirname, 'public/uploads'), {
+  maxAge: 0,
+  setHeaders: (res) => {
+    res.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
+  }
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // API Routes Mounting
