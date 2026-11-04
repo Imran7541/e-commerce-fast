@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require('bcryptjs');
 const db = require('../db/database');
 const { authenticateToken, requireRole } = require('../middleware/auth');
 
@@ -382,6 +383,140 @@ router.get('/system/health', (req, res) => {
     uptime: process.uptime(),
     memory: process.memoryUsage()
   });
+});
+
+// Staff & User Management CRUD
+router.get('/users', (req, res) => {
+  try {
+    const users = db.all(`
+      SELECT id, name, email, phone, role, permissions, status, created_at 
+      FROM users 
+      ORDER BY id ASC
+    `).map(u => ({
+      ...u,
+      permissions: (() => {
+        try {
+          return u.permissions ? JSON.parse(u.permissions) : [];
+        } catch {
+          return [];
+        }
+      })()
+    }));
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.post('/users', (req, res) => {
+  try {
+    const { name, email, phone, role = 'staff', permissions = [], password, status = 'active' } = req.body;
+    if (!name || !email || !password) {
+      return res.status(400).json({ error: 'Name, email, and password are required' });
+    }
+
+    const cleanEmail = email.trim().toLowerCase();
+    const existing = db.get(`SELECT id FROM users WHERE LOWER(email) = ?`, [cleanEmail]);
+    if (existing) {
+      return res.status(400).json({ error: 'User with this email already exists' });
+    }
+
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
+    const permString = typeof permissions === 'string' ? permissions : JSON.stringify(permissions);
+
+    const result = db.run(`
+      INSERT INTO users (name, email, phone, password_hash, role, permissions, status, created_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+    `, [name.trim(), cleanEmail, phone ? phone.trim() : null, hash, role, permString, status]);
+
+    res.status(201).json({
+      success: true,
+      message: 'User created successfully',
+      id: result.lastInsertRowid,
+      user: {
+        id: result.lastInsertRowid,
+        name: name.trim(),
+        email: cleanEmail,
+        phone: phone ? phone.trim() : null,
+        role,
+        permissions: Array.isArray(permissions) ? permissions : [],
+        status
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.put('/users/:id', (req, res) => {
+  try {
+    const { name, email, phone, role, permissions, password, status } = req.body;
+    const user = db.get(`SELECT * FROM users WHERE id = ?`, [req.params.id]);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    let sql = `UPDATE users SET name = ?, email = ?, phone = ?, role = ?, permissions = ?, status = ?`;
+    const cleanEmail = email ? email.trim().toLowerCase() : user.email;
+    const permString = permissions !== undefined ? (typeof permissions === 'string' ? permissions : JSON.stringify(permissions)) : user.permissions;
+
+    const params = [
+      name ? name.trim() : user.name,
+      cleanEmail,
+      phone !== undefined ? (phone ? phone.trim() : null) : user.phone,
+      role || user.role,
+      permString,
+      status || user.status
+    ];
+
+    if (password && password.trim().length >= 6) {
+      const salt = bcrypt.genSaltSync(10);
+      const hash = bcrypt.hashSync(password.trim(), salt);
+      sql += `, password_hash = ?`;
+      params.push(hash);
+    }
+
+    sql += ` WHERE id = ?`;
+    params.push(req.params.id);
+
+    db.run(sql, params);
+    res.json({ success: true, message: 'User updated successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.delete('/users/:id', (req, res) => {
+  try {
+    const id = parseInt(req.params.id, 10);
+    if (id === 1) {
+      return res.status(400).json({ error: 'Cannot delete primary Super Admin user' });
+    }
+    if (req.user && req.user.id === id) {
+      return res.status(400).json({ error: 'Cannot delete your own account' });
+    }
+
+    db.run(`DELETE FROM users WHERE id = ?`, [id]);
+    res.json({ success: true, message: 'User deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.put('/users/:id/password', (req, res) => {
+  try {
+    const { password } = req.body;
+    if (!password || password.trim().length < 6) {
+      return res.status(400).json({ error: 'Password must be at least 6 characters' });
+    }
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password.trim(), salt);
+    db.run(`UPDATE users SET password_hash = ? WHERE id = ?`, [hash, req.params.id]);
+    res.json({ success: true, message: 'User password updated successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // Permission Modules

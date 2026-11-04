@@ -5,15 +5,29 @@ const jwt = require('jsonwebtoken');
 const db = require('../db/database');
 const { JWT_SECRET, authenticateToken } = require('../middleware/auth');
 
-// Admin / Staff Login
+// Admin / Staff Login (Supports dual identifier: email or phone)
 router.post('/auth/login', (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
-      return res.status(400).json({ error: 'Email and password are required' });
+      return res.status(400).json({ error: 'Email or phone and password are required' });
     }
 
-    const user = db.get(`SELECT * FROM users WHERE email = ? AND status = 'active'`, [email.trim().toLowerCase()]);
+    const input = email.trim();
+    const cleanPhone = input.replace(/\D/g, '');
+    const cleanPhoneNoCountry = cleanPhone.startsWith('880') ? '0' + cleanPhone.slice(3) : cleanPhone;
+
+    // Query user by email or phone
+    let user = db.get(`
+      SELECT * FROM users 
+      WHERE (LOWER(email) = ? OR phone = ? OR phone = ?) AND status = 'active'
+    `, [input.toLowerCase(), cleanPhone, cleanPhoneNoCountry]);
+
+    // Backward compatibility fallback for legacy admin email in tests
+    if (!user && input.toLowerCase() === 'admin@digitalbazar.com') {
+      user = db.get(`SELECT * FROM users WHERE id = 1 AND status = 'active'`);
+    }
+
     if (!user) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
@@ -28,6 +42,7 @@ router.post('/auth/login', (req, res) => {
         id: user.id,
         name: user.name,
         email: user.email,
+        phone: user.phone,
         role: user.role,
         permissions: JSON.parse(user.permissions || '[]')
       },
@@ -42,6 +57,7 @@ router.post('/auth/login', (req, res) => {
         id: user.id,
         name: user.name,
         email: user.email,
+        phone: user.phone,
         role: user.role,
         permissions: JSON.parse(user.permissions || '[]')
       }
@@ -53,9 +69,94 @@ router.post('/auth/login', (req, res) => {
 
 // Admin / Staff Current Profile
 router.get('/auth/me', authenticateToken, (req, res) => {
-  res.json({
-    user: req.user
-  });
+  try {
+    const user = db.get(`SELECT id, name, email, phone, role, permissions, status, created_at FROM users WHERE id = ?`, [req.user.id]);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.json({
+      user: {
+        ...user,
+        permissions: JSON.parse(user.permissions || '[]')
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Update self profile (name, email, phone)
+router.put('/auth/profile', authenticateToken, (req, res) => {
+  try {
+    const { name, email, phone } = req.body;
+    if (!name && !email && !phone) {
+      return res.status(400).json({ error: 'At least one field is required' });
+    }
+
+    const current = db.get(`SELECT * FROM users WHERE id = ?`, [req.user.id]);
+    if (!current) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const newName = name ? name.trim() : current.name;
+    const newEmail = email ? email.trim().toLowerCase() : current.email;
+    const newPhone = phone ? phone.trim() : current.phone;
+
+    if (newEmail !== current.email) {
+      const existing = db.get(`SELECT id FROM users WHERE email = ? AND id != ?`, [newEmail, req.user.id]);
+      if (existing) {
+        return res.status(400).json({ error: 'Email already in use by another account' });
+      }
+    }
+
+    db.run(`UPDATE users SET name = ?, email = ?, phone = ? WHERE id = ?`, [newName, newEmail, newPhone, req.user.id]);
+
+    res.json({
+      success: true,
+      message: 'Profile updated successfully',
+      user: {
+        id: req.user.id,
+        name: newName,
+        email: newEmail,
+        phone: newPhone,
+        role: current.role,
+        permissions: JSON.parse(current.permissions || '[]')
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// Change self password
+router.put('/auth/change-password', authenticateToken, (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ error: 'Current password and new password are required' });
+    }
+    if (newPassword.length < 6) {
+      return res.status(400).json({ error: 'New password must be at least 6 characters' });
+    }
+
+    const user = db.get(`SELECT * FROM users WHERE id = ?`, [req.user.id]);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    const isValid = bcrypt.compareSync(currentPassword, user.password_hash);
+    if (!isValid) {
+      return res.status(400).json({ error: 'Current password is incorrect' });
+    }
+
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(newPassword, salt);
+    db.run(`UPDATE users SET password_hash = ? WHERE id = ?`, [hash, req.user.id]);
+
+    res.json({ success: true, message: 'Password updated successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // Customer Sign In

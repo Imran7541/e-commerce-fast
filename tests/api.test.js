@@ -223,16 +223,57 @@ async function runTests() {
     assert.strictEqual(resTrack.body.orders[0].orderNumber, orderNumber);
     console.log('  [PASS] Order tracking verified.');
 
-    // 10. Admin Authentication
-    console.log('Testing POST /api/auth/login...');
+    // 10. Admin Authentication (Email & Phone Dual Login)
+    console.log('Testing POST /api/auth/login with email imrandt2001@gmail.com...');
     const resLogin = await request('POST', '/api/auth/login', {
-      email: 'admin@digitalbazar.com',
+      email: 'imrandt2001@gmail.com',
       password: 'admin123'
     });
     assert.strictEqual(resLogin.status, 200);
     assert.ok(resLogin.body.token);
+    assert.strictEqual(resLogin.body.user.email, 'imrandt2001@gmail.com');
     const adminToken = resLogin.body.token;
-    console.log('  [PASS] Admin login successful, JWT token obtained.');
+
+    console.log('Testing POST /api/auth/login with phone 01787877362...');
+    const resPhoneLogin = await request('POST', '/api/auth/login', {
+      email: '01787877362',
+      password: 'admin123'
+    });
+    assert.strictEqual(resPhoneLogin.status, 200);
+    assert.ok(resPhoneLogin.body.token);
+    console.log('  [PASS] Admin dual login (email and phone) verified, JWT token obtained.');
+
+    // 10b. Admin Staff & User Management CRUD
+    console.log('Testing GET /api/admin/users...');
+    const resUsers = await request('GET', '/api/admin/users', null, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resUsers.status, 200);
+    assert.ok(Array.isArray(resUsers.body));
+    assert.ok(resUsers.body.length >= 2);
+    assert.strictEqual(resUsers.body[0].email, 'imrandt2001@gmail.com');
+    assert.strictEqual(resUsers.body[0].password_hash, undefined, 'password_hash should never be exposed');
+
+    console.log('Testing POST /api/admin/users (Create Staff)...');
+    const resCreateStaff = await request('POST', '/api/admin/users', {
+      name: 'Test Staff',
+      email: `staff_${Date.now()}@familiobazar.com`,
+      phone: '01711223366',
+      role: 'staff',
+      permissions: ['orders'],
+      password: 'staffpassword123'
+    }, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resCreateStaff.status, 201);
+    const createdStaffId = resCreateStaff.body.id;
+
+    console.log('Testing DELETE /api/admin/users/:id...');
+    const resDelStaff = await request('DELETE', `/api/admin/users/${createdStaffId}`, null, {
+      Authorization: `Bearer ${adminToken}`
+    });
+    assert.strictEqual(resDelStaff.status, 200);
+    console.log('  [PASS] Admin staff & user management CRUD verified.');
 
     // 11. Admin Protected Summary
     console.log('Testing GET /api/admin/catalog/summary...');

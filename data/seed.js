@@ -315,8 +315,8 @@ async function seed() {
   runSafe(
     insertUser,
     1,
-    'Super Admin',
-    'admin@digitalbazar.com',
+    'Imran (Super Admin)',
+    'imrandt2001@gmail.com',
     '01787877362',
     adminPasswordHash,
     'super_admin',
@@ -335,7 +335,7 @@ async function seed() {
     JSON.stringify(['pos_access', 'read_catalog']),
     'active'
   );
-  console.log('  [+] Seeded default admin (admin@digitalbazar.com / admin123).');
+  console.log('  [+] Seeded default admin (imrandt2001@gmail.com / admin123).');
 
   // 9. Seed Sample Coupons
   console.log('Seeding promotional coupons...');

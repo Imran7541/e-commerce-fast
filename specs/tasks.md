@@ -155,3 +155,15 @@ Branch: main
 - [x] T111 Verify live `/api/settings` response via curl with `--noproxy '*'`
 - [x] T112 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
 - [x] T113 Git commit and push all changes to GitHub repository `origin main`
+
+## Phase 20: Admin Authentication & Staff User Management (P1)
+- [x] T114 [US12] Update Super Admin user (id: 1) in SQLite `users` table: set email to `imrandt2001@gmail.com`, phone to `01787877362`, name to `Imran (Super Admin)`
+- [x] T115 [US12] Enhance `POST /api/auth/login` in `src/routes/auth.js` to support dual login (either email `imrandt2001@gmail.com` OR phone `01787877362` or legacy `admin@digitalbazar.com`)
+- [x] T116 [US12] Implement `/api/auth/profile` (PUT) and `/api/auth/change-password` (PUT) in `src/routes/auth.js` for self-service profile and password changes
+- [x] T117 [US12] Implement Staff & User Management CRUD in `src/routes/admin.js` (`GET /api/admin/users`, `POST /api/admin/users`, `PUT /api/admin/users/:id`, `DELETE /api/admin/users/:id`, `PUT /api/admin/users/:id/password`)
+- [x] T118 [US12] Update `data/seed.js` to seed admin user with `imrandt2001@gmail.com` and `01787877362`
+- [x] T119 [US12] Update automated tests in `tests/api.test.js` to verify login with `imrandt2001@gmail.com`, login with phone `01787877362`, and test `GET /api/admin/users` and user creation
+- [x] T120 Run automated test suite (`npm test`) to ensure all tests pass
+- [x] T121 Verify live `/api/auth/login` and `/api/admin/users` via curl
+- [x] T122 Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`
+- [x] T123 Git commit and push all changes to GitHub repository `origin main`
