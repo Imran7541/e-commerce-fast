@@ -27,6 +27,26 @@ router.post('/orders', (req, res) => {
 });
 
 // Track order
+function maskPhone(p) {
+  if (!p) return '';
+  const s = String(p).trim();
+  if (s.length < 7) return s;
+  return s.slice(0, 3) + '****' + s.slice(-4);
+}
+
+function maskName(n) {
+  if (!n) return '';
+  const s = String(n).trim();
+  const parts = s.split(/\s+/);
+  if (parts.length === 1) return parts[0].slice(0, 2) + '****';
+  return parts[0] + ' ' + parts[parts.length - 1].slice(0, 1) + '****';
+}
+
+function maskAddress(a) {
+  if (!a) return '';
+  return String(a).replace(/\d+/g, '**');
+}
+
 router.get('/orders/track', (req, res) => {
   try {
     const { orderNumber, phone } = req.query;
@@ -54,9 +74,11 @@ router.get('/orders/track', (req, res) => {
       return {
         id: o.id,
         orderNumber: o.order_number,
-        customerName: o.customer_name,
-        phone: o.phone,
-        address: o.address,
+        customerName: maskName(o.customer_name),
+        customerPhone: maskPhone(o.phone),
+        customerAddress: maskAddress(o.address),
+        phone: maskPhone(o.phone),
+        address: maskAddress(o.address),
         district: o.district,
         thana: o.thana,
         subtotal: o.subtotal,
@@ -64,6 +86,7 @@ router.get('/orders/track', (req, res) => {
         discount: o.discount,
         total: o.total,
         status: o.status,
+        orderStatus: o.status,
         paymentMethod: o.payment_method,
         paymentStatus: o.payment_status,
         courierName: o.courier_name,
@@ -81,7 +104,11 @@ router.get('/orders/track', (req, res) => {
       };
     });
 
-    res.json({ orders: formatted });
+    res.json({
+      orders: formatted,
+      order: formatted[0] || null,
+      items: formatted[0] ? formatted[0].items : []
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

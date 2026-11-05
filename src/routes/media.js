@@ -3,9 +3,21 @@ const router = express.Router();
 const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
+const { authenticateToken } = require('../middleware/auth');
 
 const publicUploadsDir = path.join(__dirname, '../public/uploads');
 const dataUploadsDir = path.join(__dirname, '../../data/uploads');
+
+// Allowed image extensions and MIME types
+const ALLOWED_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg', '.avif']);
+const ALLOWED_MIME_TYPES = new Set([
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+  'image/svg+xml',
+  'image/avif'
+]);
 
 // Ensure upload directories exist
 if (!fs.existsSync(publicUploadsDir)) fs.mkdirSync(publicUploadsDir, { recursive: true });
@@ -17,14 +29,26 @@ const storage = multer.diskStorage({
     cb(null, publicUploadsDir);
   },
   filename: (req, file, cb) => {
-    const safeName = file.originalname.replace(/[^a-zA-Z0-9._-]/g, '_');
-    cb(null, `${Date.now()}_${safeName}`);
+    const ext = path.extname(file.originalname).toLowerCase();
+    const baseName = path.basename(file.originalname, ext).replace(/[^a-zA-Z0-9_-]/g, '_');
+    cb(null, `${Date.now()}_${baseName}${ext}`);
   }
 });
 
 const upload = multer({
   storage,
-  limits: { fileSize: 15 * 1024 * 1024 } // 15MB limit
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
+  fileFilter: (req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase();
+    const mime = (file.mimetype || '').toLowerCase();
+    if (!ALLOWED_EXTENSIONS.has(ext)) {
+      return cb(new Error('Disallowed file extension: only safe images are permitted'));
+    }
+    if (mime && !ALLOWED_MIME_TYPES.has(mime)) {
+      return cb(new Error('Disallowed MIME type: ' + mime));
+    }
+    cb(null, true);
+  }
 });
 
 // Helper to sync file to data/uploads
@@ -68,8 +92,13 @@ router.get('/', (req, res) => {
   }
 });
 
-// 2. POST /api/media/upload-bulk - Handle base64 dataUrl or multipart uploads
-router.post('/upload-bulk', upload.array('files'), (req, res) => {
+// 2. POST /api/media/upload-bulk - Handle base64 dataUrl or multipart uploads (Protected)
+router.post('/upload-bulk', authenticateToken, (req, res, next) => {
+  upload.array('files')(req, res, (err) => {
+    if (err) return res.status(400).json({ error: err.message });
+    next();
+  });
+}, (req, res) => {
   try {
     const uploaded = [];
     const failed = [];
@@ -94,15 +123,27 @@ router.post('/upload-bulk', upload.array('files'), (req, res) => {
           const { dataUrl, fileName = 'image.jpg' } = item;
           if (!dataUrl) continue;
 
-          const matches = dataUrl.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+          const matches = dataUrl.match(/^data:([A-Za-z0-9\-+\/]+);base64,(.+)$/);
           if (!matches || matches.length !== 3) {
             failed.push({ error: 'Invalid base64 data URL', fileName });
             continue;
           }
 
+          const mimeType = matches[1].toLowerCase();
+          if (!ALLOWED_MIME_TYPES.has(mimeType)) {
+            failed.push({ error: 'Disallowed MIME type: ' + mimeType, fileName });
+            continue;
+          }
+
+          const ext = path.extname(fileName).toLowerCase() || '.jpg';
+          if (!ALLOWED_EXTENSIONS.has(ext)) {
+            failed.push({ error: 'Disallowed file extension: ' + ext, fileName });
+            continue;
+          }
+
           const buffer = Buffer.from(matches[2], 'base64');
-          const safeName = fileName.replace(/[^a-zA-Z0-9._-]/g, '_');
-          const uniqueFilename = `${Date.now()}_${safeName}`;
+          const baseName = path.basename(fileName, ext).replace(/[^a-zA-Z0-9_-]/g, '_');
+          const uniqueFilename = `${Date.now()}_${baseName}${ext}`;
           const savePath = path.join(publicUploadsDir, uniqueFilename);
 
           fs.writeFileSync(savePath, buffer);
@@ -111,7 +152,7 @@ router.post('/upload-bulk', upload.array('files'), (req, res) => {
           uploaded.push({
             id: uniqueFilename,
             url: `/uploads/${uniqueFilename}`,
-            title: path.parse(safeName).name.replace(/_/g, ' '),
+            title: baseName.replace(/_/g, ' '),
             size: buffer.length
           });
         } catch (itemErr) {
@@ -127,8 +168,13 @@ router.post('/upload-bulk', upload.array('files'), (req, res) => {
   }
 });
 
-// 3. POST /api/media/upload - Single image or link upload
-router.post('/upload', upload.single('file'), (req, res) => {
+// 3. POST /api/media/upload - Single image or link upload (Protected)
+router.post('/upload', authenticateToken, (req, res, next) => {
+  upload.single('file')(req, res, (err) => {
+    if (err) return res.status(400).json({ error: err.message });
+    next();
+  });
+}, (req, res) => {
   try {
     // If multipart file uploaded
     if (req.file) {
@@ -159,12 +205,21 @@ router.post('/upload', upload.single('file'), (req, res) => {
   }
 });
 
-// 4. DELETE /api/media/:id - Delete media file
-router.delete('/:id', (req, res) => {
+// 4. DELETE /api/media/:id - Delete media file (Protected)
+router.delete('/:id', authenticateToken, (req, res) => {
   try {
     const filename = path.basename(req.params.id);
-    const pubFile = path.join(publicUploadsDir, filename);
-    const dataFile = path.join(dataUploadsDir, filename);
+    const ext = path.extname(filename).toLowerCase();
+    if (!ALLOWED_EXTENSIONS.has(ext)) {
+      return res.status(400).json({ error: 'Invalid file parameter' });
+    }
+
+    const pubFile = path.resolve(publicUploadsDir, filename);
+    const dataFile = path.resolve(dataUploadsDir, filename);
+
+    if (!pubFile.startsWith(publicUploadsDir) || !dataFile.startsWith(dataUploadsDir)) {
+      return res.status(400).json({ error: 'Path traversal attempt detected' });
+    }
 
     if (fs.existsSync(pubFile)) fs.unlinkSync(pubFile);
     if (fs.existsSync(dataFile)) fs.unlinkSync(dataFile);

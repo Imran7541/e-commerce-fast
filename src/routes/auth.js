@@ -47,6 +47,8 @@ router.post(['/auth/login', '/auth/signin'], (req, res) => {
           { expiresIn: '7d' }
         );
 
+        res.setHeader('Set-Cookie', `token=${token}; Path=/; HttpOnly; SameSite=Lax; Max-Age=604800`);
+
         return res.json({
           success: true,
           token,

@@ -223,3 +223,12 @@ Branch: main
 - [x] T165 [US18] Verify HTTP 200 delivery for banner image, updated script bundle, and homepage
 - [x] T166 [US18] Verify continuous automated sliding via headless browser and ensure 15/15 tests pass (`npm test`)
 - [x] T167 [US18] Update documentation and project notes (`notes/PROJECT_STATE.md`, `notes/AGENT_HANDOVER.md`), verifying zero emojis across repository
+
+## Phase 27: Autonomous Security & Functional Auditing via Strix (P1)
+- [x] T168 [US19] Verify Strix CLI (v1.7.0) environment, Docker daemon connectivity, and sandbox image initialization (`ghcr.io/usestrix/strix-sandbox:1.3.0`)
+- [x] T169 [US19] Target live e-commerce server at `http://localhost:5050` and `http://localhost:5050/page/`
+- [x] T170 [US19] Execute Strix autonomous security scan testing OWASP Top 10, Auth/Admin access control, IDOR in order tracking, and Checkout business logic
+- [x] T171 [US19] Verify Strix execution status, agent turns, and inspect generated scan report in `strix_runs/`
+- [x] T172 [US19] Analyze findings and PoCs, proposing surgical code fixes for any verified vulnerabilities (masked customer PII on public tracking `/api/orders/track`, added authentication and MIME/path traversal validation to `/api/media`)
+- [x] T173 [US19] Run automated regression test suite (`npm test`, 16/16 passing) to guarantee zero regressions
+- [x] T174 [US19] Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md` with audit status, adhering strictly to zero emojis

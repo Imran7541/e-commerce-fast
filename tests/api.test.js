@@ -572,8 +572,24 @@ async function runTests() {
     assert.ok(resImg.headers['content-type'].includes('image'));
     console.log('  [PASS] Static image asset served successfully.');
 
+    // 14. Security Hardening (IDOR PII Masking & Media Protection)
+    console.log('Testing Security Hardening: IDOR PII Masking & Media Protection...');
+    const resSecTrack = await request('GET', `/api/orders/track?orderNumber=${orderNumber}`);
+    assert.strictEqual(resSecTrack.status, 200);
+    assert.ok(resSecTrack.body.orders[0].phone.includes('****'));
+    assert.ok(resSecTrack.body.orders[0].address.includes('**'));
+
+    const resUnauthMediaUpload = await request('POST', '/api/media/upload', {
+      url: 'https://example.com/test.jpg'
+    });
+    assert.strictEqual(resUnauthMediaUpload.status, 401);
+
+    const resUnauthMediaDelete = await request('DELETE', '/api/media/test.jpg');
+    assert.strictEqual(resUnauthMediaDelete.status, 401);
+    console.log('  [PASS] IDOR PII masking and media upload/delete access controls verified.');
+
     console.log('\n======================================================');
-    console.log('  ALL 15 TESTS PASSED! FULL PLATFORM VERIFIED!        ');
+    console.log('  ALL 16 TESTS PASSED! FULL PLATFORM VERIFIED!        ');
     console.log('======================================================\n');
     server.close(() => {
       process.exit(0);

@@ -8,8 +8,19 @@ function authenticateToken(req, res, next) {
 
   if (authHeader && authHeader.startsWith('Bearer ')) {
     token = authHeader.split(' ')[1];
-  } else if (req.cookies && req.cookies.token) {
-    token = req.cookies.token;
+  } else if (req.cookies && (req.cookies.token || req.cookies.pharma_token)) {
+    token = req.cookies.token || req.cookies.pharma_token;
+  } else if (req.headers && req.headers['cookie']) {
+    const cookies = req.headers['cookie'].split(';').reduce((acc, c) => {
+      const idx = c.indexOf('=');
+      if (idx !== -1) {
+        const k = c.slice(0, idx).trim();
+        const v = c.slice(idx + 1).trim();
+        acc[k] = decodeURIComponent(v);
+      }
+      return acc;
+    }, {});
+    token = cookies.token || cookies.pharma_token;
   } else if (req.query && (req.query.token || req.query.auth)) {
     token = req.query.token || req.query.auth;
   }
