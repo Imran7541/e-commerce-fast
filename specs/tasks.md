@@ -232,3 +232,13 @@ Branch: main
 - [x] T172 [US19] Analyze findings and PoCs, proposing surgical code fixes for any verified vulnerabilities (masked customer PII on public tracking `/api/orders/track`, added authentication and MIME/path traversal validation to `/api/media`)
 - [x] T173 [US19] Run automated regression test suite (`npm test`, 16/16 passing) to guarantee zero regressions
 - [x] T174 [US19] Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md` with audit status, adhering strictly to zero emojis
+
+## Phase 28: Cloudflare Live Deployment via Zero-Trust Tunnel (US20) (P1)
+- [x] T175 [US20] Download and install Cloudflare Tunnel CLI (`cloudflared`) to `~/.local/bin/cloudflared` on Linux x86_64
+- [x] T176 [US20] Verify `cloudflared --version` and network connectivity to Cloudflare Edge
+- [x] T177 [US20] Create helper launch script `scripts/start-cloudflare-tunnel.sh` targeting `http://localhost:5050`
+- [x] T178 [US20] Launch Cloudflare Quick Tunnel daemon and extract live public HTTPS URL (`https://*.trycloudflare.com`)
+- [x] T179 [US20] Test live public Cloudflare URL (verify HTTP 200, SSL edge certificate, React SPA shell, and public APIs)
+- [x] T180 [US20] Run automated regression test suite (`npm test`, 16/16 passing)
+- [x] T181 [US20] Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`, guaranteeing zero emojis
+- [x] T182 [US20] Commit and push all deployment scripts and documentation to GitHub `origin main`
