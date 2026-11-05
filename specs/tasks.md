@@ -242,3 +242,12 @@ Branch: main
 - [x] T180 [US20] Run automated regression test suite (`npm test`, 16/16 passing)
 - [x] T181 [US20] Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`, guaranteeing zero emojis
 - [x] T182 [US20] Commit and push all deployment scripts and documentation to GitHub `origin main`
+
+## Phase 29: Cloudflare Live Tunnel Resilience & Recovery (US21) (P1)
+- [x] T183 [US21] Diagnose Cloudflare Quick Tunnel 502 disconnection root cause (process termination on environment restart)
+- [x] T184 [US21] Fix subshell variable capture in `scripts/start-cloudflare-tunnel.sh`
+- [x] T185 [US21] Restart local Express server on port 5050 and launch active Cloudflare Quick Tunnel daemon
+- [x] T186 [US21] Verify live Cloudflare URL delivery (`https://statewide-incomplete-sugar-preview.trycloudflare.com`) via curl HTTP 200
+- [x] T187 [US21] Run automated regression test suite (`npm test`, 16/16 passing)
+- [x] T188 [US21] Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`, guaranteeing zero emojis
+- [x] T189 [US21] Commit and push all updates to GitHub `origin main`

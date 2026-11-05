@@ -25,11 +25,10 @@ echo "[INFO] Waiting for Cloudflare Edge URL..."
 
 TUNNEL_URL=""
 for i in {1..30}; do
-  if grep -o "https://[a-zA-Z0-9-]\+\.trycloudflare\.com" "${LOG_FILE}" 2>/dev/null | tail -n 1 | read -r URL; then
-    if [ -n "${URL}" ]; then
-      TUNNEL_URL="${URL}"
-      break
-    fi
+  URL=$(grep -o "https://[a-zA-Z0-9-]\+\.trycloudflare\.com" "${LOG_FILE}" 2>/dev/null | tail -n 1 || true)
+  if [ -n "${URL}" ]; then
+    TUNNEL_URL="${URL}"
+    break
   fi
   sleep 1
 done
