@@ -261,3 +261,11 @@ Branch: main
 - [x] T195 [US22] Run automated regression test suite (`npm test`, 16/16 passing)
 - [x] T196 [US22] Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`, guaranteeing zero emojis
 - [x] T197 [US22] Commit and push all cloud deployment configs to GitHub `origin main`
+
+## Phase 31: Render 24/7 Cloud Deployment Execution (US23) (P1)
+- [x] T198 [US23] Author `specs/render_cloud_deployment_plan.md` defining execution phases, cold-start validation, and quality gates
+- [ ] T199 [US23] Connect Render.com Web Service with GitHub repository `Imran7541/e-commerce-fast`
+- [ ] T200 [US23] Validate cloud build execution and verify live assigned domain (`https://*.onrender.com`) via automated HTTP smoke test
+- [ ] T201 [US23] Test live cloud storefront, API endpoints, and admin portal
+- [ ] T202 [US23] Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md` guaranteeing zero emojis
+- [ ] T203 [US23] Commit and push documentation updates to GitHub `origin main`
