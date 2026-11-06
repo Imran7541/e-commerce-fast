@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: familio-bazar-ecommerce
+    env: node
+    plan: free
+    region: singapore
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 22.14.0
+      - key: NODE_ENV
+        value: production

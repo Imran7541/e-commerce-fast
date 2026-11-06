@@ -2,6 +2,9 @@
   "name": "e-commerce-fast-commerce",
   "version": "1.0.0",
   "description": "Enterprise E-Commerce, POS & Admin Suite",
+  "engines": {
+    "node": ">=22.5.0"
+  },
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
