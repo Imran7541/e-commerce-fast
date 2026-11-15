@@ -278,3 +278,13 @@ Branch: main
 - [x] T208 [US24] Commit and push changes to `https://github.com/Imran7541/imran-portfolio.git`
 - [x] T209 [US24] Update `notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md` guaranteeing zero emojis
 - [x] T210 [US24] Commit and push updates in e-commerce repository to GitHub `origin main`
+
+## Phase 33: Cloudflare Pages Edge Deployment & Live Edge Acceleration (US25) (P1)
+- [x] T211 [US25] Author Cloudflare Pages Edge Worker (`src/public/_worker.js`) to serve static assets with sub-50ms latency and proxy `/api/*` to Render 24/7 backend (`https://familio-bazar.onrender.com`)
+- [x] T212 [US25] Configure routing rules in `src/public/_routes.json` and edge caching / security headers in `src/public/_headers`
+- [x] T213 [US25] Authenticate and provision Cloudflare Pages project `familio-bazar` via Wrangler CLI
+- [x] T214 [US25] Deploy `src/public` storefront bundles to Cloudflare Pages edge (`https://familio-bazar.pages.dev`)
+- [x] T215 [US25] Verify live Cloudflare Pages endpoints via HTTP/2 smoke tests (storefront 48ms TTFB, `/api/settings`, `/api/products`, `/shop`, `/admin`, and static assets)
+- [x] T216 [US25] Configure automated Keep-Alive cron pinging Render backend every 10 minutes to prevent container cold starts
+- [x] T217 [US25] Update live URLs across both portfolios (`emran_project_protfolio` and `imran-portfolio`) to `https://familio-bazar.pages.dev`
+- [x] T218 [US25] Commit and push all updates to GitHub repositories with strict zero emojis
