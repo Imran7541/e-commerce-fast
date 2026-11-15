@@ -132,7 +132,36 @@ async function runTests() {
     assert.strictEqual(resBrowse.body.facets.price.max, 1550);
     console.log('  [PASS] Products browse endpoint returned with 26 items and complete 9-category facets.');
 
-    // 3c. Kid's Fashion browse filter
+    // 3c. Men's Fashion & Woman's Fashion browse filters
+    console.log('Testing GET /api/products/browse?category=men-s-fashion...');
+    const resMens = await request('GET', '/api/products/browse?category=men-s-fashion');
+    assert.strictEqual(resMens.status, 200);
+    assert.strictEqual(resMens.body.total, 5);
+    assert.strictEqual(resMens.body.items.length, 5);
+    assert.ok(resMens.body.items.every(p => p.image && p.categoryName === "Men's Fashion"));
+    console.log('  [PASS] Men\'s Fashion category returns 5 products with images.');
+
+    console.log('Testing GET /api/products/browse?category=mens-fashion (slug variant)...');
+    const resMensVariant = await request('GET', '/api/products/browse?category=mens-fashion');
+    assert.strictEqual(resMensVariant.status, 200);
+    assert.strictEqual(resMensVariant.body.total, 5);
+    console.log('  [PASS] Men\'s Fashion category slug variant returns 5 products.');
+
+    console.log('Testing GET /api/products/browse?category=woman-s-fashion...');
+    const resWomans = await request('GET', '/api/products/browse?category=woman-s-fashion');
+    assert.strictEqual(resWomans.status, 200);
+    assert.strictEqual(resWomans.body.total, 5);
+    assert.strictEqual(resWomans.body.items.length, 5);
+    assert.ok(resWomans.body.items.every(p => p.image && p.categoryName === "Woman's Fashion"));
+    console.log('  [PASS] Woman\'s Fashion category returns 5 products with Halal 3D mannequin images.');
+
+    console.log('Testing GET /api/products/browse?category=womans-fashion (slug variant)...');
+    const resWomansVariant = await request('GET', '/api/products/browse?category=womans-fashion');
+    assert.strictEqual(resWomansVariant.status, 200);
+    assert.strictEqual(resWomansVariant.body.total, 5);
+    console.log('  [PASS] Woman\'s Fashion category slug variant returns 5 products.');
+
+    // 3d. Kid's Fashion browse filter
     console.log('Testing GET /api/products/browse?category=kid-s-fashion...');
     const resKids = await request('GET', '/api/products/browse?category=kid-s-fashion');
     assert.strictEqual(resKids.status, 200);

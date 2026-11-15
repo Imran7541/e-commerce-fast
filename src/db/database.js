@@ -56,3 +56,26 @@ try {
 } catch (e) {
   // Gracefully handle initial edge cases
 }
+
+// Auto-repair and synchronize products category_id and brand_id on startup
+try {
+  const productsJsonPath = path.join(__dirname, '../../data/extracted_backend_data/products_summary.json');
+  if (fs.existsSync(productsJsonPath)) {
+    const products = JSON.parse(fs.readFileSync(productsJsonPath, 'utf8'));
+    const updateStmt = db.prepare(`
+      UPDATE products 
+      SET category_id = ?, 
+          brand_id = ?
+      WHERE id = ?
+    `);
+    for (const p of products) {
+      const catId = p.category_id || p.categoryId || null;
+      const bId = p.brand_id || p.brandId || null;
+      if (catId !== null) {
+        updateStmt.run(catId, bId, p.id);
+      }
+    }
+  }
+} catch (e) {
+  // Gracefully handle startup sync
+}

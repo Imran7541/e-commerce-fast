@@ -288,3 +288,12 @@ Branch: main
 - [x] T216 [US25] Configure automated Keep-Alive cron pinging Render backend every 10 minutes to prevent container cold starts
 - [x] T217 [US25] Update live URLs across both portfolios (`emran_project_protfolio` and `imran-portfolio`) to `https://familio-bazar.pages.dev`
 - [x] T218 [US25] Commit and push all updates to GitHub repositories with strict zero emojis
+
+## Phase 34: Men's & Woman's Fashion Category Sync & Product Filter Fix (US26) (P1)
+- [x] T219 [US26] Diagnose root cause of empty product grids on `/shop?category=men-s-fashion` and `/shop?category=woman-s-fashion` (Render container SQLite database seeded with null `category_id` due to camelCase mismatch in `data/seed.js`)
+- [x] T220 [US26] Fix `data/seed.js` product seeder to support snake_case properties (`category_id`, `brand_id`, `sale_price`, etc.)
+- [x] T221 [US26] Implement automated startup category and brand relation synchronization in `src/db/database.js`
+- [x] T222 [US26] Enhance category filter queries in `src/routes/public.js` (`/api/products` and `/api/products/browse`) with resilient slug variations (`men-s-fashion`, `mens-fashion`, `woman-s-fashion`, `womans-fashion`, and category name)
+- [x] T223 [US26] Add on-demand admin endpoint `POST /api/admin/catalog/sync-categories` in `src/routes/admin.js`
+- [x] T224 [US26] Add automated integration test coverage in `tests/api.test.js` verifying 5 products with images for both Men's and Woman's Fashion
+- [x] T225 [US26] Update state ledgers (`notes/PROJECT_STATE.md` and `notes/AGENT_HANDOVER.md`) and deploy fixes

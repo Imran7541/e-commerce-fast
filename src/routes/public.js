@@ -130,8 +130,17 @@ router.get('/products', (req, res) => {
     const params = [];
 
     if (category) {
-      sql += ' AND (c.slug = ? OR p.category_id = ?)';
-      params.push(category, category);
+      if (!isNaN(category)) {
+        sql += ' AND (p.category_id = ? OR c.parent_id = ?)';
+        params.push(parseInt(category, 10), parseInt(category, 10));
+      } else {
+        sql += ` AND (
+          c.slug = ? 
+          OR REPLACE(c.slug, '-', '') = REPLACE(?, '-', '') 
+          OR LOWER(c.name) = LOWER(?)
+        )`;
+        params.push(category, category, category);
+      }
     }
     if (search) {
       sql += ' AND (p.name LIKE ? OR p.sku LIKE ? OR p.description LIKE ?)';
@@ -249,8 +258,13 @@ router.get('/products/browse', (req, res) => {
         whereClause += ' AND (p.category_id = ? OR c.parent_id = ?)';
         params.push(parseInt(category, 10), parseInt(category, 10));
       } else {
-        whereClause += ' AND (c.slug = ? OR c.parent_id = (SELECT id FROM categories WHERE slug = ?))';
-        params.push(category, category);
+        whereClause += ` AND (
+          c.slug = ? 
+          OR REPLACE(c.slug, '-', '') = REPLACE(?, '-', '') 
+          OR LOWER(c.name) = LOWER(?)
+          OR c.parent_id = (SELECT id FROM categories WHERE slug = ? OR REPLACE(slug, '-', '') = REPLACE(?, '-', '') OR LOWER(name) = LOWER(?))
+        )`;
+        params.push(category, category, category, category, category, category);
       }
     }
 

@@ -39,6 +39,37 @@ router.get('/catalog/summary', (req, res) => {
   }
 });
 
+// Sync and repair product category and brand relations
+router.post('/catalog/sync-categories', (req, res) => {
+  try {
+    const fs = require('fs');
+    const path = require('path');
+    const productsJsonPath = path.join(__dirname, '../../data/extracted_backend_data/products_summary.json');
+    if (fs.existsSync(productsJsonPath)) {
+      const products = JSON.parse(fs.readFileSync(productsJsonPath, 'utf8'));
+      const updateStmt = db.db.prepare(`
+        UPDATE products 
+        SET category_id = ?, 
+            brand_id = ?
+        WHERE id = ?
+      `);
+      let count = 0;
+      for (const p of products) {
+        const catId = p.category_id || p.categoryId || null;
+        const bId = p.brand_id || p.brandId || null;
+        if (catId !== null) {
+          updateStmt.run(catId, bId, p.id);
+          count++;
+        }
+      }
+      return res.json({ success: true, updated: count });
+    }
+    res.status(404).json({ error: 'Seed file not found' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Admin Orders Management & Invoicing (Phase 3)
 router.get('/orders-staff', (req, res) => {
   try {
